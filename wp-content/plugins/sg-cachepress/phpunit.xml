@@ -1,7 +1,0 @@
-<phpunit bootstrap="vendor/autoload.php">
-	<testsuites>
-		<testsuite name="SG Optimizer">
-			<directory>tests</directory>
-		</testsuite>
-	</testsuites>
-</phpunit>

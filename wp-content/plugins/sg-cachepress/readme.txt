@@ -1,47 +1,86 @@
 === SG Optimizer ===
-Contributors: Hristo Sg, danielkanchev, ivanyordanov, siteground
+Contributors: Hristo Sg, siteground, sstoqnov
 Tags: nginx, caching, speed, memcache, memcached, performance, siteground, nginx, supercacher
-Requires at least: 3.0.1
-Tested up to: 4.9
+Requires at least: 4.7
+Requires PHP: 5.5
+Tested up to: 5.0
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The SG Optimizer is designed to link WordPress with all SiteGround Performance services.
+With the SiteGround Optimizer enabled, you're getting the very best from your hosting environment!
 
 == Description ==
 
-This plugin is designed to link WordPress with the SiteGround Performance services. It WILL NOT WORK on another hosting provider. The SG Optimizer plugin has few different parts handling speciffic performance optimizations:
+This plugin is designed to link WordPress with the SiteGround Performance services. It WILL NOT WORK on another hosting provider. 
 
-= SuperCacher Config =
+The SG Optimizer plugin has few different parts handling speciffic performance optimizations:
 
-The main functionality of SuperCacher part of the plugin is to purge your dynamic cache whenever your content updates. For example, when you create a new post, someone comments your articles, etc. In addition to that, if you have a working Memcached service on your server, the plugin will allow you to easily configure and enable WordPress to use it.
+== Configuration ==
 
-There is public Purge function - sg_cachepress_purge_cache, which can be used by other plugins/themes. Example usage:
+For detailed information on our plugin and how it works, please check out our [SG Optimizer Tutorial](https://www.siteground.com/tutorials/wordpress/sg-optimizer/ "SG Optimizer Tutorial").
 
-if (function_exists('sg_cachepress_purge_cache')) {
-sg_cachepress_purge_cache();
-}
 
-WP-CLI command is now available: "wp sg purge" to clear the cache.
+= SuperCacher Settings = 
 
-= HTTPS Config =
+In this tab, you can configure your Dynamic Caching and Memcached. Make sure you've enabled them from your cPanel before using the plugin. You can enable/disable the automatic cache purge, exclude URLs from the cache and test your pages if they are properly cached.
 
-The HTTPS Config allows you to force SSL usage on your site. It will redirect your entire traffic over secure connections and will fix mixed content issues. A side benefit of switching on the HTTPS is the automatic use of the HTTP2 protocol and its performance benefits. 
+= Environment Optimization = 
 
-= PHP Config =
+Here, you can force HTTPS for your site, switch between different PHP Versions (compatibility check available), and enable or disable Gzip Compression and Borwser Caching rules for your site.
 
-This tool will allow you to check if your website is compatible with the recommended by SiteGround PHP version(7.0) and switch to it with a click. It is highly advisable to keep your WordPress running on the recommended PHP for best security and performance.
+= Frontend Optimization =
+
+In this tab, you can enable or disable Minification of your HTML, JS and CSS resources, remove the Emoji support and remove the query strings from your static resources.
+
+= Image Optimization = 
+
+Here, you can enable or disable optimization for your newly uploaded images, bulk optimize your old ones and enable lazy loading for your site images.
+
+= Plugin Compatibility =
+
+If your plugin does not trigger standard WordPress hooks or you need us to purge the cache, you can use this public function in your code:
+
+    if (function_exists('sg_cachepress_purge_cache')) {
+    sg_cachepress_purge_cache();
+    }
+
+Preferrably, you can pass an URL to the function to clear the cache just for it instead of purging the entire cache. For example:
+
+    if (function_exists('sg_cachepress_purge_cache')) {
+    sg_cachepress_purge_cache('https://yoursite.com/pluginpage');
+    }
+
+= WP-CLI Support = 
+
+In version 5.0 we've added full WP-CLI support for all plugin options and functionalities. 
+
+* wp sg purge (url) - purges the entire cache or if URL is passed 
+* wp sg memcached enable|disable - enables or disables Memcached
+* wp sg forcehttps enable|disable - enables or disables HTTPS for your site
+* wp sg phpver check (--version=) - checks your site for compatibility with PHP 7.1 or the version you specify
+* wp sg optimize - enables or disables different optimization options for your site:
+* wp sg optimize html enable|disable - enables or disables HTML minification
+* wp sg optimize js enable|disable - enables or disables JS minification
+* wp sg optimize css enable|disable - enables or disables CSS minification
+* wp sg optimize querystring enable|disable - enables or disables query strings removal
+* wp sg optimize emojis enable|disable - enables or disables stripping of the Emoji scripts
+* wp sg optimize images enable|disable - enables or disables New image optimization
+* wp sg optimize lazyload enable|disable - enables or disables Lazy loading of images
+* wp sg optimize gzip enable|disable - enables or disables Gzip compression for your site
+* wp sg optimize browsercache enable|disable - enables or disables Browser caching rules
 
 = Requirements =
 
 In order to work correctly, this plugin requires that your server meets the following criteria:
 
-* PHP 5.5
 * SiteGround account
+* WordPress 4.7
+* PHP 5.5
 * If you're not hosted with SiteGround this plugin WILL NOT WORK  because it relies on a specific server configuration
 
 Our plugin uses a cookie in order to function properly. It does not store personal data and is used solely for the needs of our caching system.
+
 
 == Installation ==
 
@@ -60,26 +99,39 @@ Our plugin uses a cookie in order to function properly. It does not store person
 1. Click the 'Install Now' button
 1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG CachePress listing
 
-
-== Configuration ==
-
-= Dynamic Cache Settings =
-
-* Dynamic Cache ON/OFF - enable or disable the SiteGround Dynamic caching system
-* AutoFlush Cache ON/OFF - automatically flush the Dynamic cache when you edit your content
-* Purge Cache - Manually purge all cached data from the dynamic cache
-
-= Exclude URLs From Dynamic Caching = 
-
-This field allows you to exclude URLs from the cache. This means that if you need certain parts of your site to be completely dynamic, you need to add them into this list. Type in the last part of the URL that you want to be excluded. For example, if you type in 'url', then '/path/to/url/' will be excluded but '/path/to/' and '/path/to/url/else/' won't.
-		
-= Memcached Settings =
-* Enable Memcached - Store in the server's memory (using Memcached) frequently executed queries to the database for a faster access on a later use.
-
-= HTTPS Configuration =
-Force HTTPS on/off -- enable or disable the the https redirect for your whole site and the rewriting of the resource links from http to https.
-
 == Changelog ==
+
+= Version 5.0.7 =
+* Fixed bug with notifications removal
+* Fixed bug with modifying wrong .htaccess file for installations in subdirectory
+* Flush redux cache when updating to new version 
+* Improved check for existing SSL rules in your .htaccess file
+* Added check and removal of duplicate Gzip rules in your .htaccess file
+* Added check and removal of duplicate Browser caching  rules in your .htaccess file
+
+= Version 5.0.6 =
+* Memcache issues fixed. Unique WP_CACHE_KEY_SALT is generated each time you enable it on your site.
+* Better status update handling
+* Added option to start checks even if the default WP Cron is disabled (in case you use real cronjob)
+
+= Version 5.0.5 =
+* Fixed Compatibility Checker progress issues.
+* Fixed images optimization endless loops.
+* Changed php version regex to handle rules from other plugins.
+
+= Version 5.0.4 =
+* Fixed CSS minification issues.
+* Add option to re-optimize images.
+* Allow users to hide notices.
+
+= Version 5.0.0 =
+* Complete plugin refactoring
+* Frontend optimiztions added
+* Environment optimizations added
+* Images Optimizatoins adder
+* Full WP-CLI Support
+* Better Multisite Support
+* Better Interface
 
 = Version 4.0.7 =
 * Fixed bug in the force SSL functionality in certain cases for MS
@@ -291,3 +343,11 @@ Force HTTPS on/off -- enable or disable the the https redirect for your whole si
 = 1.0 =
 * Plugin created.
 
+== Screenshots ==
+
+1. The Super Cacher Settings tab handles your Dynamic caching and Memcached. Here, you can exclude URls from the cache, test your site and purge the Dynamic caching manually.
+2. In the Environment Optimization tab, you can force HTTPS for your site, switch PHP versions and enable Gzip and Browser Caching rules.
+3. The Frontend Optimization tab allows you to Minify HTML, CSS & JS, as well as to remove query strings from your static resources and disable the Emoji support.
+4. The Image Optimization tab allows you to optimize your Media Library images, aswell as adds Lazy Loading functionality for your site.
+5. Multisite Only! In the Global Settings tab, you can configure all options that are global for your network.
+6. Multisite Only! In the Per Site Defaults tab, you can configure how the new sites, added to your network will be setup.

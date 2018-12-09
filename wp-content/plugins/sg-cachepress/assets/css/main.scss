@@ -1,0 +1,63 @@
+@import "../../node_modules/sg-styleguide/lib/styles/main.scss";
+@import "../../node_modules/sg-styleguide/lib/components/title/title.scss";
+@import "../../node_modules/sg-styleguide/lib/components/layout/styles.scss";
+
+/* Additional Reset */
+
+#sg-optimizer-app {
+  .sg-page {
+    height: 100%!important;
+    overflow: initial!important;
+  }
+
+  .sg-layout {
+    display: block;
+    height: auto;
+
+    &:after {
+      content: '';
+      clear: both;
+      overflow: hidden;
+    }
+  }
+}
+
+
+#sg-optimizer-app:after{
+  content: '';
+  clear: both;
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+li {
+  margin-bottom: 0;
+}
+
+html {
+  background: none!important;
+  overflow: initial!important;
+}
+
+
+.sg-switch__input {
+  display: none!important;
+}
+
+.sg-field {
+  border: none!important;
+  box-shadow: none!important;
+  margin: 0;
+  font-weight: normal!important;
+}
+
+.toplevel_page_sg-cachepress #adminmenu .wp-menu-image img {
+  display: inline;
+}
+
+.toplevel_page_sg-cachepress .notice {
+  display: none !important;
+}
