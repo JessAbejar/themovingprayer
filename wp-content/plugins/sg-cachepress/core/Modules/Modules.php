@@ -429,7 +429,10 @@ class Modules {
 	 */
 	public function blocking_plugins_notice() {
 
-		if ( 0 === (int) get_option( 'siteground_optimizer_blocking_plugins_notice', 1 ) ) {
+		if (
+			0 === (int) get_option( 'siteground_optimizer_blocking_plugins_notice', 1 ) ||
+			! current_user_can( 'administrator' )
+		) {
 			return;
 		}
 
@@ -461,7 +464,10 @@ class Modules {
 	 */
 	public function cache_plugins_notice() {
 
-		if ( 0 === (int) get_option( 'siteground_optimizer_cache_plugins_notice', 1 ) ) {
+		if (
+			0 === (int) get_option( 'siteground_optimizer_cache_plugins_notice', 1 ) ||
+			! current_user_can( 'administrator' )
+		) {
 			return;
 		}
 		$excluded = $this->get_excluded( $this->cache_plugins );

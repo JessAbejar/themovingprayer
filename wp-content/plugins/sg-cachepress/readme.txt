@@ -101,6 +101,21 @@ Our plugin uses a cookie in order to function properly. It does not store person
 
 == Changelog ==
 
+= Version 5.0.9 =
+* Fixed woocommerce bugs
+* Improved memcached flush
+* Improved https force
+
+= Version 5.0.8 =
+* Better .htaccess handling when disabling and enabling Browser Cache and Gzip
+* Improved image optimization handling
+* Added option to stop the image optimization and resume it later
+* Fixed bug with memcached notifications
+* Fixed bug with conflicting plugin notices for non-admins
+* Fixed bug when user accesses their site through IP/~cPaneluser
+* Fixed bug with labels for HTML, CSS & JS Minification
+* SEO Improvements in the Lazy Load functionality
+
 = Version 5.0.7 =
 * Fixed bug with notifications removal
 * Fixed bug with modifying wrong .htaccess file for installations in subdirectory

@@ -5,6 +5,9 @@ namespace SiteGround_Optimizer\Install_Service;
 use SiteGround_Optimizer\Install_Service\Install_5_0_0;
 use SiteGround_Optimizer\Install_Service\Install_5_0_5;
 use SiteGround_Optimizer\Install_Service\Install_5_0_6;
+use SiteGround_Optimizer\Install_Service\Install_5_0_8;
+use SiteGround_Optimizer\Install_Service\Install_5_0_9;
+use SiteGround_Optimizer\Supercacher\Supercacher;
 
 /**
  * Define the Install interface.
@@ -46,6 +49,8 @@ class Install_Service {
 			new Install_5_0_0(),
 			new Install_5_0_5(),
 			new Install_5_0_6(),
+			new Install_5_0_8(),
+			new Install_5_0_9(),
 		);
 
 		$version = null;
@@ -62,6 +67,10 @@ class Install_Service {
 				update_option( 'siteground_optimizer_version', $version );
 
 				update_option( 'siteground_optimizer_flush_redux_cache', 1 );
+
+				// Flush dynamic and memcache.
+				Supercacher::purge_cache();
+				Supercacher::flush_memcache();
 			}
 		}
 	}

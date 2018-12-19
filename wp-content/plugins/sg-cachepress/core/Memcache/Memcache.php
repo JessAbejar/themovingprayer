@@ -35,7 +35,8 @@ class Memcache {
 		// Store tha value in variable to prevent multiple database calls.
 		$is_memcache_enabled = Options::is_enabled( 'siteground_optimizer_enable_memcached' );
 
-		if ( ! $this->get_memcached_port() ) {
+
+		if ( empty( $this->get_memcached_port() ) ) {
 			if ( $is_memcache_enabled ) {
 				Options::enable_option( 'siteground_optimizer_memcache_notice' );
 				$this->remove_memcached_dropin();
@@ -189,7 +190,7 @@ class Memcache {
 		// Tyr to get the port.
 		$port = $this->get_memcached_port();
 		// Bail if the port doesn't exists.
-		if ( ! $port ) {
+		if ( empty( $port ) ) {
 			return false;
 		}
 

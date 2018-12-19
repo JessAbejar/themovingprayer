@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       SG Optimizer
  * Description:       This plugin will link your WordPress application with all the performance optimizations provided by SiteGround
- * Version:           5.0.7
+ * Version:           5.0.9
  * Author:            SiteGround
  * Text Domain:       sg-cachepress
  * Domain Path:       /languages
@@ -19,6 +19,8 @@
 namespace SiteGround_Optimizer;
 
 use SiteGround_Optimizer\Helper\Helper;
+use SiteGround_Optimizer\Activator\Activator;
+use SiteGround_Optimizer\Deactivator\Deactivator;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -54,6 +56,9 @@ if ( ! defined( __NAMESPACE__ . '\URL' ) ) {
 }
 
 require_once( \SiteGround_Optimizer\DIR . '/vendor/autoload.php' );
+
+register_activation_hook( __FILE__, array( new Activator(), 'activate' ) );
+register_deactivation_hook( __FILE__, array( new Deactivator(), 'deactivate' ) );
 
 // Initialize helper.
 global $siteground_optimizer_helper;

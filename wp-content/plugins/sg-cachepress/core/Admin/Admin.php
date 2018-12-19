@@ -223,7 +223,8 @@ class Admin {
 		if (
 			! is_admin() ||
 			0 === $show_notice ||
-			$this->is_optimizer_page()
+			$this->is_optimizer_page() ||
+			! current_user_can( 'administrator' )
 		) {
 			return;
 		}

@@ -68,7 +68,10 @@ class Rest_Helper {
 	public function optimize_images() {
 		$this->images_optimizer->initialize();
 
-		wp_send_json_success();
+		wp_send_json_success( array(
+			'image_optimization_status'  => 0,
+			'image_optimization_stopped' => 0,
+		) );
 	}
 
 	/**
@@ -374,14 +377,42 @@ class Rest_Helper {
 	}
 
 	/**
+	 * Stops images optimization
+	 *
+	 * @since  5.0.8
+	 */
+	public function stop_images_optimization() {
+		// Clear the scheduled cron after the optimization is completed.
+		wp_clear_scheduled_hook( 'siteground_optimizer_start_image_optimization_cron' );
+
+		// Update the status to finished.
+		update_option( 'siteground_optimizer_image_optimization_completed', 1, false );
+		update_option( 'siteground_optimizer_image_optimization_status', 1, false );
+		update_option( 'siteground_optimizer_image_optimization_stopped', 1, false );
+
+		// Delete the lock.
+		delete_option( 'siteground_optimizer_image_optimization_lock' );
+
+		wp_send_json_success(
+			array(
+				'image_optimization_status'   => 1,
+				'image_optimization_stopped'  => 1,
+				'has_images_for_optimization' => $this->options->check_for_unoptimized_images(),
+			)
+		);
+	}
+
+	/**
 	 * Return the status of current compatibility check.
 	 *
 	 * @since  5.0.0
 	 */
 	public function check_image_optimizing_status() {
+		$status = (int) get_option( 'siteground_optimizer_image_optimization_completed', 0 );
 		wp_send_json_success(
 			array(
-				'image_optimization_status' => (int) get_option( 'siteground_optimizer_image_optimization_completed', 0 ),
+				'image_optimization_status'   => $status,
+				'has_images_for_optimization' => $this->options->check_for_unoptimized_images(),
 			)
 		);
 	}

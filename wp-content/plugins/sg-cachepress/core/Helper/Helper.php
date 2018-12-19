@@ -1,6 +1,7 @@
 <?php
 namespace SiteGround_Optimizer\Helper;
 
+use SiteGround_Optimizer;
 use SiteGround_Optimizer\Admin\Admin;
 use SiteGround_Optimizer\Rest\Rest;
 use SiteGround_Optimizer\Supercacher\Supercacher;
@@ -26,6 +27,8 @@ class Helper {
 		add_action( 'init', array( new Install_Service(), 'install' ) );
 		add_action( 'plugins_loaded', array( $this, 'is_plugin_installed' ) );
 		add_action( 'init', array( $this, 'hide_warnings_in_rest_api' ) );
+
+		set_error_handler( array( $this, 'error_handler' ) );
 
 		// Run the plugin functionality.
 		$this->run();
@@ -195,4 +198,35 @@ class Helper {
 		return 0 === strpos( $current_url['path'], $rest_url['path'], 0 );
 	}
 
+	/**
+	 * Our custom error handler
+	 *
+	 * @since 5.0.8
+	 *
+	 * @param int    $errno        The first parameter, errno, contains the level of the error raised.
+	 * @param string $errstr    The second parameter, errstr, contains the error message.
+	 * @param string $errfile   The third parameter is optional, errfile, which contains the
+	 *                          filename that the error was raised in.
+	 * @param int    $errline      The fourth parameter is optional, errline, which contains the line
+	 *                             number the error was raised at.
+	 * @param array  $errcontext The fifth parameter is optional, errcontext that contains an array
+	 *                           of every variable that existed in the scope the error was triggered
+	 *                           in. User error handler must not modify error context.
+	 * @return bool             True if error is within /plugins, false otherwise.
+	 */
+	public function error_handler( $errno, $errstr, $errfile, $errline, $errcontext = array() ) {
+		// Path to error file.
+		$error_file = str_replace( '\\', '/', $errfile );
+
+		// Path to plugins.
+		$vendor = str_replace( '\\', '/', SiteGround_Optimizer\DIR . '/vendor' );
+
+		// Do nothing for errors inside of the plugins directory.
+		if ( strpos( $error_file, $vendor ) !== false ) {
+			return true;
+		}
+
+		// Default error handler otherwise.
+		return false;
+	}
 }

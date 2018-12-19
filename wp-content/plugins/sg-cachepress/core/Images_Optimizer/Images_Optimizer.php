@@ -23,7 +23,7 @@ class Images_Optimizer {
 	 * @since 5.0.0
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_nopriv_siteground_optimizer_start_image_optimization', array( $this, 'start_optimization' ) );
+		add_action( 'wp_ajax_siteground_optimizer_start_image_optimization', array( $this, 'start_optimization' ) );
 		add_action( 'siteground_optimizer_start_image_optimization_cron', array( $this, 'start_optimization' ) );
 
 		// Optimize newly uploaded images.
@@ -44,16 +44,25 @@ class Images_Optimizer {
 		// Reset the status.
 		update_option( 'siteground_optimizer_image_optimization_completed', 0, false );
 		update_option( 'siteground_optimizer_image_optimization_status', 0, false );
+		update_option( 'siteground_optimizer_image_optimization_stopped', 0, false );
+
 		// Fork the process in background.
 		$args = array(
-			'timeout'  => 0.01,
-			'blocking' => true,
+			'timeout'   => 0.01,
+			'blocking'  => false,
+			'cookies'   => $_COOKIE,
+			'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
 		);
 
 		$response = wp_remote_post(
 			add_query_arg( 'action', 'siteground_optimizer_start_image_optimization', admin_url( 'admin-ajax.php' ) ),
 			$args
 		);
+
+		// Return the error message if the request failed.
+		if ( is_wp_error( $response ) ) {
+			error_log( 'Image optimization start failed: ' . $response->get_error_message() );
+		}
 
 	}
 
@@ -110,13 +119,13 @@ class Images_Optimizer {
 
 		/**
 		 * Allow users to change the default timeout.
-		 * On SiteGround servers the default timeout is 180 seconds
+		 * On SiteGround servers the default timeout is 120 seconds
 		 *
 		 * @since 5.0.0
 		 *
 		 * @param int $timeout The timeout in seconds.
 		 */
-		$timeout = apply_filters( 'siteground_optimizer_image_optimization_timeout', 180 );
+		$timeout = apply_filters( 'siteground_optimizer_image_optimization_timeout', 120 );
 
 		// Try to lock the process if there is a timeout.
 		if ( false === $this->maybe_lock( $timeout ) ) {
@@ -173,6 +182,7 @@ class Images_Optimizer {
 		// Update the status to finished.
 		update_option( 'siteground_optimizer_image_optimization_completed', 1, false );
 		update_option( 'siteground_optimizer_image_optimization_status', 1, false );
+		update_option( 'siteground_optimizer_image_optimization_stopped', 0, false );
 
 		// Delete the lock.
 		delete_option( 'siteground_optimizer_image_optimization_lock' );

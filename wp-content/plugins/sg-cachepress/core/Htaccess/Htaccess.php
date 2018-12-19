@@ -53,11 +53,12 @@ class Htaccess {
 		'browser-caching' => array(
 			'enabled'  => '/\#\s+Leverage Browser Caching by SG-Optimizer/si',
 			'disabled' => '/\#\s+Leverage Browser Caching by SG-Optimizer(.+?)\#\s+END\s+LBC\n/ims',
-			'disable_all' => '/\#\s+Leverage Browser Caching by SG-Optimizer(.+?)\#\s+END\s+LBC\n|<IfModule mod_expires\.c>(.*?\n?)<\/IfModule>/ims',
+			'disable_all' => '/\#\s+Leverage Browser Caching by SG-Optimizer(.+?)\#\s+END\s+LBC\n|<IfModule mod_expires\.c>(.*?\n?)(<\/IfModule>\n\s)?<\/IfModule>/ims',
 		),
 		'ssl'           => array(
-			'enabled'  => '/HTTPS forced by SG-Optimizer/si',
-			'disabled' => '/\#\s+HTTPS\s+forced\s+by\s+SG-Optimizer(.+?)\#\s+END\s+HTTPS\n/ims',
+			'enabled'     => '/HTTPS forced by SG-Optimizer/si',
+			'disabled'    => '/\#\s+HTTPS\s+forced\s+by\s+SG-Optimizer(.+?)\#\s+END\s+HTTPS(\n)?/ims',
+			'disable_all' => '/\#\s+HTTPS\s+forced\s+by\s+SG-Optimizer(.+?)\#\s+END\s+HTTPS(\n)?/ims',
 		),
 		'php'           => array(
 			'enabled'  => '/START PHP VERSION CHANGE forced by SG Optimizer/si',
@@ -103,7 +104,7 @@ class Htaccess {
 		$base              = parse_url( $slashed_home, PHP_URL_PATH );
 		$document_root_fix = str_replace( '\\', '/', realpath( $_SERVER['DOCUMENT_ROOT'] ) );
 		$abspath_fix       = str_replace( '\\', '/', ABSPATH );
-		$home_path         = 0 === strpos( $abspath_fix, $document_root_fix ) ? $document_root_fix . $base : get_home_path();
+		$home_path         = ! empty( $document_root_fix ) && 0 === strpos( $abspath_fix, $document_root_fix ) ? $document_root_fix . $base : get_home_path();
 
 		// Build the filepath.
 		$filepath = $home_path . '.htaccess';

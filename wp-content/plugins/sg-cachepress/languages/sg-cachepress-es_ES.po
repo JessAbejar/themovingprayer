@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SG Optimizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 09:20+0000\n"
-"PO-Revision-Date: 2018-12-04 09:21+0000\n"
+"POT-Creation-Date: 2018-12-10 07:11+0000\n"
+"PO-Revision-Date: 2018-12-10 07:12+0000\n"
 "Last-Translator: admin <stanimir.k.stoyanov@gmail.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -228,13 +228,27 @@ msgstr ""
 msgid "Test"
 msgstr "Test"
 
+#. src-js/components/tabs/environment-optimization/index.jsx:157
+#: src-js/sg-cachepress-strings.php:37 core/Options/Options.php:337
+msgid "GZIP Compression"
+msgstr "Compresión GZIP"
+
+#. src-js/components/tabs/environment-optimization/index.jsx:213
+#: src-js/sg-cachepress-strings.php:38
+msgid ""
+"Enables a compression of the content that's delivered to your visitors "
+"browsers improving the network loading times of your site."
+msgstr ""
+"Activar la compresión del contenido que se envia a los navegadores de los "
+"visitantes mejorando los tiempo de carga de tu web."
+
 #. src-js/components/tabs/supercacher/index.jsx:426
-#: src-js/sg-cachepress-strings.php:37
+#: src-js/sg-cachepress-strings.php:39
 msgid "Memcached"
 msgstr "Memcached"
 
 #. src-js/components/tabs/supercacher/index.jsx:454
-#: src-js/sg-cachepress-strings.php:38
+#: src-js/sg-cachepress-strings.php:40
 msgid ""
 "Powerful object caching for your site. It stores frequently executed queries "
 "to your databases and reuses them for better performance."
@@ -242,20 +256,6 @@ msgstr ""
 "Herramienta de cache de objetos para tu web. Almacena las consultas "
 "ejecutadas con frecuencia en tu bases de datos y las reutiliza para un mejor "
 "rendimiento."
-
-#. src-js/components/tabs/environment-optimization/index.jsx:157
-#: src-js/sg-cachepress-strings.php:39 core/Options/Options.php:337
-msgid "GZIP Compression"
-msgstr "Compresión GZIP"
-
-#. src-js/components/tabs/environment-optimization/index.jsx:213
-#: src-js/sg-cachepress-strings.php:40
-msgid ""
-"Enables a compression of the content that's delivered to your visitors "
-"browsers improving the network loading times of your site."
-msgstr ""
-"Activar la compresión del contenido que se envia a los navegadores de los "
-"visitantes mejorando los tiempo de carga de tu web."
 
 #. src-js/components/php-checker/index.jsx:341
 #. src-js/components/tabs/multisite-control/index.jsx:226
@@ -307,28 +307,28 @@ msgstr ""
 msgid "Minify JavaScript Files"
 msgstr "Minimizar archivos JavaScript"
 
-#. src-js/components/tabs/frontend-optimization/index.jsx:65
-#: src-js/sg-cachepress-strings.php:48 src-js/sg-cachepress-strings.php:98
+#. src-js/components/tabs/frontend-optimization/index.jsx:74
+#: src-js/sg-cachepress-strings.php:48
 msgid ""
-"Combine and minify your JavaScript files in order to reduce their size, "
-"improve cachability, and reduce the number of requests to the server."
+"Minify your JavaScript files in order to reduce their size, improve "
+"cachability, and reduce the number of requests to the server."
 msgstr ""
-"Combina y minimiza tus archivos de JavaScript para reducir su tamaño, "
-"mejorar el caché y reducir el número de solicitudes en el servidor."
+"Мinimiza tus archivos de JavaScript para reducir su tamaño, mejorar el caché "
+"y reducir el número de solicitudes en el servidor."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:68
 #: src-js/sg-cachepress-strings.php:49 src-js/sg-cachepress-strings.php:99
 msgid "Minify CSS Files"
 msgstr "Minimizar archivos CSS"
 
-#. src-js/components/tabs/frontend-optimization/index.jsx:99
-#: src-js/sg-cachepress-strings.php:50 src-js/sg-cachepress-strings.php:100
+#. src-js/components/tabs/frontend-optimization/index.jsx:112
+#: src-js/sg-cachepress-strings.php:50
 msgid ""
-"Combine and minify your CSS files in order to reduce their size, improve "
-"cachability, and reduce the number of requests to the server."
+"Minify your CSS files in order to reduce their size, improve cachability, "
+"and reduce the number of requests to the server."
 msgstr ""
-"Combina y minimiza tus archivos CSS para reducir su tamaño, mejorar el caché "
-"y reducir el número de solicitudes en el servidor."
+"Мinimiza tus archivos CSS para reducir su tamaño, mejorar el caché y reducir "
+"el número de solicitudes en el servidor."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:102
 #: src-js/sg-cachepress-strings.php:51 src-js/sg-cachepress-strings.php:101
@@ -391,17 +391,16 @@ msgstr ""
 msgid "Start Optimization"
 msgstr "Comenzar Optimización"
 
-#. src-js/components/php-checker/index.jsx:205
-#. src-js/components/tabs/image-optimization/index.jsx:83
+#. src-js/components/tabs/image-optimization/index.jsx:131
+#. src-js/containers/php-checker/index.jsx:212
 #: src-js/sg-cachepress-strings.php:60 src-js/sg-cachepress-strings.php:131
 msgid ""
 "We've detected that the WordPress cronjob functionality is not working. "
 "Please, enable it following the instructions in {{link}}this article{{/link}}"
-" and refresh this page."
+" and refresh this page. If you’re using a real cron job, you can {{link2}}"
+"ignore this message{{/link2}} at your own risk. Note, that in this case, "
+"those operations may take longer than usual to complete."
 msgstr ""
-"Hemos detectado que la funcionalidad cronjob de WordPress no está "
-"funcionando. Por favor, actívalo con las instrucciones en {{link}}this "
-"article{{/link}} y refresca esta página."
 
 #. src-js/components/php-checker/index.jsx:223
 #. src-js/components/tabs/multisite-control/index.jsx:547
@@ -591,6 +590,24 @@ msgstr "OPTIMIZACIÓN DE ENTORNO"
 msgid "FRONTEND OPTIMIZATION"
 msgstr "OPTIMIZACIÓN FRONT-END"
 
+#. src-js/components/tabs/frontend-optimization/index.jsx:65
+#: src-js/sg-cachepress-strings.php:98
+msgid ""
+"Combine and minify your JavaScript files in order to reduce their size, "
+"improve cachability, and reduce the number of requests to the server."
+msgstr ""
+"Combina y minimiza tus archivos de JavaScript para reducir su tamaño, "
+"mejorar el caché y reducir el número de solicitudes en el servidor."
+
+#. src-js/components/tabs/frontend-optimization/index.jsx:99
+#: src-js/sg-cachepress-strings.php:100
+msgid ""
+"Combine and minify your CSS files in order to reduce their size, improve "
+"cachability, and reduce the number of requests to the server."
+msgstr ""
+"Combina y minimiza tus archivos CSS para reducir su tamaño, mejorar el caché "
+"y reducir el número de solicitudes en el servidor."
+
 #. src-js/components/tabs/sites-control/index.jsx:395
 #: src-js/sg-cachepress-strings.php:105
 msgid "IMAGE OPTIMIZATION"
@@ -608,8 +625,8 @@ msgstr "Memcached parado. Por favor, actívalo en el cPanel."
 
 #. Page title.
 #. Name of the plugin
-#: src-js/sg-cachepress-strings.php:119 core/Admin/Admin.php:228
-#: core/Admin/Admin.php:229
+#: src-js/sg-cachepress-strings.php:119 core/Admin/Admin.php:249
+#: core/Admin/Admin.php:250
 msgid "SG Optimizer"
 msgstr "SG Optimizer"
 
@@ -818,11 +835,11 @@ msgstr "¡No se puede habilitar %s"
 msgid "Could not disable %s"
 msgstr "¡No se pudo deshabilitar %s"
 
-#: core/Admin/Admin_Bar.php:36 core/Admin/Admin.php:282
+#: core/Admin/Admin_Bar.php:36 core/Admin/Admin.php:303
 msgid "Purge SG Cache"
 msgstr "Purgar SG Cache"
 
-#: core/Admin/Admin.php:211
+#: core/Admin/Admin.php:232
 msgid ""
 "SG Optimizer has detected that Memcached was turned off. If you want to use "
 "it, please enable it from cPanel first."
@@ -830,7 +847,7 @@ msgstr ""
 "SG Optimizer ha detectado que Memcached fue desactivado. Si quieres usarlo, "
 "por favor actívalo primero desde el cPanel."
 
-#: core/Modules/Modules.php:409
+#: core/Modules/Modules.php:444
 #, php-format
 msgid ""
 "<strong>Important message from SG Optimizer plugin</strong>: We have "
@@ -845,22 +862,18 @@ msgstr ""
 "nostro plugin:  <strong>%2$s</strong>. Se desideri abilitarle, procedi dalla "
 "pagina di configurazione di SG Optimizer."
 
-#: core/Modules/Modules.php:440
+#: core/Modules/Modules.php:475
 #, php-format
 msgid ""
 "<strong>Important warning from SG Optimizer plugin</strong>: We have "
 "detected that there is duplicate functionality with other plugins installed "
-"on your site: <strong>%s</strong>. Please note that having two caching "
-"plugins may actually decrease your site's performance and hurt your pages "
-"loading times so we recommend you to leave only one of the plugins active."
+"on your site: <strong>%s</strong>. Please note that having two plugins with "
+"the same functionality may actually decrease your site's performance and "
+"hurt your pages loading times so we recommend you to leave only one of the "
+"plugins active."
 msgstr ""
-"<strong>Avviso importante dal plugin SG Optimizer</strong>: Abbiamo rilevato "
-"che esistono funzionalità duplicate con altri plugin installati sul tuo sito:"
-"  <strong>%s</strong>. L’utilizzo di due plugin di cache potrebbe in realtà "
-"ridurre le prestazioni del tuo sito e danneggiare i tempi di caricamento "
-"delle pagine, pertanto ti consigliamo di lasciare attivo solo uno dei plugin."
 
-#: core/Rest/Rest_Helper.php:205
+#: core/Rest/Rest_Helper.php:204
 msgid ""
 "SG Optiimzer was unable to connect to the Memcached server and it was "
 "disabled. Please, check your cPanel and turn it on if disabled."
@@ -868,27 +881,27 @@ msgstr ""
 "SG Optimizer no puede conectarse con el servidor Memcached y fue desactivado."
 " Por favor, comprueba tu cPanel y actívalo si estaba desactivado."
 
-#: core/Rest/Rest_Helper.php:216
+#: core/Rest/Rest_Helper.php:215
 msgid "Memcached Enabled"
 msgstr "Memcached Activado"
 
-#: core/Rest/Rest_Helper.php:224
+#: core/Rest/Rest_Helper.php:223
 msgid "Could Not Enable Memcache!"
 msgstr "¡No se puede habilitar el Memcache!"
 
-#: core/Rest/Rest_Helper.php:242 core/Rest/Rest_Helper.php:254
+#: core/Rest/Rest_Helper.php:241 core/Rest/Rest_Helper.php:253
 msgid "Memcache Disabled!"
 msgstr "¡Memcache Desactivado!"
 
-#: core/Rest/Rest_Helper.php:262
+#: core/Rest/Rest_Helper.php:261
 msgid "Could Not Disable Memcache!"
 msgstr "¡No se pudo deshabilitar el Memcache!"
 
-#: core/Rest/Rest_Helper.php:353
+#: core/Rest/Rest_Helper.php:354
 msgid "PHP Version has been changed"
 msgstr "La versión PHP ha sido cambiada"
 
-#: core/Rest/Rest_Helper.php:353
+#: core/Rest/Rest_Helper.php:354
 msgid "Cannot change PHP Version"
 msgstr "No se puede cambiar la versión PHP"
 

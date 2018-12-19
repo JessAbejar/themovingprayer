@@ -1,19 +1,13 @@
 <?php
 /*
-Plugin Name: Memcached Redux
-Description: The real Memcached (not Memcache) backend for the WP Object Cache.
-Version: 0.1.6
-Plugin URI: http://wordpress.org/extend/plugins/memcached-redux/
-Author: Scott Taylor - uses code from Ryan Boren, Denis de Bernardy, Matt Martz, Mike Schroder, Mika Epstein
+Plugin Name: Memcached
+Description: Memcached Dropin for SGO
+Version: 1.0.0
 
 Install this file to wp-content/object-cache.php
 */
-
-if ( !defined( 'WP_CACHE_KEY_SALT' ) ) {
-	define( 'WP_CACHE_KEY_SALT', 'SG_OPTIMIZER_CACHE_KEY_SALT' );
-}
-
-if ( class_exists( 'Memcached' ) ):
+if ( class_exists( 'Memcached' ) )
+{
 
 function wp_cache_add( $key, $data, $group = '', $expire = 0 ) {
 	global $wp_object_cache;
@@ -125,7 +119,12 @@ class WP_Object_Cache {
 
 	var $cache = array();
 	var $mc = array();
-	var $stats = array();
+	var $stats = array(
+		'add'       => 0,
+		'delete'    => 0,
+		'get'       => 0,
+		'get_multi' => 0,
+	);
 	var $group_ops = array();
 
 	var $cache_enabled = true;
@@ -149,7 +148,7 @@ class WP_Object_Cache {
 		$result = $mc->add( $key, $data, $expire );
 
 		if ( false !== $result ) {
-			++$this->stats['add'];
+			@ ++$this->stats['add'];
 			$this->group_ops[$group][] = "add $id";
 			$this->cache[$key] = $data;
 		}
@@ -203,11 +202,11 @@ class WP_Object_Cache {
 
 		$result = $mc->delete( $key );
 
-		if ( false !== $result ) {
-			++$this->stats['delete'];
-			$this->group_ops[$group][] = "delete $id";
+		@ ++$this->stats['delete'];
+		$this->group_ops[$group][] = "delete $id";
+
+		if ( false !== $result )
 			unset( $this->cache[$key] );
-		}
 
 		return $result;
 	}
@@ -227,9 +226,9 @@ class WP_Object_Cache {
 		$key = $this->key( $id, $group );
 		$mc =& $this->get_mc( $group );
 		$found = false;
-
+		
 		if ( isset( $this->cache[$key] ) && ( !$force || in_array( $group, $this->no_mc_groups ) ) ) {
-			$found = true;
+		    $found = true;
 			if ( is_object( $this->cache[$key] ) )
 				$value = clone $this->cache[$key];
 			else
@@ -239,7 +238,7 @@ class WP_Object_Cache {
 		} else {
 			$value = $mc->get( $key );
 			if ( empty( $value ) || ( is_integer( $value ) && -1 == $value ) ){
-				$value = false;
+			    $value = false;
 				$found = $mc->getResultCode() !== Memcached::RES_NOTFOUND;
 			} else {
 				$found = true;
@@ -247,12 +246,8 @@ class WP_Object_Cache {
 			$this->cache[$key] = $value;
 		}
 
-		if ( $found ) {
-			++$this->stats['get'];
-			$this->group_ops[$group][] = "get $id";
-		} else {
-			++$this->stats['miss'];
-		}
+		@ ++$this->stats['get'];
+		$this->group_ops[$group][] = "get $id";
 
 		if ( 'checkthedatabaseplease' === $value ) {
 			unset( $this->cache[$key] );
@@ -295,7 +290,7 @@ class WP_Object_Cache {
 			$return = array_merge( $return, $joined );
 		}
 
-		++$this->stats['get_multi'];
+		@ ++$this->stats['get_multi'];
 		$this->group_ops[$group][] = "get_multi $id";
 		$this->cache = array_merge( $this->cache, $return );
 		return array_values( $return );
@@ -310,7 +305,10 @@ class WP_Object_Cache {
 		else
 			$prefix = $this->blog_prefix;
 
-		return preg_replace( '/\s+/', '', WP_CACHE_KEY_SALT . "$prefix$group:$key" );
+		if ( ! in_array( $group, $this->global_groups ) && defined( 'ICL_LANGUAGE_CODE' ) )
+			$prefix .= ICL_LANGUAGE_CODE . ':';
+
+		return preg_replace( '/\s+/', '', substr(md5(dirname(__FILE__)),7) . "$prefix$group:$key" );
 	}
 
 	function replace( $id, $data, $group = 'default', $expire = 0 ) {
@@ -426,19 +424,10 @@ class WP_Object_Cache {
 	}
 
 	function __construct() {
-
-		$this->stats = array(
-			'get'        => 0,
-			'get_multi'  => 0,
-			'add'        => 0,
-			'set'        => 0,
-			'delete'     => 0,
-			'miss'       => 0,
-		);
 		
 		$memcached_servers = array(
-			'default' => array(
-				'@changedefaults@',
+					'default' => array(
+					'@changedefaults@'
 			)
 		);
 
@@ -477,18 +466,7 @@ class WP_Object_Cache {
 		}
 
 		$this->cache_hits =& $this->stats['get'];
-		$this->cache_misses =& $this->stats['miss'];
+		$this->cache_misses =& $this->stats['add'];
 	}
 }
-else: // No Memcached
-
-	// In 3.7+, we can handle this smoothly
-	if ( function_exists( 'wp_using_ext_object_cache' ) ) {
-		wp_using_ext_object_cache( false );
-
-	// In earlier versions, there isn't a clean bail-out method.
-	} else {
-		wp_die( 'Memcached class not available.' );
-	}
-
-endif;
+}

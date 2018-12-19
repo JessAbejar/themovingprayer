@@ -45,6 +45,13 @@ class Rest {
 		);
 
 		register_rest_route(
+			self::REST_NAMESPACE, '/stop-images-optimization/', array(
+				'methods'  => 'GET',
+				'callback' => array( $this->helper, 'stop_images_optimization' ),
+			)
+		);
+
+		register_rest_route(
 			self::REST_NAMESPACE, '/check-image-optimizing-status/', array(
 				'methods'  => 'GET',
 				'callback' => array( $this->helper, 'check_image_optimizing_status' ),
