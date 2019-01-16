@@ -19,7 +19,7 @@ use SiteGround_Optimizer\Supercacher\Supercacher;
  */
 class Cli_Purge {
 	/**
-	 * Enable specific option for SG Optimizer plugin.
+	 * Purge all caches - static, dynamic, memcached and PHP opcache
 	 */
 	public function __invoke( $args, $assoc_args ) {
 		$this->supercacher = new Supercacher();
@@ -62,7 +62,7 @@ class Cli_Purge {
 	public function purge_memcached() {
 		$response = $this->supercacher->flush_memcache();
 
-		if ( true === $response ) {
+		if ( true == $response ) {
 			return \WP_CLI::success( 'Memcached Successfully Purged' );
 		}
 

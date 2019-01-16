@@ -101,6 +101,32 @@ Our plugin uses a cookie in order to function properly. It does not store person
 
 == Changelog ==
 
+= Version 5.0.13 =
+* Modified HTML minification to keep comments
+* Interface Improvements
+* Better input validation and sanitation for PHP Version check
+* Improved security
+
+= Version 5.0.12 =
+* Better cache purge for multisite
+* Surpress dynamic cache notices for localhost sites
+
+= Version 5.0.11 =
+* Improved handling of third party plugins causing issues with the compatibility checker functionality
+* Optimized WP-CLI commands for better performance
+* Better notice handling for Multisite and conflicting plugins
+
+= Version 5.0.10 =
+* Fixed issue with Mythemeshop themes
+* Fixed issues with exclude URL on update
+* Fixed issues with exclude URL on update
+* Exclude Lazy Load from AMP pages
+* Exclude Lazy Load from Backend pages
+* Fixed WPML problems
+* Fixed Beaver Builder issues
+* Fixed Spanish translations
+* Fixed incompatibility with JCH Optimize
+
 = Version 5.0.9 =
 * Fixed woocommerce bugs
 * Improved memcached flush

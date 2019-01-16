@@ -25,8 +25,6 @@ class Php_Checker {
 	public function __construct() {
 		add_action( 'wp_ajax_siteground_optimizer_start_test', array( $this, 'start' ) );
 		add_action( 'siteground_optimizer_start_test_cron', array( $this, 'start' ) );
-
-		$this->codesniffer_cli  = new \PHP_CodeSniffer_CLI();
 	}
 
 	/**
@@ -196,7 +194,7 @@ class Php_Checker {
 			$count = (int) get_post_meta( $directory->ID, 'count', true );
 
 			if ( $count > 1 ) {
-				wp_delete_post( $id );
+				wp_delete_post( $directory->ID );
 				// $this->delete_dir_and_update_progress( $directory->ID );
 				continue;
 			}
@@ -428,9 +426,11 @@ class Php_Checker {
 	public function process_dir( $dir, $php_version ) {
 		call_user_func( array( 'PHPCompatibility\PHPCSHelper', 'setConfigData' ), 'testVersion', $php_version, true );
 
+		$codesniffer_cli = new \PHP_CodeSniffer_CLI();
+
 		ob_start();
 
-		$this->codesniffer_cli->process(
+		$codesniffer_cli->process(
 			array(
 				'files'           => $dir,
 				'testVersion'     => $php_version,

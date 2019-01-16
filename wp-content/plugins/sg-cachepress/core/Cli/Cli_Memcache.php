@@ -20,7 +20,7 @@ use SiteGround_Optimizer\Options\Options;
  */
 class Cli_Memcache {
 	/**
-	 * Enable specific option for SG Optimizer plugin.
+	 * Allow you to enable/disable memcached.
 	 *
 	 * ## OPTIONS
 	 *

@@ -22,8 +22,10 @@ class Memcache {
 	 * @since 5.0.0
 	 */
 	public function __construct() {
-		add_action( 'wp_login', array( $this, 'status_healthcheck' ) );
-		add_action( 'plugins_loaded', array( $this, 'run' ) );
+		if ( ! defined( 'WP_CLI' ) ) {
+			add_action( 'wp_login', array( $this, 'status_healthcheck' ) );
+			add_action( 'plugins_loaded', array( $this, 'run' ) );
+		}
 	}
 
 	/**
@@ -127,7 +129,7 @@ class Memcache {
 	 */
 	protected function get_port_file_contents() {
 		// Get the account name.
-		$account_name = get_current_user();
+		$account_name = defined( 'WP_CLI' ) ? $_SERVER['USER'] : get_current_user();
 
 		// Generate the port file path.
 		$port_file_path = "/home/{$account_name}/.SGCache/cache_status";

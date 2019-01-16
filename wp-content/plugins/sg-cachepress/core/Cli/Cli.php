@@ -4,8 +4,7 @@ namespace SiteGround_Optimizer\Cli;
 /**
  * SG CachePress Cli main plugin class
  */
-class Cli {
-
+class Cli {	
 	/**
 	 * Create a {@link Cli} instance.
 	 *

@@ -181,7 +181,7 @@ class Minify_Html {
     protected $_placeholders = array();
     protected $_cssMinifier = null;
     protected $_jsMinifier = null;
-    protected $_keepComments = false;
+    protected $_keepComments = true;
 
     protected function _outsideTagCB($m)
     {

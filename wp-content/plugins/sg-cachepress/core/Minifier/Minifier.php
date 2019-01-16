@@ -188,7 +188,7 @@ class Minifier {
 				stripos( $wp_scripts->registered[ $handle ]->src, '.min.js' ) !== false || // If the file is minified already.
 				false === $wp_scripts->registered[ $handle ]->src || // If the source is empty.
 				in_array( $wp_scripts->registered[ $handle ]->src, $this->js_ignore_list ) || // If the file is ignored.
-				strpos( home_url( '/' ), parse_url( $wp_scripts->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
+				strpos( Helper::get_home_url(), parse_url( $wp_scripts->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
 			) {
 				continue;
 			}
@@ -204,7 +204,7 @@ class Minifier {
 			// Check that everythign with minified file is ok.
 			if ( $is_minified_file_ok ) {
 				// Replace the script src with the minified version.
-				$wp_scripts->registered[ $handle ]->src = str_replace( ABSPATH, home_url( '/' ), $filename );
+				$wp_scripts->registered[ $handle ]->src = str_replace( ABSPATH, Helper::get_home_url(), $filename );
 			}
 		}
 	}
@@ -219,21 +219,21 @@ class Minifier {
 	 * @return string           Original filepath.
 	 */
 	public function get_original_filepath( $original ) {
-		$home_url = home_url( '/' );
+		$home_url = Helper::get_home_url();
 		// Get the home_url from database. Some plugins like qtranslate for example,
 		// modify the home_url, which result to wrong replacement with ABSPATH for resources loaded via link.
 		// Very ugly way to handle resources without protocol.
 		$result = parse_url( $home_url );
 
-		$replace = $result['scheme'] . '://' . $result['host'];
+		$replace = $result['scheme'] . '://';
 
-		preg_replace( '~^https?:\/\/|^\/\/~', $replace, $original );
+		$new = preg_replace( '~^https?:\/\/|^\/\/~', $replace, $original );
 
 		// Get the filepath to original file.
-		if ( strpos( $original, $home_url ) !== false ) {
-			$original_filepath = str_replace( $home_url, ABSPATH, $original );
+		if ( strpos( $new, $home_url ) !== false ) {
+			$original_filepath = str_replace( $home_url, ABSPATH, $new );
 		} else {
-			$original_filepath = untrailingslashit( ABSPATH ) . $original;
+			$original_filepath = untrailingslashit( ABSPATH ) . $new;
 		}
 
 		return $original_filepath;
@@ -252,8 +252,8 @@ class Minifier {
 	 */
 	private function check_and_create_file( $new_file_path, $original_filepath ) {
 		// First remove the query strings.
-		$original_filepath = Front_End_Optimization::remove_query_strings( $original_filepath );
-		$new_file_path     = Front_End_Optimization::remove_query_strings( $new_file_path );
+		$original_filepath = Front_End_Optimization::remove_query_strings( preg_replace( '/\?.*/', '', $original_filepath ) );
+		$new_file_path     = Front_End_Optimization::remove_query_strings( preg_replace( '/\?.*/', '', $new_file_path ) );
 
 		// Gets file modification time.
 		$original_file_timestamp = @filemtime( $original_filepath );
@@ -316,7 +316,7 @@ class Minifier {
 			if (
 				stripos( $wp_styles->registered[ $handle ]->src, '.min.css' ) !== false || // If the file is minified already.
 				false === $wp_styles->registered[ $handle ]->src || // If the source is empty.
-				strpos( home_url( '/' ), parse_url( $wp_styles->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
+				strpos( Helper::get_home_url(), parse_url( $wp_styles->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
 			) {
 				continue;
 			}
@@ -332,7 +332,7 @@ class Minifier {
 			// Check that everythign with minified file is ok.
 			if ( $is_minified_file_ok ) {
 				// Replace the script src with the minified version.
-				$wp_styles->registered[ $handle ]->src = str_replace( ABSPATH, home_url( '/' ), $filename );
+				$wp_styles->registered[ $handle ]->src = str_replace( ABSPATH, Helper::get_home_url(), $filename );
 			}
 		}
 	}

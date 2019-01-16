@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       SG Optimizer
  * Description:       This plugin will link your WordPress application with all the performance optimizations provided by SiteGround
- * Version:           5.0.9
+ * Version:           5.0.13
  * Author:            SiteGround
  * Text Domain:       sg-cachepress
  * Domain Path:       /languages
@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 // Define version constant.
 if ( ! defined( __NAMESPACE__ . '\VERSION' ) ) {
-	define( __NAMESPACE__ . '\VERSION', '1.0.0' );
+	define( __NAMESPACE__ . '\VERSION', '5.0.13' );
 }
 
 // Define slug constant.
@@ -44,15 +44,17 @@ if ( ! defined( __NAMESPACE__ . '\DIR' ) ) {
 
 // Define root URL.
 if ( ! defined( __NAMESPACE__ . '\URL' ) ) {
-	$url = \trailingslashit( DIR );
+	$root_url = \trailingslashit( DIR );
 
 	// Sanitize directory separator on Windows.
-	$url = str_replace( '\\', '/', $url );
+	$root_url = str_replace( '\\', '/', $root_url );
 
 	$wp_plugin_dir = str_replace( '\\', '/', WP_PLUGIN_DIR );
-	$url = str_replace( $wp_plugin_dir, \plugins_url(), $url );
+	$root_url = str_replace( $wp_plugin_dir, \plugins_url(), $root_url );
 
-	define( __NAMESPACE__ . '\URL', \untrailingslashit( $url ) );
+	define( __NAMESPACE__ . '\URL', \untrailingslashit( $root_url ) );
+
+	unset( $root_url );
 }
 
 require_once( \SiteGround_Optimizer\DIR . '/vendor/autoload.php' );

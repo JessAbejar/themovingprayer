@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SG Optimizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-10 07:11+0000\n"
-"PO-Revision-Date: 2018-12-10 07:12+0000\n"
-"Last-Translator: admin <stanimir.k.stoyanov@gmail.com>\n"
+"POT-Creation-Date: 2019-01-10 08:32+0000\n"
+"PO-Revision-Date: 2019-01-10 08:39+0000\n"
+"Last-Translator: admin <adsdas@fsfsd.fsd>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
@@ -68,9 +68,9 @@ msgid ""
 "switch back the PHP version from your {{strong}}cPanel{{/strong}} > {{strong}"
 "}PHP Version Manager{{/strong}} tool."
 msgstr ""
-"Cambiar la versión de PHP puede hacer tu página web inutilizable. Si esto "
-"ocurriera, cambia la versión de PHP desde tu la herramienta {{strong}}"
-"cPanel{{/strong}} > {{strong}}PHP Version Manager{{/strong}}."
+"Cambiar la versión de PHP puede dejar tu web inutilizable. Si esto ocurriera,"
+" cambia la versión de PHP desde {{strong}}cPanel{{/strong}} > {{strong}}PHP "
+"Version Manager{{/strong}}."
 
 #. src-js/components/dialogs/ssl-dialog.jsx:23
 #: src-js/sg-cachepress-strings.php:13
@@ -80,7 +80,7 @@ msgid ""
 "rule in your .htaccess file, forcing all requests to go through encrypted "
 "connection."
 msgstr ""
-"Para forzar el HTTPS en tu página, actualizaremos automáticamente tu base de "
+"Para forzar el HTTPS en tu página actualizaremos automáticamente tu base de "
 "datos reemplazando todos los enlaces inseguros. Además de esto, añadiremos "
 "una regla en tu archivo .htaccess, forzando todas las peticiones a través de "
 "una conexión encriptada."
@@ -99,7 +99,7 @@ msgid ""
 "{{strong}}www.site.com/parent-page/sub-page{{/strong}} will exclude only "
 "that single URL."
 msgstr ""
-"{{strong}}www.site.com/pagina-madre/sub-pagina{{/strong}} excluirá solo la "
+"{{strong}}www.site.com/pagina-madre/sub-pagina{{/strong}} excluirá solo esa "
 "URL."
 
 #. src-js/components/dialogs/urls-dialog.jsx:38
@@ -109,7 +109,7 @@ msgid ""
 "of \"parent-page\"."
 msgstr ""
 "{{strong}}www.site.com/pagina-madre/*{{/strong}} será excluido de todas las "
-"sub-paginas de la “pagina-madre”."
+"sub-paginas de la “pagina-superior”."
 
 #. src-js/components/tabs/environment-optimization/index.jsx:216
 #: src-js/sg-cachepress-strings.php:18 core/Options/Options.php:338
@@ -126,19 +126,48 @@ msgstr ""
 "manteniendo el contenido estático un período más largo para un mejor "
 "funcionamiento del sitio web."
 
+#. src-js/components/tabs/environment-optimization/index.jsx:157
+#: src-js/sg-cachepress-strings.php:20 core/Options/Options.php:337
+msgid "GZIP Compression"
+msgstr "Compresión GZIP"
+
+#. src-js/components/tabs/environment-optimization/index.jsx:213
+#: src-js/sg-cachepress-strings.php:21
+msgid ""
+"Enables a compression of the content that's delivered to your visitors "
+"browsers improving the network loading times of your site."
+msgstr ""
+"Activar la compresión del contenido que se envia a los navegadores de los "
+"visitantes mejorando los tiempo de carga de tu web."
+
+#. src-js/components/tabs/supercacher/index.jsx:426
+#: src-js/sg-cachepress-strings.php:22
+msgid "Memcached"
+msgstr "Memcached"
+
+#. src-js/components/tabs/supercacher/index.jsx:454
+#: src-js/sg-cachepress-strings.php:23
+msgid ""
+"Powerful object caching for your site. It stores frequently executed queries "
+"to your databases and reuses them for better performance."
+msgstr ""
+"Herramienta de cache de objetos para tu web. Almacena las consultas "
+"ejecutadas con frecuencia en tu bases de datos y las reutiliza para un mejor "
+"rendimiento."
+
 #. src-js/components/tabs/image-optimization/index.jsx:318
-#: src-js/sg-cachepress-strings.php:20
+#: src-js/sg-cachepress-strings.php:24
 msgid "This URL already exists in exclude list."
 msgstr "Esta URL ya existe en la lista de exclusión."
 
 #. src-js/components/tabs/multisite-control/index.jsx:277
 #. src-js/components/tabs/supercacher/index.jsx:160
-#: src-js/sg-cachepress-strings.php:21 src-js/sg-cachepress-strings.php:85
+#: src-js/sg-cachepress-strings.php:25 src-js/sg-cachepress-strings.php:87
 msgid "Dynamic Caching"
 msgstr "Almacenamiento en caché dinámico"
 
 #. src-js/components/tabs/supercacher/index.jsx:218
-#: src-js/sg-cachepress-strings.php:22
+#: src-js/sg-cachepress-strings.php:26
 msgid ""
 "Store your content in the server’s memory for a faster access with this full-"
 "page caching solution powered by NGINX."
@@ -147,32 +176,32 @@ msgstr ""
 "con esta solución de página completa de caché por NGINX."
 
 #. src-js/components/tabs/supercacher/index.jsx:221
-#: src-js/sg-cachepress-strings.php:23
+#: src-js/sg-cachepress-strings.php:27
 msgid "Manual Cache Purge"
 msgstr "Vaciado manual de caché"
 
 #. src-js/components/tabs/supercacher/index.jsx:264
-#: src-js/sg-cachepress-strings.php:24
+#: src-js/sg-cachepress-strings.php:28
 msgid "Clear the Dynamic Cache for your entire website."
-msgstr "Vaciar la Caché Dinámica para toda la página web."
+msgstr "Vaciar la caché dinámica para toda la web."
 
 #. src-js/components/modules/dynamic-cache/index.jsx:234
-#: src-js/sg-cachepress-strings.php:25
+#: src-js/sg-cachepress-strings.php:29
 msgid "Purge Cache"
-msgstr "Purgar Caché"
+msgstr "Purgar caché"
 
 #. src-js/components/modules/dynamic-cache/index.jsx:247
-#: src-js/sg-cachepress-strings.php:26
+#: src-js/sg-cachepress-strings.php:30
 msgid "Purging ..."
 msgstr "Vaciando ..."
 
 #. src-js/components/tabs/supercacher/index.jsx:267
-#: src-js/sg-cachepress-strings.php:27 src-js/sg-cachepress-strings.php:87
+#: src-js/sg-cachepress-strings.php:31 src-js/sg-cachepress-strings.php:89
 msgid "Automatic Cache Purge"
-msgstr "Eliminación automática de Caché"
+msgstr "Eliminación automática de caché"
 
 #. src-js/components/tabs/supercacher/index.jsx:299
-#: src-js/sg-cachepress-strings.php:28 src-js/sg-cachepress-strings.php:88
+#: src-js/sg-cachepress-strings.php:32 src-js/sg-cachepress-strings.php:90
 msgid ""
 "Automatically perform a smart cache purge after every content modification."
 msgstr ""
@@ -180,17 +209,17 @@ msgstr ""
 "modificación de contenido."
 
 #. src-js/components/tabs/supercacher/index.jsx:302
-#: src-js/sg-cachepress-strings.php:29
+#: src-js/sg-cachepress-strings.php:33
 msgid "See rules"
 msgstr "Ver normas"
 
 #. src-js/components/tabs/supercacher/index.jsx:305
-#: src-js/sg-cachepress-strings.php:30
+#: src-js/sg-cachepress-strings.php:34
 msgid "Excluding URLs"
 msgstr "Excluir URLs"
 
 #. src-js/components/tabs/supercacher/index.jsx:332
-#: src-js/sg-cachepress-strings.php:31
+#: src-js/sg-cachepress-strings.php:35
 msgid ""
 "Use this feature if you want to exclude certain parts of your website from "
 "being cached and keep them dynamic."
@@ -199,22 +228,22 @@ msgstr ""
 "excluidas de la caché y mantenerlo dinámica."
 
 #. src-js/components/tabs/supercacher/index.jsx:335
-#: src-js/sg-cachepress-strings.php:32
+#: src-js/sg-cachepress-strings.php:36
 msgid "See examples"
 msgstr "Ver ejemplos"
 
 #. src-js/components/tabs/supercacher/index.jsx:338
-#: src-js/sg-cachepress-strings.php:33
+#: src-js/sg-cachepress-strings.php:37
 msgid "Exclude"
 msgstr "Excluir"
 
 #. src-js/components/tabs/supercacher/index.jsx:364
-#: src-js/sg-cachepress-strings.php:34
+#: src-js/sg-cachepress-strings.php:38
 msgid "Test URLs for Cache Status"
 msgstr "Prueba las URLs para saber el estado de la caché"
 
 #. src-js/components/tabs/supercacher/index.jsx:396
-#: src-js/sg-cachepress-strings.php:35
+#: src-js/sg-cachepress-strings.php:39
 msgid ""
 "Check if the Dynamic Cache is working on a certain URL. Especially useful to "
 "make sure your Exclude list is working the way it should."
@@ -224,47 +253,18 @@ msgstr ""
 "correcta."
 
 #. src-js/components/tabs/supercacher/index.jsx:399
-#: src-js/sg-cachepress-strings.php:36
-msgid "Test"
-msgstr "Test"
-
-#. src-js/components/tabs/environment-optimization/index.jsx:157
-#: src-js/sg-cachepress-strings.php:37 core/Options/Options.php:337
-msgid "GZIP Compression"
-msgstr "Compresión GZIP"
-
-#. src-js/components/tabs/environment-optimization/index.jsx:213
-#: src-js/sg-cachepress-strings.php:38
-msgid ""
-"Enables a compression of the content that's delivered to your visitors "
-"browsers improving the network loading times of your site."
-msgstr ""
-"Activar la compresión del contenido que se envia a los navegadores de los "
-"visitantes mejorando los tiempo de carga de tu web."
-
-#. src-js/components/tabs/supercacher/index.jsx:426
-#: src-js/sg-cachepress-strings.php:39
-msgid "Memcached"
-msgstr "Memcached"
-
-#. src-js/components/tabs/supercacher/index.jsx:454
 #: src-js/sg-cachepress-strings.php:40
-msgid ""
-"Powerful object caching for your site. It stores frequently executed queries "
-"to your databases and reuses them for better performance."
-msgstr ""
-"Herramienta de cache de objetos para tu web. Almacena las consultas "
-"ejecutadas con frecuencia en tu bases de datos y las reutiliza para un mejor "
-"rendimiento."
+msgid "Test"
+msgstr "Probar"
 
 #. src-js/components/php-checker/index.jsx:341
 #. src-js/components/tabs/multisite-control/index.jsx:226
-#: src-js/sg-cachepress-strings.php:41 src-js/sg-cachepress-strings.php:90
+#: src-js/sg-cachepress-strings.php:41 src-js/sg-cachepress-strings.php:92
 msgid "Enable HTTPS"
 msgstr "Activar HTTPS"
 
 #. src-js/components/tabs/environment-optimization/index.jsx:109
-#: src-js/sg-cachepress-strings.php:42 src-js/sg-cachepress-strings.php:91
+#: src-js/sg-cachepress-strings.php:42 src-js/sg-cachepress-strings.php:93
 msgid ""
 "Configures your site to work correctly via HTTPS and forces a secure "
 "connection to your site."
@@ -273,12 +273,12 @@ msgstr ""
 "fuerza una conexión segura en tu sitio web."
 
 #. src-js/components/tabs/environment-optimization/index.jsx:112
-#: src-js/sg-cachepress-strings.php:43 src-js/sg-cachepress-strings.php:92
+#: src-js/sg-cachepress-strings.php:43 src-js/sg-cachepress-strings.php:94
 msgid "Fix Insecure Content"
 msgstr "Reparar contenido inseguro"
 
 #. src-js/components/tabs/environment-optimization/index.jsx:154
-#: src-js/sg-cachepress-strings.php:44 src-js/sg-cachepress-strings.php:93
+#: src-js/sg-cachepress-strings.php:44 src-js/sg-cachepress-strings.php:95
 msgid ""
 "Enable this option in case you’re getting insecure content errors on your "
 "website. We will dynamically rewrite insecure requests for resources coming "
@@ -289,12 +289,12 @@ msgstr ""
 "elementos de tu web"
 
 #. src-js/components/tabs/environment-optimization/index.jsx:249
-#: src-js/sg-cachepress-strings.php:45 src-js/sg-cachepress-strings.php:95
+#: src-js/sg-cachepress-strings.php:45 src-js/sg-cachepress-strings.php:97
 msgid "Minify the HTML Output"
 msgstr "Minimizar la salida HTML"
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:32
-#: src-js/sg-cachepress-strings.php:46 src-js/sg-cachepress-strings.php:96
+#: src-js/sg-cachepress-strings.php:46 src-js/sg-cachepress-strings.php:98
 msgid ""
 "Removes unnecessary characters from your HTML output saving data and "
 "improving your site speed."
@@ -303,7 +303,7 @@ msgstr ""
 "la velocidad de tu web."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:35
-#: src-js/sg-cachepress-strings.php:47 src-js/sg-cachepress-strings.php:97
+#: src-js/sg-cachepress-strings.php:47 src-js/sg-cachepress-strings.php:99
 msgid "Minify JavaScript Files"
 msgstr "Minimizar archivos JavaScript"
 
@@ -317,7 +317,7 @@ msgstr ""
 "y reducir el número de solicitudes en el servidor."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:68
-#: src-js/sg-cachepress-strings.php:49 src-js/sg-cachepress-strings.php:99
+#: src-js/sg-cachepress-strings.php:49 src-js/sg-cachepress-strings.php:101
 msgid "Minify CSS Files"
 msgstr "Minimizar archivos CSS"
 
@@ -331,12 +331,12 @@ msgstr ""
 "el número de solicitudes en el servidor."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:102
-#: src-js/sg-cachepress-strings.php:51 src-js/sg-cachepress-strings.php:101
+#: src-js/sg-cachepress-strings.php:51 src-js/sg-cachepress-strings.php:103
 msgid "Remove Query Strings From Static Resources"
 msgstr "Eliminar Query Springs de los recursos estáticos"
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:132
-#: src-js/sg-cachepress-strings.php:52 src-js/sg-cachepress-strings.php:102
+#: src-js/sg-cachepress-strings.php:52 src-js/sg-cachepress-strings.php:104
 msgid ""
 "Removes version query strings from your static resources improving the "
 "caching of those resources."
@@ -345,12 +345,12 @@ msgstr ""
 "caché de esos recursos."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:135
-#: src-js/sg-cachepress-strings.php:53 src-js/sg-cachepress-strings.php:103
+#: src-js/sg-cachepress-strings.php:53 src-js/sg-cachepress-strings.php:105
 msgid "Disable Emojis"
 msgstr "Desactivar Emojis"
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:165
-#: src-js/sg-cachepress-strings.php:54 src-js/sg-cachepress-strings.php:104
+#: src-js/sg-cachepress-strings.php:54 src-js/sg-cachepress-strings.php:106
 msgid ""
 "Enable to prevent WordPress from automatically detecting and generating "
 "emojis in your pages."
@@ -359,12 +359,27 @@ msgstr ""
 "en tus páginas."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:191
-#: src-js/sg-cachepress-strings.php:55 core/Options/Options.php:354
+#: src-js/sg-cachepress-strings.php:55
+msgid "Resume Optimization"
+msgstr "Reanudar Optimización"
+
+#. src-js/components/tabs/image-optimization/index.jsx:105
+#: src-js/sg-cachepress-strings.php:56
+msgid "Start Optimization"
+msgstr "Comenzar optimización"
+
+#. src-js/components/tabs/image-optimization/index.jsx:67
+#: src-js/sg-cachepress-strings.php:57
+msgid "Pause Optimization"
+msgstr "Pausar Optimización"
+
+#. src-js/components/tabs/frontend-optimization/index.jsx:191
+#: src-js/sg-cachepress-strings.php:58 core/Options/Options.php:354
 msgid "New Images Optimization"
 msgstr "Optimización de nuevas imágenes"
 
 #. src-js/components/tabs/image-optimization/index.jsx:68
-#: src-js/sg-cachepress-strings.php:56
+#: src-js/sg-cachepress-strings.php:59
 msgid ""
 "We will automatically optimize all new images that you upload to your Media "
 "Library."
@@ -373,12 +388,12 @@ msgstr ""
 "la biblioteca de medios."
 
 #. src-js/components/tabs/image-optimization/index.jsx:71
-#: src-js/sg-cachepress-strings.php:57
+#: src-js/sg-cachepress-strings.php:60
 msgid "Existing Images Optimization"
 msgstr "Optimización de imágenes existentes"
 
 #. src-js/components/tabs/image-optimization/index.jsx:80
-#: src-js/sg-cachepress-strings.php:58 src-js/sg-cachepress-strings.php:107
+#: src-js/sg-cachepress-strings.php:61 src-js/sg-cachepress-strings.php:109
 msgid ""
 "We will optimize all your existing images with minimal or no loss in quality."
 " Note, that this will overwrite your original images."
@@ -386,14 +401,9 @@ msgstr ""
 "Optimizaremos todas tus imágenes con un perdida mínima o nula de calidad. "
 "Ten en cuenta, esto sobreescribirá tus imágenes originales."
 
-#. src-js/components/tabs/image-optimization/index.jsx:105
-#: src-js/sg-cachepress-strings.php:59
-msgid "Start Optimization"
-msgstr "Comenzar Optimización"
-
 #. src-js/components/tabs/image-optimization/index.jsx:131
 #. src-js/containers/php-checker/index.jsx:212
-#: src-js/sg-cachepress-strings.php:60 src-js/sg-cachepress-strings.php:131
+#: src-js/sg-cachepress-strings.php:62 src-js/sg-cachepress-strings.php:133
 msgid ""
 "We've detected that the WordPress cronjob functionality is not working. "
 "Please, enable it following the instructions in {{link}}this article{{/link}}"
@@ -401,16 +411,22 @@ msgid ""
 "ignore this message{{/link2}} at your own risk. Note, that in this case, "
 "those operations may take longer than usual to complete."
 msgstr ""
+"Hemos detectado que la funcionalidad cronjob de WordPress no funciona. Por "
+"favor, actívala siguiendo las instrucciones de {{link}}este artículo{{/link}}"
+" y actualiza esta página. Si estás utilizando una tarea cron real, puedes "
+"{{link2}}ignorar este mensaje{{/link2}} bajo tu propio riesgo. Ten en cuenta "
+"que, en este caso, estas operaciones pueden tardar más de lo habitual en "
+"completarse."
 
 #. src-js/components/php-checker/index.jsx:223
 #. src-js/components/tabs/multisite-control/index.jsx:547
 #. src-js/components/tabs/image-optimization/index.jsx:111
-#: src-js/sg-cachepress-strings.php:61 src-js/sg-cachepress-strings.php:132
+#: src-js/sg-cachepress-strings.php:63 src-js/sg-cachepress-strings.php:134
 msgid "https://www.siteground.com/kb/disable-enable-wordpress-cron/"
 msgstr "https://www.siteground.es/kb/administrar-wordpress-cron/"
 
 #. src-js/components/tabs/image-optimization/index.jsx:141
-#: src-js/sg-cachepress-strings.php:62
+#: src-js/sg-cachepress-strings.php:64
 msgid ""
 "We are optimizing your images, please be patient, this process may take some "
 "time."
@@ -419,7 +435,7 @@ msgstr ""
 "podría tardar."
 
 #. src-js/components/tabs/image-optimization/index.jsx:159
-#: src-js/sg-cachepress-strings.php:63
+#: src-js/sg-cachepress-strings.php:65
 msgid ""
 "All images in your Media Library have been optimized successfully! Force "
 "{{link}}re-optimization{{/link}} of your images."
@@ -429,22 +445,22 @@ msgstr ""
 "tus imágenes."
 
 #. src-js/components/tabs/image-optimization/index.jsx:148
-#: src-js/sg-cachepress-strings.php:64 src-js/sg-cachepress-strings.php:108
+#: src-js/sg-cachepress-strings.php:66 src-js/sg-cachepress-strings.php:110
 msgid "Lazy Load Images"
 msgstr "Carga diferida de imágenes"
 
 #. src-js/components/tabs/image-optimization/index.jsx:168
-#: src-js/sg-cachepress-strings.php:65 src-js/sg-cachepress-strings.php:109
+#: src-js/sg-cachepress-strings.php:67 src-js/sg-cachepress-strings.php:111
 msgid "Load images only when they are visible in the browser"
 msgstr "Cargar imágenes solo cuando sean visibles en el navegador"
 
 #. src-js/components/tabs/image-optimization/index.jsx:171
-#: src-js/sg-cachepress-strings.php:66 src-js/sg-cachepress-strings.php:110
+#: src-js/sg-cachepress-strings.php:68 src-js/sg-cachepress-strings.php:112
 msgid "Lazy Load Gravatars"
 msgstr "Carga diferida de Gravatars"
 
 #. src-js/components/tabs/image-optimization/index.jsx:212
-#: src-js/sg-cachepress-strings.php:67 src-js/sg-cachepress-strings.php:111
+#: src-js/sg-cachepress-strings.php:69 src-js/sg-cachepress-strings.php:113
 msgid ""
 "When users comment under your posts, WordPress tries to load their avatars "
 "from gravatar.com. We recommend lazy-loading them as your users scroll down "
@@ -456,12 +472,12 @@ msgstr ""
 "comentarios. "
 
 #. src-js/components/tabs/image-optimization/index.jsx:215
-#: src-js/sg-cachepress-strings.php:68 src-js/sg-cachepress-strings.php:112
+#: src-js/sg-cachepress-strings.php:70 src-js/sg-cachepress-strings.php:114
 msgid "Lazy Load Thumbnails"
 msgstr "Carga diferida de miniaturas"
 
 #. src-js/components/tabs/image-optimization/index.jsx:246
-#: src-js/sg-cachepress-strings.php:69 src-js/sg-cachepress-strings.php:113
+#: src-js/sg-cachepress-strings.php:71 src-js/sg-cachepress-strings.php:115
 msgid ""
 "Enable if you want to lazy-load the thumbnail sizes of your original images."
 msgstr ""
@@ -469,12 +485,12 @@ msgstr ""
 "originales."
 
 #. src-js/components/tabs/image-optimization/index.jsx:249
-#: src-js/sg-cachepress-strings.php:70 src-js/sg-cachepress-strings.php:114
+#: src-js/sg-cachepress-strings.php:72 src-js/sg-cachepress-strings.php:116
 msgid "Lazy Load Responsive Images"
 msgstr "Carga diferida de imágenes adaptables"
 
 #. src-js/components/tabs/image-optimization/index.jsx:280
-#: src-js/sg-cachepress-strings.php:71 src-js/sg-cachepress-strings.php:115
+#: src-js/sg-cachepress-strings.php:73 src-js/sg-cachepress-strings.php:117
 msgid ""
 "Certain plugins and themes generate multiple images from a single upload to "
 "work better on different devices. Enable if you want to lazy-load these too."
@@ -484,12 +500,12 @@ msgstr ""
 "estas de forma diferida."
 
 #. src-js/components/tabs/image-optimization/index.jsx:283
-#: src-js/sg-cachepress-strings.php:72 src-js/sg-cachepress-strings.php:116
+#: src-js/sg-cachepress-strings.php:74 src-js/sg-cachepress-strings.php:118
 msgid "Lazy Load Widgets"
-msgstr "Carga diferida de Widgets"
+msgstr "Carga diferida de widgets"
 
 #. src-js/components/tabs/image-optimization/index.jsx:315
-#: src-js/sg-cachepress-strings.php:73 src-js/sg-cachepress-strings.php:117
+#: src-js/sg-cachepress-strings.php:75 src-js/sg-cachepress-strings.php:119
 msgid ""
 "Enable this option if you want the images in your widget areas to load only "
 "when users reach them. "
@@ -498,12 +514,12 @@ msgstr ""
 "cuando los usuarios accedan a ellas. "
 
 #. src-js/components/tabs/multisite-control/index.jsx:339
-#: src-js/sg-cachepress-strings.php:74
+#: src-js/sg-cachepress-strings.php:76
 msgid "Site Admin Permissions"
-msgstr "Permisos de administrador web"
+msgstr "Permisos de administrador del sitio"
 
 #. src-js/components/tabs/multisite-control/index.jsx:372
-#: src-js/sg-cachepress-strings.php:75
+#: src-js/sg-cachepress-strings.php:77
 msgid ""
 "In this section, set the access permission for admins of separate sites."
 msgstr ""
@@ -511,12 +527,12 @@ msgstr ""
 "separadas."
 
 #. src-js/components/tabs/multisite-control/index.jsx:87
-#: src-js/sg-cachepress-strings.php:76 helpers/manual-translations.php:2
+#: src-js/sg-cachepress-strings.php:78 helpers/manual-translations.php:2
 msgid "SuperCacher Settings"
-msgstr "SuperCaché Configuración"
+msgstr "Ajustes de SuperCacher"
 
 #. src-js/components/tabs/multisite-control/index.jsx:402
-#: src-js/sg-cachepress-strings.php:77
+#: src-js/sg-cachepress-strings.php:79
 msgid ""
 "Select whether site admins can access and make changes within the SiteGround "
 "Optimizer's SuperCacher tab."
@@ -525,12 +541,12 @@ msgstr ""
 "pestaña SuperCacher de SiteGround Optimizer."
 
 #. src-js/components/tabs/multisite-control/index.jsx:405
-#: src-js/sg-cachepress-strings.php:78
+#: src-js/sg-cachepress-strings.php:80
 msgid "Frontend Optimizations"
-msgstr "Optimizaciones Frontend"
+msgstr "Optimizaciones en portada"
 
 #. src-js/components/tabs/multisite-control/index.jsx:434
-#: src-js/sg-cachepress-strings.php:79
+#: src-js/sg-cachepress-strings.php:81
 msgid ""
 "Select whether site admins can access and make changes within the SiteGround "
 "Optimizer's Frontend Optmization tab."
@@ -539,12 +555,12 @@ msgstr ""
 "pestaña de Optimización Frontend de SiteGround Optimizer."
 
 #. src-js/components/tabs/multisite-control/index.jsx:437
-#: src-js/sg-cachepress-strings.php:80
+#: src-js/sg-cachepress-strings.php:82
 msgid "Image Optimizations"
 msgstr "Optimizaciones de imagen"
 
 #. src-js/components/tabs/multisite-control/index.jsx:464
-#: src-js/sg-cachepress-strings.php:81
+#: src-js/sg-cachepress-strings.php:83
 msgid ""
 "Select whether site admins can access and make changes within the SiteGround "
 "Optimizer's Image Optimization tab."
@@ -553,12 +569,12 @@ msgstr ""
 "pestaña Optimiación de Imagen de SiteGround Optimizer."
 
 #. src-js/components/tabs/multisite-control/index.jsx:467
-#: src-js/sg-cachepress-strings.php:82
+#: src-js/sg-cachepress-strings.php:84
 msgid "Environment Optimizations"
 msgstr "Optimización de entorno"
 
 #. src-js/components/tabs/multisite-control/index.jsx:494
-#: src-js/sg-cachepress-strings.php:83
+#: src-js/sg-cachepress-strings.php:85
 msgid ""
 "Select whether site admins can access and make changes within the SiteGround "
 "Optimizer's Environment Optimization tab."
@@ -567,12 +583,12 @@ msgstr ""
 "cambios dentro de la pestaña Optimización de entorno de SiteGround Optimizer."
 
 #. src-js/components/tabs/multisite-control/index.jsx:209
-#: src-js/sg-cachepress-strings.php:84
+#: src-js/sg-cachepress-strings.php:86
 msgid "SUPERCACHER SETTINGS"
 msgstr "AJUSTES DE SUPERCACHER"
 
 #. src-js/components/tabs/multisite-control/index.jsx:304
-#: src-js/sg-cachepress-strings.php:86
+#: src-js/sg-cachepress-strings.php:88
 msgid ""
 "Select whether new sites should have the Dynamic Caching enabled for them or "
 "not."
@@ -581,17 +597,17 @@ msgstr ""
 "o no."
 
 #. src-js/components/tabs/sites-control/index.jsx:103
-#: src-js/sg-cachepress-strings.php:89
+#: src-js/sg-cachepress-strings.php:91
 msgid "ENVIRONMENT OPTIMIZATION"
-msgstr "OPTIMIZACIÓN DE ENTORNO"
+msgstr "OPTIMIZACIÓN DEL ENTORNO"
 
 #. src-js/components/tabs/sites-control/index.jsx:208
-#: src-js/sg-cachepress-strings.php:94
+#: src-js/sg-cachepress-strings.php:96
 msgid "FRONTEND OPTIMIZATION"
-msgstr "OPTIMIZACIÓN FRONT-END"
+msgstr "OPTIMIZACIÓN DE PORTADA"
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:65
-#: src-js/sg-cachepress-strings.php:98
+#: src-js/sg-cachepress-strings.php:100
 msgid ""
 "Combine and minify your JavaScript files in order to reduce their size, "
 "improve cachability, and reduce the number of requests to the server."
@@ -600,7 +616,7 @@ msgstr ""
 "mejorar el caché y reducir el número de solicitudes en el servidor."
 
 #. src-js/components/tabs/frontend-optimization/index.jsx:99
-#: src-js/sg-cachepress-strings.php:100
+#: src-js/sg-cachepress-strings.php:102
 msgid ""
 "Combine and minify your CSS files in order to reduce their size, improve "
 "cachability, and reduce the number of requests to the server."
@@ -609,29 +625,29 @@ msgstr ""
 "y reducir el número de solicitudes en el servidor."
 
 #. src-js/components/tabs/sites-control/index.jsx:395
-#: src-js/sg-cachepress-strings.php:105
+#: src-js/sg-cachepress-strings.php:107
 msgid "IMAGE OPTIMIZATION"
-msgstr "OPTIMIZACIÓN DE IMAGEN"
+msgstr "OPTIMIZACIÓN DE IMÁGENES"
 
 #. src-js/components/tabs/sites-control/index.jsx:425
-#: src-js/sg-cachepress-strings.php:106 helpers/manual-translations.php:5
+#: src-js/sg-cachepress-strings.php:108 helpers/manual-translations.php:5
 msgid "Image Optimization"
-msgstr "Optimización de imagen"
+msgstr "Optimización de imágenes"
 
 #. src-js/components/tabs/supercacher/index.jsx:117
-#: src-js/sg-cachepress-strings.php:118
+#: src-js/sg-cachepress-strings.php:120
 msgid "Memcached Stopped. Please, enable it in cPanel."
-msgstr "Memcached parado. Por favor, actívalo en el cPanel."
+msgstr "Memcached parado. Por favor, actívalo en cPanel."
 
 #. Page title.
 #. Name of the plugin
-#: src-js/sg-cachepress-strings.php:119 core/Admin/Admin.php:249
-#: core/Admin/Admin.php:250
+#: src-js/sg-cachepress-strings.php:121 core/Admin/Admin.php:251
+#: core/Admin/Admin.php:252
 msgid "SG Optimizer"
 msgstr "SG Optimizer"
 
 #. src-js/containers/main/index.jsx:136
-#: src-js/sg-cachepress-strings.php:120
+#: src-js/sg-cachepress-strings.php:122
 msgid ""
 "Get the best performance for your WordPress website with our optimization "
 "plugin. It handles caching, system settings, and all the necessary "
@@ -640,53 +656,53 @@ msgid ""
 msgstr ""
 "Obtén el mejor rendimiento de tu web WordPress con nuestro plugin de "
 "optimización. Se encarga de la caché, configuración de sistema y todas las "
-"configuraciones necesarias para una página web consistente. Con SiteGround "
-"Optimizer activado, obtienes el mejor rendimiento de tu entorno de "
-"alojamiento."
+"configuraciones necesarias para una página web consistente. ¡Con SiteGround "
+"Optimizer activado obtienes el mejor rendimiento de tu entorno de "
+"alojamiento!"
 
 #. src-js/components/dialogs/urls-dialog.jsx:54
-#: src-js/sg-cachepress-strings.php:121
+#: src-js/sg-cachepress-strings.php:123
 msgid " (Current & Recommended)"
-msgstr "Actual y recomendados"
+msgstr " (Actual y recomendado)"
 
 #. src-js/components/php-checker/index.jsx:77
-#: src-js/sg-cachepress-strings.php:122
+#: src-js/sg-cachepress-strings.php:124
 msgid " (Current)"
-msgstr "Actual"
+msgstr " (Actual)"
 
 #. src-js/components/php-checker/index.jsx:79
-#: src-js/sg-cachepress-strings.php:123
+#: src-js/sg-cachepress-strings.php:125
 msgid " (Recommended)"
-msgstr "Recomendado"
+msgstr " (Recomendado)"
 
 #. src-js/components/php-checker/index.jsx:81
-#: src-js/sg-cachepress-strings.php:124
+#: src-js/sg-cachepress-strings.php:126
 msgid "Old PHP Version (Current)"
-msgstr "Antigua versión de PHP (Actual)"
+msgstr "Versión antigua de PHP (Actual)"
 
 #. src-js/components/php-checker/index.jsx:92
 #. src-js/components/php-checker/index.jsx:136
-#: src-js/sg-cachepress-strings.php:125 src-js/sg-cachepress-strings.php:127
+#: src-js/sg-cachepress-strings.php:127 src-js/sg-cachepress-strings.php:129
 msgid "Check Again"
 msgstr "Comprobar de nuevo"
 
 #. src-js/components/php-checker/index.jsx:126
-#: src-js/sg-cachepress-strings.php:126
+#: src-js/sg-cachepress-strings.php:128
 msgid "Switch to PHP "
 msgstr "Cambiar a PHP "
 
 #. src-js/components/php-checker/index.jsx:158
-#: src-js/sg-cachepress-strings.php:128
+#: src-js/sg-cachepress-strings.php:130
 msgid "Check PHP %(version)s Compatibility"
-msgstr "Comprobar compatibilidad con la versión PHP%"
+msgstr "Comprobar compatibilidad con la versión de PHP %(version)s"
 
 #. src-js/components/php-checker/index.jsx:158
-#: src-js/sg-cachepress-strings.php:129
+#: src-js/sg-cachepress-strings.php:131
 msgid "Switch to Recommended PHP Version"
 msgstr "Cambia a la versión recomendada de PHP"
 
 #. src-js/components/php-checker/index.jsx:201
-#: src-js/sg-cachepress-strings.php:130
+#: src-js/sg-cachepress-strings.php:132
 msgid ""
 "Our system will check for compatibility issues and inform you whether it is "
 "safe to upgrade to the recommended version:"
@@ -695,16 +711,16 @@ msgstr ""
 "mejorarlo a la versión recomendada:"
 
 #. src-js/components/php-checker/index.jsx:226
-#: src-js/sg-cachepress-strings.php:133
+#: src-js/sg-cachepress-strings.php:135
 msgid ""
 "You are running PHP %(version)s which is the minimum recommended or higher "
 "PHP version."
 msgstr ""
-"Estás usando una versión de PHP % que es la mínima recomendada o versión PHP "
+"Estás usando la versión de PHP %(version)s que es la mínima recomendada o "
 "superior."
 
 #. src-js/components/php-checker/index.jsx:244
-#: src-js/sg-cachepress-strings.php:134
+#: src-js/sg-cachepress-strings.php:136
 msgid ""
 "Unfortunately some of your plugins or theme are not compatible with our "
 "recommended version"
@@ -713,19 +729,35 @@ msgstr ""
 "nuestra versión recomendada"
 
 #. src-js/components/php-checker/index.jsx:282
-#: src-js/sg-cachepress-strings.php:135
+#: src-js/sg-cachepress-strings.php:137
 msgid "Manual PHP Change."
 msgstr "Cambio manual de PHP."
 
 #. src-js/components/php-checker/index.jsx:311
-#: src-js/sg-cachepress-strings.php:136
+#: src-js/sg-cachepress-strings.php:138
 msgid "Manually switch between different available PHP versions."
 msgstr "Cambio manual entre las diferentes versiones disponibles de PHP."
 
 #. src-js/components/php-checker/index.jsx:314
-#: src-js/sg-cachepress-strings.php:137
+#: src-js/sg-cachepress-strings.php:139
 msgid "Switch"
 msgstr "Cambiar"
+
+#. src-js/containers/php-checker/index.jsx:352
+#: src-js/sg-cachepress-strings.php:140
+msgid "Thanks for using SG Optimizer to make your site faster!"
+msgstr "¡Gracias por usar SG Optimizer para hacer tu sitio web más rápido!"
+
+#. src-js/containers/rating/index.jsx:53
+#: src-js/sg-cachepress-strings.php:141
+msgid "Help more people optimize their sites by rating our plugin."
+msgstr ""
+"Ayuda a más personas a optimizar sus sitios web valorando nuestro plugin."
+
+#. src-js/containers/rating/index.jsx:60
+#: src-js/sg-cachepress-strings.php:142
+msgid "Don’t Show This Again"
+msgstr "No mostrar esto de nuevo"
 
 #: helpers/manual-translations.php:3
 msgid "Environment Optimization"
@@ -741,11 +773,11 @@ msgstr "Caché dinámica"
 
 #: core/Options/Options.php:334
 msgid "Autoflush"
-msgstr "“Auto-Vaciado”"
+msgstr "Vaciado automático"
 
 #: core/Options/Options.php:335
 msgid "Memcache"
-msgstr "Memcache"
+msgstr "Memcached"
 
 #: core/Options/Options.php:336
 msgid "HTTPS"
@@ -757,7 +789,7 @@ msgstr "Corrección de contenido inseguro"
 
 #: core/Options/Options.php:340
 msgid "HTML Minification"
-msgstr "Minificación HTML"
+msgstr "Minimización de HTML"
 
 #: core/Options/Options.php:341
 msgid "JavaScript Minification"
@@ -765,7 +797,7 @@ msgstr "Minimización de JavaScript"
 
 #: core/Options/Options.php:342
 msgid "CSS Minification"
-msgstr "Minificación de CSS"
+msgstr "Minimización de CSS"
 
 #: core/Options/Options.php:343
 msgid "Query Strings Removal"
@@ -793,23 +825,23 @@ msgstr "Carga diferida de imágenes adaptables"
 
 #: core/Options/Options.php:349
 msgid "Lazy Loading Widgets"
-msgstr "Carga diferida de Widgets"
+msgstr "Carga diferida de widgets"
 
 #: core/Options/Options.php:350
 msgid "Can Config SuperCacher"
-msgstr "Configuración Super Caché"
+msgstr "Puede configurar SuperCacher"
 
 #: core/Options/Options.php:351
 msgid "Can Optimize Frontend"
-msgstr "Optimizar el Frontend"
+msgstr "Puede optimizar la portada"
 
 #: core/Options/Options.php:352
 msgid "Can Optimize Images"
-msgstr "Optimizar imágenes"
+msgstr "Puede optimizar imágenes"
 
 #: core/Options/Options.php:353
 msgid "Can Optimize Environment"
-msgstr "Optimizar el entorno"
+msgstr "Puede optimizar el entorno"
 
 #: core/Options/Options.php:358
 msgid "Option"
@@ -818,36 +850,36 @@ msgstr "Opción"
 #: core/Options/Options.php:362
 #, php-format
 msgid "%s Enabled"
-msgstr "%s Activado"
+msgstr "%s activado"
 
 #: core/Options/Options.php:365
 #, php-format
 msgid "%s Disabled"
-msgstr "%s Desactivado"
+msgstr "%s desactivado"
 
 #: core/Options/Options.php:370
 #, php-format
 msgid "Could not enable %s"
-msgstr "¡No se puede habilitar %s"
+msgstr "¡No se puede activar %s"
 
 #: core/Options/Options.php:373
 #, php-format
 msgid "Could not disable %s"
-msgstr "¡No se pudo deshabilitar %s"
+msgstr "¡No se pudo desactivar %s"
 
-#: core/Admin/Admin_Bar.php:36 core/Admin/Admin.php:303
+#: core/Admin/Admin_Bar.php:33 core/Admin/Admin.php:305
 msgid "Purge SG Cache"
-msgstr "Purgar SG Cache"
+msgstr "Vaciar SG Cache"
 
-#: core/Admin/Admin.php:232
+#: core/Admin/Admin.php:234
 msgid ""
 "SG Optimizer has detected that Memcached was turned off. If you want to use "
 "it, please enable it from cPanel first."
 msgstr ""
-"SG Optimizer ha detectado que Memcached fue desactivado. Si quieres usarlo, "
-"por favor actívalo primero desde el cPanel."
+"SG Optimizer ha detectado que Memcached se ha desactivado. Si quieres usarlo,"
+" por favor actívalo primero desde el cPanel."
 
-#: core/Modules/Modules.php:444
+#: core/Modules/Modules.php:450
 #, php-format
 msgid ""
 "<strong>Important message from SG Optimizer plugin</strong>: We have "
@@ -856,13 +888,13 @@ msgid ""
 "functions from our plugin: <strong>%2$s</strong>. If you wish to enable them,"
 " please do that from the SG Optimizer config page."
 msgstr ""
-"<strong>Messaggio importante dal plugin SG Optimizer</strong>: Abbiamo "
-"rilevato che esistono funzionalità duplicate con altri plugin installati sul "
-"tuo sito: <strong>%1$s</strong> e disattivato le seguenti funzioni del "
-"nostro plugin:  <strong>%2$s</strong>. Se desideri abilitarle, procedi dalla "
-"pagina di configurazione di SG Optimizer."
+"<strong>Mensaje importante del plugin SG Optimizer</strong>: Hemos detectado "
+"que hay una funcionalidad duplicada con otros plugins instalados en tu sitio:"
+" <strong>%1$s</strong> y hemos desactivado las siguientes funcionalidades de "
+"nuestro plugin: <strong>%2$s</strong>.Si quieres activarlas, por favor, "
+"hazlo desde la página de configuración de SG Optimizer."
 
-#: core/Modules/Modules.php:475
+#: core/Modules/Modules.php:485
 #, php-format
 msgid ""
 "<strong>Important warning from SG Optimizer plugin</strong>: We have "
@@ -872,8 +904,14 @@ msgid ""
 "hurt your pages loading times so we recommend you to leave only one of the "
 "plugins active."
 msgstr ""
+"<strong> Advertencia importante del plugin SG Optimizer </strong>: Hemos "
+"detectado que hay una funcionalidad duplicada con otros plugins instalados "
+"en tu sitio: <strong>%s</strong>. Ten en cuenta que tener dos plugins con la "
+"misma funcionalidad puede en realidad disminuir el rendimiento de tu sitio y "
+"dañar los tiempos de carga de tus páginas, por lo que te recomendamos que "
+"dejes activo sólo uno de los plugins."
 
-#: core/Rest/Rest_Helper.php:204
+#: core/Rest/Rest_Helper.php:207
 msgid ""
 "SG Optiimzer was unable to connect to the Memcached server and it was "
 "disabled. Please, check your cPanel and turn it on if disabled."
@@ -881,37 +919,37 @@ msgstr ""
 "SG Optimizer no puede conectarse con el servidor Memcached y fue desactivado."
 " Por favor, comprueba tu cPanel y actívalo si estaba desactivado."
 
-#: core/Rest/Rest_Helper.php:215
+#: core/Rest/Rest_Helper.php:218
 msgid "Memcached Enabled"
 msgstr "Memcached Activado"
 
-#: core/Rest/Rest_Helper.php:223
+#: core/Rest/Rest_Helper.php:226
 msgid "Could Not Enable Memcache!"
-msgstr "¡No se puede habilitar el Memcache!"
+msgstr "¡No se puede activar Memcached!"
 
-#: core/Rest/Rest_Helper.php:241 core/Rest/Rest_Helper.php:253
+#: core/Rest/Rest_Helper.php:244 core/Rest/Rest_Helper.php:256
 msgid "Memcache Disabled!"
-msgstr "¡Memcache Desactivado!"
+msgstr "¡Memcached Desactivado!"
 
-#: core/Rest/Rest_Helper.php:261
+#: core/Rest/Rest_Helper.php:264
 msgid "Could Not Disable Memcache!"
-msgstr "¡No se pudo deshabilitar el Memcache!"
+msgstr "¡No se pudo desactivar Memcached!"
 
-#: core/Rest/Rest_Helper.php:354
+#: core/Rest/Rest_Helper.php:357
 msgid "PHP Version has been changed"
-msgstr "La versión PHP ha sido cambiada"
+msgstr "La versión PHP ha cambiado"
 
-#: core/Rest/Rest_Helper.php:354
+#: core/Rest/Rest_Helper.php:357
 msgid "Cannot change PHP Version"
-msgstr "No se puede cambiar la versión PHP"
+msgstr "No se puede cambiar la versión de PHP"
 
 #. Description of the plugin
 msgid ""
 "This plugin will link your WordPress application with all the performance "
 "optimizations provided by SiteGround"
 msgstr ""
-"Este plugin enlazará tu aplicación de WordPress con todas las mejoras "
-"llevadas a cabo por SiteGround"
+"Este plugin enlazará tu aplicación WordPress con todas las optimizaciones de "
+"rendimiento ofrecidas por SiteGround"
 
 #. Author of the plugin
 msgid "SiteGround"

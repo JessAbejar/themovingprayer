@@ -13,9 +13,6 @@ class Admin_Bar {
 	 */
 	public function __construct() {
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_purge' ), PHP_INT_MAX );
-
-		// Add the admin bar purge button handler.
-		add_action( 'wp_ajax_admin_bar_purge_cache', array( $this, 'purge_cache' ) );
 	}
 
 

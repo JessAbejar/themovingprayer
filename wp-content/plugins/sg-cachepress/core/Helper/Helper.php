@@ -229,4 +229,21 @@ class Helper {
 		// Default error handler otherwise.
 		return false;
 	}
+
+	/**
+	 * Some plugins like WPML for example are overwriting the home url.
+	 *
+	 * @since  5.0.10
+	 *
+	 * @return string The real home url.
+	 */
+	public static function get_home_url() {
+		$url = get_option( 'home' );
+
+		$scheme = is_ssl() ? 'https' : parse_url( $url, PHP_URL_SCHEME );
+
+		$url = set_url_scheme( $url, $scheme );
+
+		return trailingslashit( $url );
+	}
 }

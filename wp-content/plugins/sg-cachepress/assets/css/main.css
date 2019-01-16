@@ -737,3 +737,32 @@ html {
 
 .toplevel_page_sg-cachepress .notice {
   display: none !important; }
+
+.icl_als_iclflag {
+  display: inline-block; }
+
+.sg-rate {
+  position: relative; }
+
+.sg-rate .sg-star-rating.sg-star-rating--size-large {
+  width: 100%; }
+
+.sg-rate .sg-link:visited {
+  color: #25b8d2; }
+
+.sg-rate .sg-rate--stars {
+  border-right: 1px solid #ddd; }
+
+.sg-rate .sg-button--hide {
+  position: absolute;
+  top: 5px;
+  right: 10px; }
+
+@media (max-width: 767px) {
+  .sg-rate .sg-rate--stars {
+    border: none; }
+  .sg-rate .sg-button--hide {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: 30px; } }

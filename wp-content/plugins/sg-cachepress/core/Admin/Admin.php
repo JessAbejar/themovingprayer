@@ -20,6 +20,9 @@ class Admin {
 	 */
 	public function __construct() {
 		$this->modules = new Modules();
+		$admin_bar     = new Admin_Bar();
+
+		add_action( 'wp_ajax_admin_bar_purge_cache', array( $admin_bar, 'purge_cache' ) );
 
 		// Bail if there is nothing to display.
 		if ( empty( $this->modules->get_active_tabs() ) ) {
@@ -28,7 +31,6 @@ class Admin {
 
 		if ( is_network_admin() ) {
 			add_action( 'network_admin_menu', array( $this, 'add_plugin_admin_menu' ) );
-			new Admin_Bar();
 		}
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -37,14 +39,10 @@ class Admin {
 
 		if ( ! $this->is_multisite_without_permissions() ) {
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
-			add_action( 'admin_notices', array( $this, 'memcache_notice' ) );
+			// add_action( 'admin_notices', array( $this, 'memcache_notice' ) );
 			add_action( 'wp_ajax_dismiss_memcache_notice', array( $this, 'hide_memcache_notice' ) );
 			add_action( 'wp_ajax_dismiss_blocking_plugins_notice', array( $this, 'hide_blocking_plugins_notice' ) );
 			add_action( 'wp_ajax_dismiss_cache_plugins_notice', array( $this, 'hide_cache_plugins_notice' ) );
-
-			if ( ! is_network_admin() ) {
-				new Admin_Bar();
-			}
 		}
 
 	}
@@ -143,7 +141,7 @@ class Admin {
 
 		$data = array(
 			'rest_base'          => untrailingslashit( get_rest_url( null, Rest::REST_NAMESPACE ) ),
-			'home_url'           => home_url( '/' ),
+			'home_url'           => Helper::get_home_url(),
 			'php_version'        => Htaccess::get_instance()->get_php_version(),
 			'is_cron_disabled'   => Helper::is_cron_disabled(),
 			'modules'            => $this->modules->get_active_modules(),
@@ -151,6 +149,7 @@ class Admin {
 			'locale'             => Helper::get_i18n_data_json(),
 			'should_flush_cache' => $this->should_flush_cache(),
 			'localeSlug'         => join( '-', explode( '_', \get_user_locale() ) ),
+			'wp_nonce'           => wp_create_nonce( 'wp_rest' ),
 			'config'             => array(
 				'iconsPath' => SiteGround_Optimizer\URL . '/assets/images/svg',
 			),
@@ -189,6 +188,7 @@ class Admin {
 	 */
 	public function hide_memcache_notice() {
 		update_option( 'siteground_optimizer_memcache_notice', 0 );
+		update_site_option( 'siteground_optimizer_memcache_notice', 0 );
 	}
 
 	/**
@@ -198,6 +198,7 @@ class Admin {
 	 */
 	public function hide_blocking_plugins_notice() {
 		update_option( 'siteground_optimizer_blocking_plugins_notice', 0 );
+		update_site_option( 'siteground_optimizer_blocking_plugins_notice', 0 );
 	}
 
 	/**
@@ -207,6 +208,7 @@ class Admin {
 	 */
 	public function hide_cache_plugins_notice() {
 		update_option( 'siteground_optimizer_cache_plugins_notice', 0 );
+		update_site_option( 'siteground_optimizer_cache_plugins_notice', 0 );
 	}
 
 
@@ -217,7 +219,7 @@ class Admin {
 	 */
 	public function memcache_notice() {
 		// Get the option.
-		$show_notice = (int) get_option( 'siteground_optimizer_memcache_notice', 0 );
+		$show_notice = (int) get_site_option( 'siteground_optimizer_memcache_notice', 0 );
 
 		// Bail if the current user is not admin or if we sholdn't  display notice.
 		if (

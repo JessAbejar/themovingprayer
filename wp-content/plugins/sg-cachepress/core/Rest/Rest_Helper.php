@@ -336,6 +336,20 @@ class Rest_Helper {
 		// Get the php version.
 		$php_version = $this->validate_and_get_option_value( $request, 'php_version' );
 
+		$php_versions_request = wp_remote_get( 'https://updates.sgvps.net/supported-versions.json' );
+		$php_versions = json_decode( wp_remote_retrieve_body( $php_versions_request ), true );
+
+		if ( ! in_array( $php_version, $php_versions['versions'], false ) ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'data'    => array(
+						'message' => __( 'Cannot change PHP Version', 'sg-cachepress' ),
+					),
+				)
+			);
+		}
+
 		$this->htaccess->disable( 'php' );
 		$result = $this->htaccess->enable(
 			'php',
@@ -474,6 +488,18 @@ class Rest_Helper {
 	 */
 	public function reset_images_optimization() {
 		$this->images_optimizer->reset_image_optimization_status();
+
+		wp_send_json_success();
+	}
+
+	/**
+	 * Hide the rating box
+	 *
+	 * @since  5.0.12
+	 */
+	public function handle_hide_rating() {
+		update_option( 'siteground_optimizer_hide_rating', 1 );
+		update_site_option( 'siteground_optimizer_hide_rating', 1 );
 
 		wp_send_json_success();
 	}

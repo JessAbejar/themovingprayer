@@ -94,20 +94,27 @@ class Lazy_Load_Images {
 	public function filter_html( $content ) {
 
 		// Bail if it's feed or if the content is empty.
-		if ( is_feed() || empty( $content ) ) {
+		if (
+			is_feed() ||
+			empty( $content ) ||
+			is_admin() ||
+			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ||
+			method_exists( 'FLBuilderModel', 'is_builder_enabled' ) ||
+			wp_is_mobile()
+		) {
 			return $content;
 		}
 
 		// Search patterns.
 		$patterns = array(
-			'/(?<!noscript\>)(<img([\w\W]+?)>)/i',
+			'/(?<!noscript\>)((<img.*?src=["|\'].*?["|\']).*?(\/?>))/i',
 			'/(?<!noscript\>)(<img.*?)(src)=["|\']((?!data).*?)["|\']/i',
 			'/(?<!noscript\>)(<img.*?)((srcset)=["|\'](.*?)["|\'])/i',
 		);
 
 		// Replacements.
 		$replacements = array(
-			'$1<noscript>$1</noscript>',
+			'$1<noscript>$2$3</noscript>',
 			'$1src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-$2="$3"',
 			'$1data-$3="$4"',
 		);

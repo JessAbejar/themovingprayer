@@ -63,6 +63,7 @@ class Htaccess {
 		'php'           => array(
 			'enabled'  => '/START PHP VERSION CHANGE forced by SG Optimizer/si',
 			'disabled' => '/\#\s+START PHP VERSION CHANGE forced by SG Optimizer(.+?)\#\s+END PHP VERSION CHANGE\n|(AddHandler\s+application\/x-httpd-php.*?$)/ims',
+			'disable_all' => '/\#\s+START PHP VERSION CHANGE forced by SG Optimizer(.+?)\#\s+END PHP VERSION CHANGE\n|(AddHandler\s+application\/x-httpd-php.*?$)/ims',
 		),
 	);
 
@@ -100,14 +101,8 @@ class Htaccess {
 	 * @since 5.0.0
 	 */
 	public function set_htaccess_path() {
-		$slashed_home      = trailingslashit( get_option( 'home' ) );
-		$base              = parse_url( $slashed_home, PHP_URL_PATH );
-		$document_root_fix = str_replace( '\\', '/', realpath( $_SERVER['DOCUMENT_ROOT'] ) );
-		$abspath_fix       = str_replace( '\\', '/', ABSPATH );
-		$home_path         = ! empty( $document_root_fix ) && 0 === strpos( $abspath_fix, $document_root_fix ) ? $document_root_fix . $base : get_home_path();
-
 		// Build the filepath.
-		$filepath = $home_path . '.htaccess';
+		$filepath = $this->wp_filesystem->abspath() . '.htaccess';
 
 		// Create the htaccess if it doesn't exists.
 		if ( ! is_file( $filepath ) ) {
@@ -118,7 +113,6 @@ class Htaccess {
 		if ( ! $this->wp_filesystem->is_writable( $filepath ) ) {
 			return false;
 		}
-
 		// Finally set the path.
 		$this->path = $filepath;
 	}

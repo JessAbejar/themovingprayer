@@ -27,7 +27,7 @@ class Cli_Php_Checker {
 	 * <action>
 	 * : The action: check\change.
 	 * Use `change` along with `version` param, to switch to php version.
-	 * Use `check` to check if the
+	 * Use `check` to check if site plugins and themes are compatible with the current php version.
 	 * ---
 	 * options:
 	 *   - check

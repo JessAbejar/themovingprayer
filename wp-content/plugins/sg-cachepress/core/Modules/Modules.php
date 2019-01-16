@@ -383,6 +383,8 @@ class Modules {
 	public function __construct() {
 		add_action( 'admin_notices', array( $this, 'blocking_plugins_notice' ) );
 		add_action( 'admin_notices', array( $this, 'cache_plugins_notice' ) );
+		add_action( 'network_admin_notices', array( $this, 'cache_plugins_notice' ) );
+		add_action( 'network_admin_notices', array( $this, 'blocking_plugins_notice' ) );
 
 		if ( 1 === (int) get_option( 'disable_conflicting_modules', 0 ) ) {
 			add_action( 'plugins_loaded', array( $this, 'disable_modules' ) );
@@ -430,8 +432,9 @@ class Modules {
 	public function blocking_plugins_notice() {
 
 		if (
-			0 === (int) get_option( 'siteground_optimizer_blocking_plugins_notice', 1 ) ||
-			! current_user_can( 'administrator' )
+			0 === (int) get_site_option( 'siteground_optimizer_blocking_plugins_notice', 1 ) ||
+			! current_user_can( 'administrator' ) ||
+			( is_multisite() && ! is_network_admin() )
 		) {
 			return;
 		}
@@ -465,8 +468,9 @@ class Modules {
 	public function cache_plugins_notice() {
 
 		if (
-			0 === (int) get_option( 'siteground_optimizer_cache_plugins_notice', 1 ) ||
-			! current_user_can( 'administrator' )
+			0 === (int) get_site_option( 'siteground_optimizer_cache_plugins_notice', 1 ) ||
+			! current_user_can( 'administrator' ) ||
+			( is_multisite() && ! is_network_admin() )
 		) {
 			return;
 		}
