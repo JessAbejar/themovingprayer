@@ -18,6 +18,15 @@ class Images_Optimizer {
 	const BATCH_LIMIT = 200;
 
 	/**
+	 * The png image size limit. Bigger images won't be optimized.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @var int The png image size limit.
+	 */
+	const PNGS_SIZE_LIMIT = 500000;
+
+	/**
 	 * The constructor.
 	 *
 	 * @since 5.0.0
@@ -265,6 +274,12 @@ class Images_Optimizer {
 				break;
 
 			case IMAGETYPE_PNG:
+				// Bail if the image is bigger than 500k.
+				// PNG usage is not recommended and images bigger than 500kb
+				// hit the limits.
+				if ( filesize( $filepath ) > self::PNGS_SIZE_LIMIT ) {
+					return true;
+				}
 				$placeholder = 'optipng -o2 %s 2>&1';
 				break;
 

@@ -65,11 +65,11 @@ class Memcache {
 			// Get the last fail option.
 			$last_fail = get_option( 'siteground_optimizer_last_fail' );
 
-			// Start fail timer of 5 minutes cooldown until memcache will be disabled as option in wp-admin.
+			// Start fail timer of 60 minutes cooldown until memcache will be disabled as option in wp-admin.
 			if ( 0 === $last_fail ) {
 				// Update the last fail with current timestamp.
 				update_option( 'siteground_optimizer_last_fail', time() );
-			} elseif ( $last_fail < time() - 60 * 5 ) {
+			} elseif ( $last_fail < time() - 60 * 60 ) {
 				// Disable the memcache if the dropin is still not working.
 				Options::disable_option( 'siteground_optimizer_enable_memcached' );
 				Options::disable_option( 'siteground_optimizer_last_fail' );

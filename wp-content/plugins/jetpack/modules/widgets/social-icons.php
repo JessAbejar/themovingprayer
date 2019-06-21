@@ -364,7 +364,7 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 		$aria_hidden = ' aria-hidden="true"';
 
 		// Begin SVG markup.
-		$svg = '<svg class="icon icon-' . esc_attr( $args['icon'] ) . '"' . $aria_hidden . ' role="img">';
+		$svg = '<svg class="icon icon-' . esc_attr( $args['icon'] ) . '"' . $aria_hidden . ' role="presentation">';
 
 		/*
 		 * Display the icon.
@@ -478,6 +478,16 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 				'label' => 'Digg',
 			),
 			array(
+				'url'   => 'discord.gg',
+				'icon'  => 'discord',
+				'label' => 'Discord',
+			),
+			array(
+				'url'   => 'discordapp.com',
+				'icon'  => 'discord',
+				'label' => 'Discord',
+			),
+			array(
 				'url'   => 'dribbble.com',
 				'icon'  => 'dribbble',
 				'label' => 'Dribbble',
@@ -518,16 +528,6 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 				'label' => 'Goodreads',
 			),
 			array(
-				'url'   => 'google.com/+',
-				'icon'  => 'google-plus',
-				'label' => 'Google +',
-			),
-			array(
-				'url'   => 'plus.google.com',
-				'icon'  => 'google-plus',
-				'label' => 'Google +',
-			),
-			array(
 				'url'   => 'google.com',
 				'icon'  => 'google',
 				'label' => 'Google',
@@ -563,7 +563,7 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 				'label' => 'Medium',
 			),
 			array(
-				'url'   => 'pinterest.com',
+				'url'   => 'pinterest.',
 				'icon'  => 'pinterest',
 				'label' => 'Pinterest',
 			),
@@ -606,6 +606,11 @@ class Jetpack_Widget_Social_Icons extends WP_Widget {
 				'url'   => 'spotify.com',
 				'icon'  => 'spotify',
 				'label' => 'Spotify',
+			),
+			array(
+				'url'   => 'stackoverflow.com',
+				'icon'  => 'stackoverflow',
+				'label' => 'Stack Overflow',
 			),
 			array(
 				'url'   => 'stumbleupon.com',

@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       SG Optimizer
  * Description:       This plugin will link your WordPress application with all the performance optimizations provided by SiteGround
- * Version:           5.0.13
+ * Version:           5.1.3
  * Author:            SiteGround
  * Text Domain:       sg-cachepress
  * Domain Path:       /languages
@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 // Define version constant.
 if ( ! defined( __NAMESPACE__ . '\VERSION' ) ) {
-	define( __NAMESPACE__ . '\VERSION', '5.0.13' );
+	define( __NAMESPACE__ . '\VERSION', '5.1.3' );
 }
 
 // Define slug constant.

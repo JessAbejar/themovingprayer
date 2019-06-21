@@ -139,15 +139,19 @@ class Admin {
 			true
 		);
 
+		$php_version_info = Htaccess::get_instance()->get_php_version();
+
 		$data = array(
 			'rest_base'          => untrailingslashit( get_rest_url( null, Rest::REST_NAMESPACE ) ),
 			'home_url'           => Helper::get_home_url(),
-			'php_version'        => Htaccess::get_instance()->get_php_version(),
+			'php_version'        => $php_version_info['version'],
+			'is_php_changed'     => $php_version_info['has_been_changed'],
 			'is_cron_disabled'   => Helper::is_cron_disabled(),
 			'modules'            => $this->modules->get_active_modules(),
 			'tabs'               => $this->modules->get_active_tabs(),
 			'locale'             => Helper::get_i18n_data_json(),
 			'should_flush_cache' => $this->should_flush_cache(),
+			'is_shop'            => is_plugin_active( 'woocommerce/woocommerce.php' ) ? 1 : 0,
 			'localeSlug'         => join( '-', explode( '_', \get_user_locale() ) ),
 			'wp_nonce'           => wp_create_nonce( 'wp_rest' ),
 			'config'             => array(

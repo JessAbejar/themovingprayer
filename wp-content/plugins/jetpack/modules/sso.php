@@ -58,23 +58,6 @@ class Jetpack_SSO {
 	 **/
 	public static function module_configure_button() {
 		Jetpack::enable_module_configurable( __FILE__ );
-		Jetpack::module_configuration_load( __FILE__, array( __CLASS__, 'module_configuration_load' ) );
-		Jetpack::module_configuration_head( __FILE__, array( __CLASS__, 'module_configuration_head' ) );
-		Jetpack::module_configuration_screen( __FILE__, array( __CLASS__, 'module_configuration_screen' ) );
-	}
-
-	public static function module_configuration_load() {}
-
-	public static function module_configuration_head() {}
-
-	public static function module_configuration_screen() {
-		?>
-		<form method="post" action="options.php">
-			<?php settings_fields( 'jetpack-sso' ); ?>
-			<?php do_settings_sections( 'jetpack-sso' ); ?>
-			<?php submit_button(); ?>
-		</form>
-		<?php
 	}
 
 	/**
@@ -812,16 +795,12 @@ class Jetpack_SSO {
 				Jetpack::init()->store_json_api_authorization_token( $user->user_login, $user );
 
 			} else if ( ! $is_user_connected ) {
-				$calypso_env = ! empty( $_GET['calypso_env'] )
-					? sanitize_key( $_GET['calypso_env'] )
-					: '';
-
 				wp_safe_redirect(
 					add_query_arg(
 						array(
 							'redirect_to'               => $redirect_to,
 							'request_redirect_to'       => $_request_redirect_to,
-							'calypso_env'               => $calypso_env,
+							'calypso_env'               => Jetpack::get_calypso_env(),
 							'jetpack-sso-auth-redirect' => '1',
 						),
 						admin_url()
@@ -1130,7 +1109,7 @@ class Jetpack_SSO {
 				'message'     => esc_html__( "You've successfully signed in with WordPress.com Secure Sign On!", 'jetpack' ),
 				'icon'        => 'jetpack',
 				'list'        => array(),
-				'description' => esc_html__( 'Interested in learning more about how Secure Sign on keeps your site safer?', 'jetpack' ),
+				'description' => esc_html__( 'Interested in learning more about how Secure Sign On keeps your site safer?', 'jetpack' ),
 				'classes'     => '',
 			),
 			'CTA'             => array(

@@ -3,8 +3,7 @@ Contributors: Hristo Sg, siteground, sstoqnov
 Tags: nginx, caching, speed, memcache, memcached, performance, siteground, nginx, supercacher
 Requires at least: 4.7
 Requires PHP: 5.5
-Tested up to: 5.0
-Stable tag: 1.0
+Tested up to: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,15 +40,83 @@ Here, you can enable or disable optimization for your newly uploaded images, bul
 
 If your plugin does not trigger standard WordPress hooks or you need us to purge the cache, you can use this public function in your code:
 
-    if (function_exists('sg_cachepress_purge_cache')) {
-    sg_cachepress_purge_cache();
-    }
+	if (function_exists('sg_cachepress_purge_cache')) {
+		sg_cachepress_purge_cache();
+	}
 
 Preferrably, you can pass an URL to the function to clear the cache just for it instead of purging the entire cache. For example:
 
-    if (function_exists('sg_cachepress_purge_cache')) {
-    sg_cachepress_purge_cache('https://yoursite.com/pluginpage');
-    }
+	if (function_exists('sg_cachepress_purge_cache')) {
+		sg_cachepress_purge_cache('https://yoursite.com/pluginpage');
+	}
+
+You can exclude styles from being combined and minified using the filters we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
+
+	add_filter( 'sgo_css_combine_exclude', 'css_combine_exclude' );
+	function css_combine_exclude( $exclude_list ) {
+		// Add the style handle to exclude list.
+		$exclude_list[] = 'style-handle';
+		$exclude_list[] = 'style-handle-2';
+
+		return $exclude_list;
+	}
+
+	add_filter( 'sgo_css_minify_exclude', 'css_minify_exclude' );
+	function css_minify_exclude( $exclude_list ) {
+		// Add the style handle to exclude list.
+		$exclude_list[] = 'style-handle';
+		$exclude_list[] = 'style-handle-2';
+
+		return $exclude_list;
+	}
+
+You can exclude script from being minified using the filter we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
+
+	add_filter( 'sgo_js_minify_exclude', 'js_minify_exclude' );
+	function js_minify_exclude( $exclude_list ) {
+		$exclude_list[] = 'script-handle';
+		$exclude_list[] = 'script-handle-2';
+
+		return $exclude_list;
+	}
+
+You can exclude script from being loaded asynchronous using the filter we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
+
+	add_filter( 'sgo_js_async_exclude', 'js_async_exclude' );
+	function js_async_exclude( $exclude_list ) {
+		$exclude_list[] = 'script-handle';
+		$exclude_list[] = 'script-handle-2';
+
+		return $exclude_list;
+	}
+
+You can exclude url or url that contain specific query param using the following filters:
+
+	add_filter( 'sgo_html_minify_exclude_params', 'html_minify_exclude_params' );
+	function html_minify_exclude_params( $exclude_params ) {
+		// Add the query params that you want to exclude.
+		$exclude_params[] = 'test';
+
+		return $exclude_params;
+	}
+
+	add_filter( 'sgo_html_minify_exclude_urls', 'html_minify_exclude' );
+	function html_minify_exclude( $exclude_urls ) {
+		// Add the url that you want to exclude.
+		$exclude_urls[] = 'http://mydomain.com/page-slug';
+
+		return $exclude_urls;
+	}
+
+You can exclude images from Lazy Load using the following filter:
+
+	add_filter( 'sgo_lazy_load_exclude_classes', 'exclude_images_with_specific_class' );
+	function exclude_images_with_specific_class( $classes ) {
+		// Add the class name that you want to exclude from lazy load.
+		$classes[] = 'test-class';
+
+		return $classes;
+	}
 
 = WP-CLI Support = 
 
@@ -69,6 +136,7 @@ In version 5.0 we've added full WP-CLI support for all plugin options and functi
 * wp sg optimize lazyload enable|disable - enables or disables Lazy loading of images
 * wp sg optimize gzip enable|disable - enables or disables Gzip compression for your site
 * wp sg optimize browsercache enable|disable - enables or disables Browser caching rules
+* wp sg status html|js|js-async|css|combine-css|querystring|emojis|images|lazyload_images|lazyload_gravatars|lazyload_thumbnails|lazyload_responsive|lazyload_textwidgets|gzip|browser-caching|memcache|ssl|ssl-fix|autoflush|dynamic-cache - returns optimization current status (enabled|disabled)
 
 = Requirements =
 
@@ -100,6 +168,41 @@ Our plugin uses a cookie in order to function properly. It does not store person
 1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG CachePress listing
 
 == Changelog ==
+
+= Version 5.1.3 =
+* Improved Elementor support
+* Improved CSS optimization for inclusions without protocol
+* Excluded large PNGs from optimizations
+* Added better WP-CLI command documentation
+
+= Version 5.1.2 =
+* Added support for Recommended by SiteGround PHP Version
+* Improved LazyLoad Support for WooCommerce sites
+* Improved Image Optimization checks
+* Improved PHP Version switching checks
+* Added wp cli status command for checking optimization status
+* Fixed bug with Combine CSS
+
+= Version 5.1.1 =
+* Improved cache invalidation for combined styles
+* Cache purge from the admin bar now handles combined files too
+* Added filter to exclude images from Lazy Loading
+* Added filter to exclude pages from HTML Minification
+* Added Filter to query params from HTML Minification
+* Added PHP 7.3 support
+
+= Version 5.1.0 =
+* Added CSS Combination Functionality
+* Added Async Load of Render-Blocking JS
+* Added WooCommerce Support for LazyLoad
+* Added Filter to Exclude Styles from CSS Combination
+* Improved Lazy Load Functionality on Mobile Devices
+* Fixed Issue with WP Rocket’s .htaccess rules and GZIP
+* Fixed Issue with Query String Removal Script in the Admin Section
+* Fixed Compatibility Issues with 3rd Party Plugins and Lazy Load
+* Fixed Compatibility Issues with Woo PDF Catalog Plugin and HTML Minification
+* Improved Memcached Reliability
+* Improved Lazy Load for Responsive Images
 
 = Version 5.0.13 =
 * Modified HTML minification to keep comments

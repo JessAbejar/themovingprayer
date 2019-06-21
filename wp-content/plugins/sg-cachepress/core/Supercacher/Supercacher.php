@@ -1,6 +1,7 @@
 <?php
 namespace SiteGround_Optimizer\Supercacher;
 
+use SiteGround_Optimizer\Front_End_Optimization\Front_End_Optimization;
 /**
  * SG CachePress main plugin class
  */
@@ -65,6 +66,16 @@ class Supercacher {
 		add_action( 'update_option_siteground_optimizer_enable_cache', array( $this, 'purge_everything' ) );
 		add_action( 'update_option_siteground_optimizer_autoflush_cache', array( $this, 'purge_everything' ) );
 		add_action( 'update_option_siteground_optimizer_enable_memcached', array( $this, 'purge_everything' ) );
+		add_action( 'update_option_siteground_optimizer_combine_css', array( $this, 'delete_assets' ) );
+
+		// Delete assets (minified js and css files) every 30 days.
+		add_action( 'siteground_delete_assets', array( $this, 'delete_assets' ) );
+		add_filter( 'cron_schedules', array( $this, 'add_siteground_cron_schedule' ) );
+
+		// Schedule a cron job that will delete all assets (minified js and css files) every 30 days.
+		if ( ! wp_next_scheduled( 'siteground_delete_assets' ) ) {
+			wp_schedule_event( time(), 'siteground_monthly', 'siteground_delete_assets' );
+		}
 
 		$this->purge_on_other_events();
 		$this->purge_on_options_save();
@@ -307,5 +318,46 @@ class Supercacher {
 
 		// The header doesn't exists.
 		return false;
+	}
+
+	/**
+	 * Adds custom cron schdule.
+	 *
+	 * @since 5.1.0
+	 *
+	 * @param array $schedules An array of non-default cron schedules.
+	 */
+	public function add_siteground_cron_schedule( $schedules ) {
+
+		if ( ! array_key_exists( 'siteground_monthly', $schedules ) ) {
+			$schedules['siteground_monthly'] = array(
+				'interval' => 2635200,
+				'display' => __( 'Monthly', 'sg-cachepress' ),
+			);
+		}
+		return $schedules;
+	}
+
+	/**
+	 * Delete plugin assets
+	 *
+	 * @since  5.1.0
+	 */
+	public static function delete_assets() {
+		$assets_dir = Front_End_Optimization::get_instance()->assets_dir;
+		$files = scandir( $assets_dir );
+
+		foreach ( $files as $filename ) {
+			// Build the filepath.
+			$maybe_file = trailingslashit( $assets_dir ) . $filename;
+
+			// Bail if the file is not a file.
+			if ( ! is_file( $maybe_file ) ) {
+				continue;
+			}
+
+			// Delete the file.
+			unlink( $maybe_file );
+		}
 	}
 }

@@ -37,6 +37,9 @@ class Cli {
 
 		// Php version.
 		\WP_CLI::add_command( 'sg phpver', 'SiteGround_Optimizer\Cli\Cli_Php_Checker' );
+
+		// Status.
+		\WP_CLI::add_command( 'sg status', 'SiteGround_Optimizer\Cli\Cli_Status' );
 	}
 
 }

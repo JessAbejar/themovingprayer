@@ -55,6 +55,7 @@ class Admin_Bar {
 
 		Supercacher::purge_cache();
 		Supercacher::flush_memcache();
+		Supercacher::delete_assets();
 
 		wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
 		exit;

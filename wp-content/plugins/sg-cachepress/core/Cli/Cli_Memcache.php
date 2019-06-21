@@ -39,7 +39,7 @@ class Cli_Memcache {
 			$port = $memcache->get_memcached_port();
 
 			if ( empty( $port ) ) {
-				return \WP_CLI::error( 'SG Optiimzer was unable to connect to the Memcached server and it was disabled. Please, check your cPanel and turn it on if disabled.' );
+				return \WP_CLI::error( 'SG Optimizer was unable to connect to the Memcached server and it was disabled. Please, check your cPanel and turn it on if disabled.' );
 			}
 
 			// First enable the option.

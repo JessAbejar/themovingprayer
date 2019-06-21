@@ -35,19 +35,8 @@ class Minifier {
 	 * @var array Array of all js files that should be ignored.
 	 */
 	private $js_ignore_list = array(
-		'/wp-includes/js/jquery/jquery.js',
-	);
-
-	/**
-	 * Script handles that should be loaded async.
-	 *
-	 * @since 5.0.0
-	 *
-	 * @var array Array of script handles that should be loaded async.
-	 */
-	private $async_scripts = array(
-		'siteground-optimizer-lazy-load-images-js',
-		'siteground-optimizer-lazy-load-images-responsive-js',
+		'jquery',
+		'jquery-core',
 	);
 
 	/**
@@ -58,6 +47,15 @@ class Minifier {
 	 * @var array Array of all css files that should be ignored.
 	 */
 	private $css_ignore_list = array();
+
+	/**
+	 * The singleton instance.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @var \Minifier The singleton instance.
+	 */
+	private static $instance;
 
 	/**
 	 * The constructor.
@@ -74,10 +72,14 @@ class Minifier {
 			$this->wp_filesystem = Helper::setup_wp_filesystem();
 		}
 
-		// Set the assets dir path.
-		$this->set_assets_directory_path();
+		$this->assets_dir = Front_End_Optimization::get_instance()->assets_dir;
 
-		if ( Options::is_enabled( 'siteground_optimizer_optimize_html' ) ) {
+		self::$instance = $this;
+
+		if (
+			Options::is_enabled( 'siteground_optimizer_optimize_html' ) &&
+			! defined( 'WP_CLI' )
+		) {
 			// Add the hooks that we will use t ominify the html.
 			add_action( 'init', array( $this, 'start_html_minifier_buffer' ) );
 			add_action( 'shutdown', array( $this, 'end_html_minifier_buffer' ) );
@@ -85,84 +87,26 @@ class Minifier {
 
 		if ( Options::is_enabled( 'siteground_optimizer_optimize_javascript' ) ) {
 			// Minify the js files.
-			add_action( 'wp_print_scripts', array( $this, 'minify_scripts' ), PHP_INT_MAX );
+			add_action( 'wp_print_scripts', array( $this, 'minify_scripts' ), PHP_INT_MAX - 1 );
 			add_action( 'wp_print_footer_scripts', array( $this, 'minify_scripts' ), 9.999999 );
 		}
 
 		if ( Options::is_enabled( 'siteground_optimizer_optimize_css' ) ) {
 			// Minify the css files.
-			add_action( 'wp_print_styles', array( $this, 'minify_styles' ), PHP_INT_MAX );
-			add_action( 'wp_print_footer_scripts', array( $this, 'minify_styles' ), 9.999999 );
-		}
-
-		// Add async attr to all scripts.
-		add_filter( 'script_loader_tag', array( $this, 'add_async_attribute' ), 10, 2 );
-	}
-
-	/**
-	 * Load all scripts async.
-	 * This function adds async attr to all scripts.
-	 *
-	 * @since 5.0.0
-	 *
-	 * @param string $tag    The <script> tag for the enqueued script.
-	 * @param string $handle The script's registered handle.
-	 */
-	public function add_async_attribute( $tag, $handle ) {
-		// Bail if this is not our scrupt.
-		if ( ! in_array( $handle, $this->async_scripts ) ) {
-			return $tag;
-		}
-
-		return str_replace( ' src', ' async="async" src', $tag );
-	}
-	/**
-	 * Set the assets directory.
-	 *
-	 * @since  5.0.0
-	 */
-	private function set_assets_directory_path() {
-		// Bail if the assets dir has been set.
-		if ( null !== $this->assets_dir ) {
-			return;
-		}
-
-		// Get the uploads dir.
-		$upload_dir = wp_upload_dir();
-
-		// Build the assets dir name.
-		$directory = $upload_dir['basedir'] . '/siteground-optimizer-assets';
-
-		// Check if directory exists and try to create it if not.
-		$is_directory_created = ! is_dir( $directory ) ? $this->create_directory( $directory ) : true;
-
-		// Set the assets dir.
-		if ( $is_directory_created ) {
-			$this->assets_dir = $directory;
+			add_action( 'wp_print_styles', array( $this, 'minify_styles' ), 11 );
+			add_action( 'wp_print_footer_scripts', array( $this, 'minify_styles' ), 11 );
 		}
 	}
 
 	/**
-	 * Create directory.
+	 * Get the singleton instance.
 	 *
-	 * @since  5.0.0
+	 * @since 5.1.0
 	 *
-	 * @param  string $directory The new directory path.
-	 *
-	 * @return bool              True is the directory is created.
-	 *                           False on failure.
+	 * @return \Minifier The singleton instance.
 	 */
-	private function create_directory( $directory ) {
-		// Create the directory and return the result.
-		$is_directory_created = wp_mkdir_p( $directory );
-
-		// Bail if cannot create temp dir.
-		if ( false === $is_directory_created ) {
-			// translators: `$directory` is the name of directory that should be created.
-			error_log( sprintf( 'Cannot create directory: %s.', $directory ) );
-		}
-
-		return $is_directory_created;
+	public static function get_instance() {
+		return self::$instance;
 	}
 
 	/**
@@ -181,22 +125,24 @@ class Minifier {
 		$scripts = wp_clone( $wp_scripts );
 		$scripts->all_deps( $scripts->queue );
 
+		$excluded_scripts = apply_filters( 'sgo_js_minify_exclude', $this->js_ignore_list );
+
 		// Get groups of handles.
 		foreach ( $scripts->to_do as $handle ) {
 			// Skip scripts.
 			if (
 				stripos( $wp_scripts->registered[ $handle ]->src, '.min.js' ) !== false || // If the file is minified already.
 				false === $wp_scripts->registered[ $handle ]->src || // If the source is empty.
-				in_array( $wp_scripts->registered[ $handle ]->src, $this->js_ignore_list ) || // If the file is ignored.
-				strpos( Helper::get_home_url(), parse_url( $wp_scripts->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
+				in_array( $handle, $excluded_scripts ) || // If the file is ignored.
+				@strpos( Helper::get_home_url(), parse_url( $wp_scripts->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
 			) {
 				continue;
 			}
 
-			$original_filepath = $this->get_original_filepath( $wp_scripts->registered[ $handle ]->src );
+			$original_filepath = Front_End_Optimization::get_original_filepath( $wp_scripts->registered[ $handle ]->src );
 
 			// Build the minified version filename.
-			$filename = $this->assets_dir . '/' . $handle . '.min.js';
+			$filename = $this->assets_dir . $handle . '.min.js';
 
 			// Check for original file modifications and create the minified copy.
 			$is_minified_file_ok = $this->check_and_create_file( $filename, $original_filepath );
@@ -207,36 +153,6 @@ class Minifier {
 				$wp_scripts->registered[ $handle ]->src = str_replace( ABSPATH, Helper::get_home_url(), $filename );
 			}
 		}
-	}
-
-	/**
-	 * Get the original filepath by file handle.
-	 *
-	 * @since  5.0.0
-	 *
-	 * @param  string $original File handle.
-	 *
-	 * @return string           Original filepath.
-	 */
-	public function get_original_filepath( $original ) {
-		$home_url = Helper::get_home_url();
-		// Get the home_url from database. Some plugins like qtranslate for example,
-		// modify the home_url, which result to wrong replacement with ABSPATH for resources loaded via link.
-		// Very ugly way to handle resources without protocol.
-		$result = parse_url( $home_url );
-
-		$replace = $result['scheme'] . '://';
-
-		$new = preg_replace( '~^https?:\/\/|^\/\/~', $replace, $original );
-
-		// Get the filepath to original file.
-		if ( strpos( $new, $home_url ) !== false ) {
-			$original_filepath = str_replace( $home_url, ABSPATH, $new );
-		} else {
-			$original_filepath = untrailingslashit( ABSPATH ) . $new;
-		}
-
-		return $original_filepath;
 	}
 
 	/**
@@ -256,8 +172,8 @@ class Minifier {
 		$new_file_path     = Front_End_Optimization::remove_query_strings( preg_replace( '/\?.*/', '', $new_file_path ) );
 
 		// Gets file modification time.
-		$original_file_timestamp = @filemtime( $original_filepath );
-		$minified_file_timestamp = @filemtime( $new_file_path );
+		$original_file_timestamp = file_exists( $original_filepath ) ? filemtime( $original_filepath ) : true;
+		$minified_file_timestamp = file_exists( $new_file_path ) ? filemtime( $new_file_path ) : false;
 
 		// Compare the original and new file timestamps.
 		// This check will fail if the minified file doens't exists
@@ -307,24 +223,27 @@ class Minifier {
 			return;
 		}
 
-		$scripts = wp_clone( $wp_styles );
-		$scripts->all_deps( $scripts->queue );
+		$styles = wp_clone( $wp_styles );
+		$styles->all_deps( $styles->queue );
+
+		$excluded_styles = apply_filters( 'sgo_css_minify_exclude', $this->css_ignore_list );
 
 		// Get groups of handles.
-		foreach ( $scripts->to_do as $handle ) {
-			// Skip scripts.
+		foreach ( $styles->to_do as $handle ) {
+			// Skip styles.
 			if (
 				stripos( $wp_styles->registered[ $handle ]->src, '.min.css' ) !== false || // If the file is minified already.
 				false === $wp_styles->registered[ $handle ]->src || // If the source is empty.
+				in_array( $handle, $excluded_styles ) || // If the file is ignored.
 				strpos( Helper::get_home_url(), parse_url( $wp_styles->registered[ $handle ]->src, PHP_URL_HOST ) ) === false // Skip all external sources.
 			) {
 				continue;
 			}
 
-			$original_filepath = $this->get_original_filepath( $wp_styles->registered[ $handle ]->src );
+			$original_filepath = Front_End_Optimization::get_original_filepath( $wp_styles->registered[ $handle ]->src );
 
 			// Build the minified version filename.
-			$filename = dirname( $original_filepath ) . '/' . $handle . '.min.css';
+			$filename = dirname( $original_filepath ) . '/' . $wp_styles->registered[ $handle ]->handle . '.min.css';
 
 			// Check for original file modifications and create the minified copy.
 			$is_minified_file_ok = $this->check_and_create_file( $filename, $original_filepath );
@@ -358,6 +277,11 @@ class Minifier {
 	 * @since  5.0.0
 	 */
 	public function start_html_minifier_buffer() {
+		// Do not minify the html if the current url is excluded.
+		if ( $this->is_url_excluded() ) {
+			return;
+		}
+
 		ob_start( array( $this, 'minify_html' ) );
 	}
 
@@ -370,5 +294,60 @@ class Minifier {
 		if ( ob_get_length() ) {
 			ob_end_flush();
 		}
+	}
+
+	/**
+	 * Check if the current url has params that are excluded.
+	 *
+	 * @since  5.1.0
+	 *
+	 * @return boolean True if the url is excluded, false otherwise.
+	 */
+	public function is_url_excluded() {
+		$protocol = isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
+
+		// Build the current url.
+		$url = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER["REQUEST_URI"];
+
+		// Remove the query params from the url.
+		$plain_url = trailingslashit( $protocol . '://' . $_SERVER['HTTP_HOST'] . parse_url( $_SERVER["REQUEST_URI"], PHP_URL_PATH ) );
+
+		// Get excluded urls.
+		$excluded_urls = apply_filters( 'sgo_html_minify_exclude_urls', array() );
+
+		foreach ( $excluded_urls as $excluded_url ) {
+
+			// Add trailingslash if the excluded url doesn't have query params.
+			if ( ! parse_url( $excluded_url, PHP_URL_QUERY ) ) {
+				$excluded_url = trailingslashit( $excluded_url );
+
+				// Check if the current url matches the excluded url.
+				if ( $plain_url === $excluded_url ) {
+					return true;
+				}
+			}
+
+			// Compare the original url with excluded url provided from the client.
+			if ( $url === $excluded_url ) {
+				return true;
+			}
+		}
+
+		// If there are no params we don't need to check the query params.
+		if ( ! isset( $_REQUEST ) ) {
+			return false;
+		}
+
+		// Get excluded params.
+		$excluded_params = apply_filters( 'sgo_html_minify_exclude_params', array( 'pdf-catalog' ) );
+
+		// Check if any of the excluded params exists in the request.
+		foreach ( $excluded_params as $param ) {
+			if ( array_key_exists( $param, $_REQUEST ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

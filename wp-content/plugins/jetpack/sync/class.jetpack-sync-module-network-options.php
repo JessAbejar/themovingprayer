@@ -33,10 +33,13 @@ class Jetpack_Sync_Module_Network_Options extends Jetpack_Sync_Module {
 		}
 
 		// full sync
-		add_filter( 'jetpack_sync_before_send_jetpack_full_sync_network_options', array(
-			$this,
-			'expand_network_options',
-		) );
+		add_filter(
+			'jetpack_sync_before_send_jetpack_full_sync_network_options',
+			array(
+				$this,
+				'expand_network_options',
+			)
+		);
 	}
 
 	public function set_defaults() {
@@ -45,7 +48,7 @@ class Jetpack_Sync_Module_Network_Options extends Jetpack_Sync_Module {
 
 	function enqueue_full_sync_actions( $config, $max_items_to_enqueue, $state ) {
 		if ( ! is_multisite() ) {
-			return array( 0, true );
+			return array( null, true );
 		}
 
 		/**
@@ -63,9 +66,9 @@ class Jetpack_Sync_Module_Network_Options extends Jetpack_Sync_Module {
 
 	function estimate_full_sync_actions( $config ) {
 		if ( ! is_multisite() ) {
-			return 0;
+			return null;
 		}
-		
+
 		return 1;
 	}
 

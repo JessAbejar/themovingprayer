@@ -38,21 +38,26 @@ class Cli_Https {
 			return \WP_CLI::error( 'Please provide action: enable/disable or add the subcommand `fix`' );
 		}
 
-		if ( 'fix' === $args[0] ) {
-			if ( empty( $args[1] ) ) {
-				return \WP_CLI::error( 'Please provide action: enable/disable' );
-			}
-			return $this->apply_https_fix( $args[1] );
-		}
+		switch ( $args[0] ) {
+			case 'fix':
+				if ( empty( $args[1] ) ) {
+					return \WP_CLI::error( 'Please provide action: enable/disable' );
+				}
+				return $this->apply_https_fix( $args[1] );
+			case 'enable':
+				$result = $this->ssl->enable();
+				true === $result ? Options::enable_option( 'siteground_optimizer_ssl_enabled' ) : '';
+				$type = true;
+				break;
 
-		if ( 'enable' === $args[0] ) {
-			$result = $this->ssl->enable();
-			true === $result ? Options::enable_option( 'siteground_optimizer_ssl_enabled' ) : '';
-			$type = true;
-		} else {
-			$result = $this->ssl->disable();
-			true === $result ? Options::disable_option( 'siteground_optimizer_ssl_enabled' ) : '';
-			$type = false;
+			case 'disable':
+				$result = $this->ssl->disable();
+				true === $result ? Options::disable_option( 'siteground_optimizer_ssl_enabled' ) : '';
+				$type = false;
+				break;
+			default:
+				\WP_CLI::error( 'Please specify action' );
+				break;
 		}
 
 		$message = $this->option_service->get_response_message( $result, 'siteground_optimizer_ssl_enabled', $type );

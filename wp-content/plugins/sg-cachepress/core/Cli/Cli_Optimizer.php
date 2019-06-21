@@ -31,7 +31,9 @@ class Cli_Optimizer {
 	 * options:
 	 *  - html
 	 *  - js
+	 *  - js-async
 	 *  - css
+	 *  - combine-css
 	 *  - querystring
 	 *  - emojis
 	 *  - images
@@ -59,6 +61,8 @@ class Cli_Optimizer {
 			case 'css':
 			case 'querystring':
 			case 'emojis':
+			case 'js-async':
+			case 'combine-css':
 			case 'images':
 				return $this->optimize( $args[1], $args[0], $blog_id );
 			case 'lazyload':
@@ -101,7 +105,9 @@ class Cli_Optimizer {
 		$mapping = array(
 			'html'        => 'siteground_optimizer_optimize_html',
 			'js'          => 'siteground_optimizer_optimize_javascript',
+			'js-async'    => 'siteground_optimizer_optimize_javascript_async',
 			'css'         => 'siteground_optimizer_optimize_css',
+			'combine-css' => 'siteground_optimizer_combine_css',
 			'querystring' => 'siteground_optimizer_remove_query_strings',
 			'emojis'      => 'siteground_optimizer_disable_emojis',
 			'images'      => 'siteground_optimizer_optimize_images',
@@ -126,6 +132,10 @@ class Cli_Optimizer {
 
 				$type = false;
 				break;
+		}
+
+		if ( ! isset( $result ) ) {
+			\WP_CLI::error( 'Please specify action' );
 		}
 
 		$message = $this->option_service->get_response_message( $result, $mapping[ $option ], $type );

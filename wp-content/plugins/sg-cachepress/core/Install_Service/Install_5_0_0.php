@@ -54,7 +54,9 @@ class Install_5_0_0 extends Install {
 			'fix_insecure_content'      => 'siteground_optimizer_fix_insecure_content',
 			'optimize_html'             => 'siteground_optimizer_optimize_html',
 			'optimize_javascript'       => 'siteground_optimizer_optimize_javascript',
+			'optimize_javascript_async' => 'siteground_optimizer_optimize_javascript_async',
 			'optimize_css'              => 'siteground_optimizer_optimize_css',
+			'combine_css'               => 'siteground_optimizer_combine_css',
 			'remove_query_strings'      => 'siteground_optimizer_remove_query_strings',
 			'disable_emojis'            => 'siteground_optimizer_disable_emojis',
 			'optimize_images'           => 'siteground_optimizer_optimize_images',
@@ -150,12 +152,14 @@ class Install_5_0_0 extends Install {
 		return array_merge(
 			$options,
 			array(
-				'optimize_html'        => get_option( 'siteground_optimizer_optimize_html', 0 ),
-				'optimize_javascript'  => get_option( 'siteground_optimizer_optimize_javascript', 0 ),
-				'optimize_css'         => get_option( 'siteground_optimizer_optimize_css', 0 ),
-				'remove_query_strings' => get_option( 'siteground_optimizer_remove_query_strings', 0 ),
-				'disable_emojis'       => get_option( 'siteground_optimizer_disable_emojis', 0 ),
-				'optimize_images'      => get_option( 'siteground_optimizer_optimize_images', 0 ),
+				'optimize_html'             => get_option( 'siteground_optimizer_optimize_html', 0 ),
+				'optimize_javascript'       => get_option( 'siteground_optimizer_optimize_javascript', 0 ),
+				'optimize_javascript_async' => get_option( 'siteground_optimizer_optimize_javascript_async', 0 ),
+				'optimize_css'              => get_option( 'siteground_optimizer_optimize_css', 0 ),
+				'combine_css'               => get_option( 'siteground_optimizer_combine_css', 0 ),
+				'remove_query_strings'      => get_option( 'siteground_optimizer_remove_query_strings', 0 ),
+				'disable_emojis'            => get_option( 'siteground_optimizer_disable_emojis', 0 ),
+				'optimize_images'           => get_option( 'siteground_optimizer_optimize_images', 0 ),
 			)
 		);
 	}
@@ -176,7 +180,9 @@ class Install_5_0_0 extends Install {
 			'autoflush_cache',
 			'optimize_html',
 			'optimize_javascript',
+			'optimize_javascript_async',
 			'optimize_css',
+			'combine_css',
 			'remove_query_strings',
 			'disable_emojis',
 			'optimize_images',

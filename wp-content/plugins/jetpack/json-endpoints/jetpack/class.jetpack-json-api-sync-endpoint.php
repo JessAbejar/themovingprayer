@@ -10,7 +10,6 @@ class Jetpack_JSON_API_Sync_Endpoint extends Jetpack_JSON_API_Endpoint {
 
 	protected function result() {
 		$args = $this->input();
-
 		$modules = null;
 
 		// convert list of modules in comma-delimited format into an array
@@ -33,7 +32,6 @@ class Jetpack_JSON_API_Sync_Endpoint extends Jetpack_JSON_API_Endpoint {
 		if ( empty( $modules ) ) {
 			$modules = null;
 		}
-
 		return array( 'scheduled' => Jetpack_Sync_Actions::do_full_sync( $modules ) );
 	}
 
@@ -52,7 +50,9 @@ class Jetpack_JSON_API_Sync_Endpoint extends Jetpack_JSON_API_Endpoint {
 // GET /sites/%s/sync/status
 class Jetpack_JSON_API_Sync_Status_Endpoint extends Jetpack_JSON_API_Sync_Endpoint {
 	protected function result() {
-		return Jetpack_Sync_Actions::get_sync_status();
+		$args   = $this->query_args();
+		$fields = isset( $args['fields'] ) ? $args['fields'] : array();
+		return Jetpack_Sync_Actions::get_sync_status( $fields );
 	}
 }
 
@@ -79,7 +79,12 @@ class Jetpack_JSON_API_Sync_Histogram_Endpoint extends Jetpack_JSON_API_Sync_End
 		require_once JETPACK__PLUGIN_DIR . 'sync/class.jetpack-sync-wp-replicastore.php';
 		$store = new Jetpack_Sync_WP_Replicastore();
 
-		return $store->checksum_histogram( $args['object_type'], $args['buckets'], $args['start_id'], $args['end_id'], $columns, $args['strip_non_ascii'] );
+		if ( ! isset( $args['strip_non_ascii'] ) ) {
+			$args['strip_non_ascii'] = true;
+		}
+		$histogram = $store->checksum_histogram( $args['object_type'], $args['buckets'], $args['start_id'], $args['end_id'], $columns, $args['strip_non_ascii'], $args['shared_salt'] );
+
+		return array( 'histogram' => $histogram, 'type' => $store->get_checksum_type() );
 	}
 }
 
@@ -97,7 +102,7 @@ class Jetpack_JSON_API_Sync_Modify_Settings_Endpoint extends Jetpack_JSON_API_Sy
 				if ( is_numeric( $value ) ) {
 					$value = (int) $value;
 				}
-				
+
 				// special case for sending empty arrays - a string with value 'empty'
 				if ( $value === 'empty' ) {
 					$value = array();
@@ -205,12 +210,12 @@ class Jetpack_JSON_API_Sync_Checkout_Endpoint extends Jetpack_JSON_API_Sync_Endp
 		}
 
 		$buffer = $this->get_buffer( $queue, $args[ 'number_of_items' ] );
-		
+
 		// Check that the $buffer is not checkout out already
 		if ( is_wp_error( $buffer ) ) {
 			return new WP_Error( 'buffer_open', "We couldn't get the buffer it is currently checked out", 400 );
 		}
-		
+
 		if ( ! is_object( $buffer ) ) {
 			return new WP_Error( 'buffer_non-object', 'Buffer is not an object', 400 );
 		}

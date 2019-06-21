@@ -93,7 +93,9 @@ class Multisite {
 		if (
 			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_optimize_html', 0 ) &&
 			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_optimize_javascript', 0 ) &&
+			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_optimize_javascript_async', 0 ) &&
 			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_optimize_css', 0 ) &&
+			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_combine_css', 0 ) &&
 			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_remove_query_strings', 0 ) &&
 			0 === (int) get_blog_option( $blog_id, 'siteground_optimizer_disable_emojis', 0 )
 		) {

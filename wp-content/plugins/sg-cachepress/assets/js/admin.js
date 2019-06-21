@@ -8,7 +8,6 @@
 				$this.data('link')
 			)
 			.success(function() {
-				console.log('test');
 				$this.parents('.notice-error').remove()
 			})
 

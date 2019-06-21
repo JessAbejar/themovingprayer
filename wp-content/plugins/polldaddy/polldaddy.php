@@ -6,7 +6,7 @@
  * Description: Create and manage Crowdsignal polls and ratings in WordPress
  * Author: Automattic, Inc.
  * Author URL: https://crowdsignal.com/
- * Version: 2.1.1
+ * Version: 2.1.2
  */
 
 // To hardcode your Polldaddy PartnerGUID (API Key), add the (uncommented) line below with the PartnerGUID to your `wp-config.php`
@@ -2574,7 +2574,7 @@ src="https://static.polldaddy.com/p/<?php echo (int) $poll_id; ?>.js"&gt;&lt;/sc
 						<?php echo number_format_i18n( $answer->_total ); ?>
 					</td>
 					<td style="text-align:center;vertical-align:middle;">
-						<?php echo number_format_i18n( $answer->_percent ); ?>%
+						<?php echo number_format_i18n( $answer->_percent, 2 ); ?>%
 					</td>
 					<td style="vertical-align:middle;">
 						<span class="result-bar" style="width: <?php echo number_format( $answer->_percent, 2 ); ?>%;">&nbsp;</span>

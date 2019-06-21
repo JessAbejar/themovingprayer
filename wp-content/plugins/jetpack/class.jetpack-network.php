@@ -70,10 +70,10 @@ class Jetpack_Network {
 			/*
 			 * If admin wants to automagically register new sites set the hook here
 			 *
-			 * This is a hacky way because xmlrpc is not available on wpmu_new_blog
+			 * This is a hacky way because xmlrpc is not available on wp_initialize_site
 			 */
 			if ( $this->get_option( 'auto-connect' ) == 1 ) {
-				add_action( 'wpmu_new_blog', array( $this, 'do_automatically_add_new_site' ) );
+				add_action( 'wp_initialize_site', array( $this, 'do_automatically_add_new_site' ) );
 			}
 		}
 
@@ -107,12 +107,15 @@ class Jetpack_Network {
 	 * Registers new sites upon creation
 	 *
 	 * @since 2.9
-	 * @uses  wpmu_new_blog
+	 * @since 7.4.0 Uses a WP_Site object.
+	 * @uses  wp_initialize_site
 	 *
-	 * @param int $blog_id
+	 * @param WP_Site $site
 	 **/
-	public function do_automatically_add_new_site( $blog_id ) {
-		$this->do_subsiteregister( $blog_id );
+	public function do_automatically_add_new_site( $site ) {
+		if ( is_a( $site, 'WP_Site') ) {
+			$this->do_subsiteregister( $site->id );
+		}
 	}
 
 	/**
@@ -451,6 +454,15 @@ class Jetpack_Network {
 
 		$tracks_identity = jetpack_tracks_get_identity( $user_id );
 
+		/*
+		 * Use the subsite's registration date as the site creation date.
+		 *
+		 * This is in contrast to regular standalone sites, where we use the helper
+		 * `Jetpack::get_assumed_site_creation_date()` to assume the site's creation date.
+		 */
+		$blog_details = get_blog_details();
+		$site_creation_date = $blog_details->registered;
+
 		/**
 		 * Both `state` and `user_id` need to be sent in the request, even though they are the same value.
 		 * Connecting via the network admin combines `register()` and `authorize()` methods into one step,
@@ -476,6 +488,7 @@ class Jetpack_Network {
 				'state'                 => $user_id,
 				'_ui'                   => $tracks_identity['_ui'],
 				'_ut'                   => $tracks_identity['_ut'],
+				'site_created'          => $site_creation_date,
 				'jetpack_version'       => JETPACK__VERSION
 			),
 			'headers' => array(

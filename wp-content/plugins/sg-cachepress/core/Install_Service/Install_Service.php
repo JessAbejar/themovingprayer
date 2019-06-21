@@ -80,6 +80,7 @@ class Install_Service {
 			}
 		}
 	}
+
 	/**
 	 * Retrieve the current version.
 	 *

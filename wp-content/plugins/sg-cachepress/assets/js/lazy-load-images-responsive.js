@@ -1,5 +1,5 @@
 (function ($, window, document, undefined) {
-    var options = $.lazyLoad,
+    var options = $.lazyLoadSG,
         srcsetSupport = (function () {
             return 'srcset' in (new Image());
         })(),
@@ -11,7 +11,7 @@
         one = [0, 1],
         srcsetOptions = {
             srcsetAttr: 'data-srcset',
-            srcsetExtended: true,
+            srcsetExtended: false,
             srcsetBaseAttr: 'data-srcset-base',
             srcsetExtAttr: 'data-srcset-ext'
         },
@@ -24,10 +24,14 @@
         limit;
 
     for (property in srcsetOptions) {
-        if (options[property] === undefined) {
-            options[property] = srcsetOptions[property];
+        if ( typeof(options) !== undefined ) {
+            if ( options[property] === undefined
+            ) {
+                options[property] = srcsetOptions[property];
+            }
         }
     }
+
     options.selector += ',img[' + options.srcsetAttr + ']';
 
     function mathFilter(array, action) {
@@ -51,7 +55,7 @@
             return false;
         }
 
-        var list = $.map(srcset.split(','), function (item) {
+        var list = $.map(srcset.replace(/(\s[\d.]+[whx]),/g, '$1 @,@ ').split(' @,@ '), function (item) {
             return {
                 url: reUrl.exec(item)[1],
                 w: parseFloat((reWidth.exec(item) || infty)[1]),
@@ -99,14 +103,20 @@
 
     $(document).on('lazyshow', 'img', function (e, $el) {
         var srcset = $el.attr(options.srcsetAttr);
-
         if (srcset) {
             if (!options.srcsetExtended && srcsetSupport) {
                 $el.attr('srcset', srcset);
+                $el.attr('data-srcset', '');
             } else {
-                $el.lazyLoad.srcAttr = parseSrcset;
+                $el.lazyLoadSG.srcAttr = parseSrcset;
             }
         }
+    });
+
+    $(window).on('ajaxComplete', function() {
+        setTimeout(function() {
+            $(window).lazyLoadSG();
+        }, 1000 );
     });
 
 })(window.jQuery || window.Zepto || window.$, window, document);

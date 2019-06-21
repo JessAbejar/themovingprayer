@@ -39,6 +39,11 @@ class Lazy_Load_Images {
 		if ( Options::is_enabled( 'siteground_optimizer_lazyload_fadein' ) ) {
 			add_filter( 'body_class', array( $this, 'add_fadein_body_class' ) );
 		}
+
+		// If enabled replace the 'src' attr with 'data-src' in text widgets.
+		if ( Options::is_enabled( 'siteground_optimizer_lazyload_woocommerce' ) ) {
+			add_filter( 'woocommerce_product_get_image', array( $this, 'filter_html' ) );
+		}
 	}
 
 	/**
@@ -79,7 +84,6 @@ class Lazy_Load_Images {
 				true
 			);
 		}
-
 	}
 
 	/**
@@ -92,40 +96,70 @@ class Lazy_Load_Images {
 	 * @return string          Modified content.
 	 */
 	public function filter_html( $content ) {
-
 		// Bail if it's feed or if the content is empty.
 		if (
 			is_feed() ||
 			empty( $content ) ||
 			is_admin() ||
 			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ||
-			method_exists( 'FLBuilderModel', 'is_builder_enabled' ) ||
-			wp_is_mobile()
+			method_exists( 'FLBuilderModel', 'is_builder_enabled' )
 		) {
 			return $content;
 		}
 
-		// Search patterns.
-		$patterns = array(
-			'/(?<!noscript\>)((<img.*?src=["|\'].*?["|\']).*?(\/?>))/i',
-			'/(?<!noscript\>)(<img.*?)(src)=["|\']((?!data).*?)["|\']/i',
-			'/(?<!noscript\>)(<img.*?)((srcset)=["|\'](.*?)["|\'])/i',
-		);
+		preg_match_all( '/<img[\s\r\n]+.*?>/is', $content, $matches );
 
-		// Replacements.
-		$replacements = array(
-			'$1<noscript>$2$3</noscript>',
-			'$1src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-$2="$3"',
-			'$1data-$3="$4"',
-		);
+		$search  = array();
+		$replace = array();
 
-		// Finally do the search/replace and return modified content.
-		return preg_replace(
-			$patterns,
-			$replacements,
-			$content
-		);
+		foreach ( $matches[0] as $image ) {
+			// Skip already replaced images.
+			if ( preg_match( "/src=['\"]data:image/is", $image ) ) {
+				continue;
+			}
 
+			// Get image classes.
+			preg_match( '/class=["\'](.*?)["\']/is', $image, $class_matches );
+
+			if ( ! empty( $class_matches[1] ) ) {
+				// Load the ignored image classes.
+				$ignored_classes = apply_filters( 'sgo_lazy_load_exclude_classes', array() );
+
+				// Convert all classes to array.
+				$image_classes = explode( ' ', $class_matches[1] );
+
+				// Check if the image has ignored class and bail if has.
+				if ( array_intersect( $image_classes, $ignored_classes ) ) {
+					continue;
+				}
+			}
+
+			// Search patterns.
+			$patterns = array(
+				'/(?<!noscript\>)((<img.*?src=["|\'].*?["|\']).*?(\/?>))/i',
+				'/(?<!noscript\>)(<img.*?)(src)=["|\']((?!data).*?)["|\']/i',
+				'/(?<!noscript\>)(<img.*?)((srcset)=["|\'](.*?)["|\'])/i',
+			);
+
+			// Replacements.
+			$replacements = array(
+				'$1<noscript>$2$3</noscript>',
+				'$1src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-$2="$3"',
+				'$1data-$3="$4"',
+			);
+
+			// Finally do the search/replace and return modified content.
+			$new_image = preg_replace(
+				$patterns,
+				$replacements,
+				$image
+			);
+
+			array_push( $search, $image );
+			array_push( $replace, $new_image );
+		}
+
+		return str_replace( $search, $replace, $content );
 	}
 
 	/**

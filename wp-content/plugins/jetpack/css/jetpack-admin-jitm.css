@@ -24,10 +24,10 @@ https://github.com/thoughtbot/bourbon
 */
 .jitm-button {
   background: white;
-  border-color: #c8d7e1;
+  border-color: #d5d5d5;
   border-style: solid;
   border-width: 1px 1px 2px;
-  color: #2e4453;
+  color: #414141;
   cursor: pointer;
   display: inline-block;
   margin: 0;
@@ -48,8 +48,8 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jitm-button:hover {
-  border-color: #a8bece;
-  color: #2e4453;
+  border-color: #bbbbbb;
+  color: #414141;
 }
 
 .jitm-button:active {
@@ -57,13 +57,13 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jitm-button:visited {
-  color: #2e4453;
+  color: #414141;
 }
 
 .jitm-button[disabled], .jitm-button:disabled {
-  color: #e9eff3;
+  color: #eeeeee;
   background: white;
-  border-color: #e9eff3;
+  border-color: #eeeeee;
   cursor: default;
 }
 
@@ -79,13 +79,13 @@ https://github.com/thoughtbot/bourbon
 
 .jitm-button.is-compact {
   padding: 0.4375rem;
-  color: #668eaa;
+  color: #888888;
   font-size: 0.75rem;
   line-height: 1;
 }
 
 .jitm-button.is-compact:disabled {
-  color: #e9eff3;
+  color: #eeeeee;
 }
 
 .jitm-button.hidden {
@@ -121,7 +121,7 @@ https://github.com/thoughtbot/bourbon
   padding: 1rem;
   box-sizing: border-box;
   background: white;
-  box-shadow: 0 0 0 1px rgba(200, 215, 225, 0.5), 0 1px 2px #e9eff3;
+  box-shadow: 0 0 0 1px rgba(213, 213, 213, 0.5), 0 1px 2px #eeeeee;
 }
 
 .jitm-card:after {
@@ -167,7 +167,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jp-lower .jitm-card {
-  margin: 3rem 0 1.5rem;
+  margin: 0 0 1.5rem;
 }
 
 .jitm-banner.jitm-card {
@@ -248,7 +248,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jitm-banner.jitm-card:hover.is-card-link {
-  box-shadow: 0 0 0 1px #87a6bc, 0 2px 4px #c8d7e1;
+  box-shadow: 0 0 0 1px #a2a2a2, 0 2px 4px #d5d5d5;
 }
 
 .jitm-banner.jitm-card:hover .jitm-card__link-indicator {
@@ -369,7 +369,7 @@ https://github.com/thoughtbot/bourbon
 
 .jitm-banner__info .jitm-banner__title,
 .jitm-banner__info .jitm-banner__description {
-  color: #2e4453;
+  color: #414141;
 }
 
 .jitm-banner__info .jitm-banner__title {
@@ -394,7 +394,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jitm-banner__info .banner__list li .gridicon {
-  fill: #87a6bc;
+  fill: #a2a2a2;
   display: inline;
   margin-right: 12px;
   vertical-align: bottom;
@@ -419,7 +419,7 @@ https://github.com/thoughtbot/bourbon
 
 .jitm-banner__action .jitm-banner__prices .dops-plan-price.is-discounted,
 .jitm-banner__action .jitm-banner__prices .dops-plan-price.is-discounted .dops-plan-price__currency-symbol {
-  color: #2e4453;
+  color: #414141;
 }
 
 .has-call-to-action .jitm-banner__action .jitm-banner__prices .dops-plan-price {
@@ -448,7 +448,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jitm-banner__dismiss:before {
-  color: #4f748e;
+  color: #6f6f6f;
   font: 400 16px/1 dashicons;
   content: '\f158';
 }

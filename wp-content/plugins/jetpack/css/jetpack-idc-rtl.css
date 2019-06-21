@@ -56,7 +56,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jp-idc-notice h3, .jp-idc-notice p {
-  color: #2e4453;
+  color: #414141;
 }
 
 .jp-idc-notice a:not(.dops-notice__action) {
@@ -141,7 +141,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jp-idc-notice__action {
-  border: 1px solid #e9eff3;
+  border: 1px solid #eeeeee;
   border-radius: 4px;
   display: flex;
   padding: 16px;
@@ -177,7 +177,7 @@ https://github.com/thoughtbot/bourbon
 }
 
 .jp-idc-notice__separator {
-  background-color: #e9eff3;
+  background-color: #eeeeee;
   margin: 0 -10px 0 -10px;
   height: 1px;
 }
