@@ -8,17 +8,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-01-10 18:35-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: Editorial Calendar\n"
+"Language: ja\n"
+"X-Generator: Poedit 2.2.3\n"
 
-#: edcal.php:90
-#: edcal.php:114
+#: edcal.php:90 edcal.php:114
 msgid "Calendar"
 msgstr "カレンダー"
 
-#: edcal.php:242
-#: edcal.php:466
+#: edcal.php:242 edcal.php:466
 msgid "en-US"
 msgstr "ja-JP"
 
@@ -50,8 +50,7 @@ msgstr " [下書き、先頭に固定表示]"
 msgid " [PENDING, STICKY]"
 msgstr " [レビュー待ち、先頭に固定表示]"
 
-#: edcal.php:259
-#: edcal.php:263
+#: edcal.php:259 edcal.php:263
 msgid "Edit"
 msgstr "編集"
 
@@ -71,18 +70,15 @@ msgstr "プレビュー"
 msgid "Status:"
 msgstr "ステータス："
 
-#: edcal.php:265
-#: edcal.php:435
+#: edcal.php:265 edcal.php:435
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: edcal.php:266
-#: edcal.php:398
+#: edcal.php:266 edcal.php:398
 msgid "Title"
 msgstr "タイトル"
 
-#: edcal.php:267
-#: edcal.php:403
+#: edcal.php:267 edcal.php:403
 msgid "Content"
 msgstr "本文"
 
@@ -98,8 +94,7 @@ msgstr "新規 %s - "
 msgid "Update"
 msgstr "アップデート"
 
-#: edcal.php:271
-#: edcal.php:434
+#: edcal.php:271 edcal.php:434
 msgid "Schedule"
 msgstr "スケジュール"
 
@@ -115,8 +110,7 @@ msgstr "保存"
 msgid "Edit %1$s - %2$s"
 msgstr "編集 %1$s - %2$s"
 
-#: edcal.php:275
-#: edcal.php:420
+#: edcal.php:275 edcal.php:420
 msgid "Scheduled"
 msgstr "予約投稿"
 
@@ -176,8 +170,7 @@ msgstr "カレンダーのセルへの表示"
 msgid "Author"
 msgstr "作成者"
 
-#: edcal.php:293
-#: edcal.php:414
+#: edcal.php:293 edcal.php:414
 msgid "Status"
 msgstr "ステータス"
 
@@ -245,8 +238,10 @@ msgstr "投稿"
 msgid "Post "
 msgstr "投稿"
 
-#: edcal.php:737
-#: edcal.php:740
+#: edcal.php:737 edcal.php:740
 msgid "Error in deleting..."
 msgstr "削除中にエラーが発生しました..."
 
+#: edcal.php:190 edcal.php:274
+msgid "ltr"
+msgstr "ltr"

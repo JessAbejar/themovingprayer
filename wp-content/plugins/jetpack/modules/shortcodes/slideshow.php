@@ -1,4 +1,7 @@
 <?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+
+use Automattic\Jetpack\Assets;
+
 /**
  * Slideshow shortcode.
  * Adds a new "slideshow" gallery type when adding a gallery using the classic editor.
@@ -251,7 +254,7 @@ class Jetpack_Slideshow_Shortcode {
 		wp_enqueue_script( 'jquery-cycle', plugins_url( '/js/jquery.cycle.min.js', __FILE__ ), array( 'jquery' ), '20161231', true );
 		wp_enqueue_script(
 			'jetpack-slideshow',
-			Jetpack::get_file_url_for_environment( '_inc/build/shortcodes/js/slideshow-shortcode.min.js', 'modules/shortcodes/js/slideshow-shortcode.js' ),
+			Assets::get_file_url_for_environment( '_inc/build/shortcodes/js/slideshow-shortcode.min.js', 'modules/shortcodes/js/slideshow-shortcode.js' ),
 			array( 'jquery-cycle' ),
 			'20160119.1',
 			true
@@ -276,14 +279,20 @@ class Jetpack_Slideshow_Shortcode {
 			 * @since 4.7.0 Added the `speed` option to the array of options.
 			 *
 			 * @param array $args
-			 * - string - spinner - URL of the spinner image.
-			 * - string - speed   - Speed of the slideshow. Defaults to 4000.
+			 * - string - spinner        - URL of the spinner image.
+			 * - string - speed          - Speed of the slideshow. Defaults to 4000.
+			 * - string - label_prev     - Aria label for slideshow's previous button
+			 * - string - label_stop    - Aria label for slideshow's pause button
+			 * - string - label_next     - Aria label for slideshow's next button
 			 */
 			apply_filters(
 				'jetpack_js_slideshow_settings',
 				array(
-					'spinner' => plugins_url( '/img/slideshow-loader.gif', __FILE__ ),
-					'speed'   => '4000',
+					'spinner'    => plugins_url( '/img/slideshow-loader.gif', __FILE__ ),
+					'speed'      => '4000',
+					'label_prev' => __( 'Previous Slide', 'jetpack' ),
+					'label_stop' => __( 'Pause Slideshow', 'jetpack' ),
+					'label_next' => __( 'Next Slide', 'jetpack' ),
 				)
 			)
 		);

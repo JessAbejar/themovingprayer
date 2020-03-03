@@ -2,6 +2,7 @@
 namespace SiteGround_Optimizer\Memcache;
 
 use SiteGround_Optimizer\Options\Options;
+use SiteGround_Optimizer\Helper\Helper;
 
 /**
  * The class responsible for obejct cache.
@@ -34,46 +35,11 @@ class Memcache {
 	 * @since 5.0.0
 	 */
 	public function run() {
-		// Store tha value in variable to prevent multiple database calls.
-		$is_memcache_enabled = Options::is_enabled( 'siteground_optimizer_enable_memcached' );
-
-
-		if ( empty( $this->get_memcached_port() ) ) {
-			if ( $is_memcache_enabled ) {
-				Options::enable_option( 'siteground_optimizer_memcache_notice' );
-				$this->remove_memcached_dropin();
-			}
-		} else {
-			Options::disable_option( 'siteground_optimizer_memcache_notice' );
-		}
-
-		// If the droping exist but memcache is disabled.
-		if ( $this->dropin_exists() && ! $is_memcache_enabled ) {
-			// Try to remove the dropin if the memcache is disabled.
-			$this->remove_memcached_dropin();
-		}
-
 		// Check if memcache is enabled, but the dropin doesn't exists.
-		if ( ! $this->dropin_exists() && $is_memcache_enabled ) {
+		if ( ! $this->dropin_exists() && Options::is_enabled( 'siteground_optimizer_enable_memcached' ) ) {
 			// Try to create the memcache droping.
-			if ( $this->create_memcached_dropin() ) {
-				// Diable the `last_fail` option if the dropin has been created.
-				Options::disable_option( 'siteground_optimizer_last_fail' );
-				return;
-			}
-
-			// Get the last fail option.
-			$last_fail = get_option( 'siteground_optimizer_last_fail' );
-
-			// Start fail timer of 60 minutes cooldown until memcache will be disabled as option in wp-admin.
-			if ( 0 === $last_fail ) {
-				// Update the last fail with current timestamp.
-				update_option( 'siteground_optimizer_last_fail', time() );
-			} elseif ( $last_fail < time() - 60 * 60 ) {
-				// Disable the memcache if the dropin is still not working.
-				Options::disable_option( 'siteground_optimizer_enable_memcached' );
-				Options::disable_option( 'siteground_optimizer_last_fail' );
-			}
+			Options::disable_option( 'siteground_optimizer_enable_memcached' );
+			return;
 		}
 
 	}
@@ -87,7 +53,7 @@ class Memcache {
 	public function status_healthcheck() {
 		if ( ! $this->is_connection_working() ) {
 			Options::enable_option( 'siteground_optimizer_memcache_notice' );
-			$this->remove_memcached_dropin();
+			Options::disable_option( 'siteground_optimizer_enable_memcached' );
 		}
 	}
 
@@ -175,6 +141,10 @@ class Memcache {
 		$port_file_content = $this->get_port_file_contents();
 
 		if ( ! $port_file_content ) {
+			if ( Helper::is_avalon() ) {
+				return 11211;
+			}
+
 			return '';
 		}
 

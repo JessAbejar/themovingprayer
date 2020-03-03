@@ -15,8 +15,6 @@ class Options {
 	 * @since 5.0.0
 	 */
 	public function __construct() {
-
-		$this->fetch_options();
 		$this->htaccess_service = new Htaccess();
 
 		add_filter(
@@ -286,14 +284,14 @@ class Options {
 	 *
 	 * @since  5.0.0
 	 *
-	 * @return bool 1 if there are unoptimized images, 0 otherwise.
+	 * @return int The count of unoptimized images.
 	 */
-	public function check_for_unoptimized_images() {
+	public static function check_for_unoptimized_images() {
 		$images = get_posts(
 			array(
 				'post_type'      => 'attachment',
 				'post_mime_type' => 'image',
-				'posts_per_page' => 1,
+				'posts_per_page' => -1,
 				'fields'         => 'ids',
 				'meta_query'     => array(
 					// Skip optimized images.
@@ -310,11 +308,58 @@ class Options {
 			)
 		);
 
-		if ( ! empty( $images ) ) {
-			return 1;
-		}
+		return count( $images );
+	}
 
-		return 0;
+	/**
+	 * Checks if there are non converted images.
+	 *
+	 * @since  5.4.0
+	 *
+	 * @return int The count of non converted images.
+	 */
+	public static function check_for_non_converted_images() {
+		$images = get_posts(
+			array(
+				'post_type'      => 'attachment',
+				'post_mime_type' => 'image',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'meta_query'     => array(
+					// Skip optimized images.
+					array(
+						'key'     => 'siteground_optimizer_is_converted_to_webp',
+						'compare' => 'NOT EXISTS',
+					),
+					// Also skip failed optimizations.
+					array(
+						'key'     => 'siteground_optimizer_webp_conversion_failed',
+						'compare' => 'NOT EXISTS',
+					),
+				),
+			)
+		);
+
+		return count( $images );
+	}
+
+	/**
+	 * Checks if there are any images in the library.
+	 *
+	 * @since  5.3.5
+	 *
+	 * @return int 1 if thre are any images in the lib, 0 otherwise.
+	 */
+	public function check_for_images() {
+		$images = get_posts(
+			array(
+				'post_type'      => 'attachment',
+				'post_mime_type' => 'image',
+				'posts_per_page' => 1,
+			)
+		);
+
+		return count( $images );
 	}
 
 	/**
@@ -332,28 +377,33 @@ class Options {
 		$messages = array(
 			'siteground_optimizer_enable_cache'              => __( 'Dynamic Cache', 'sg-cachepress' ),
 			'siteground_optimizer_autoflush_cache'           => __( 'Autoflush', 'sg-cachepress' ),
+			'siteground_optimizer_user_agent_header'         => __( 'Browser-Specific Caching', 'sg-cachepress' ),
 			'siteground_optimizer_enable_memcached'          => __( 'Memcache', 'sg-cachepress' ),
 			'siteground_optimizer_ssl_enabled'               => __( 'HTTPS', 'sg-cachepress' ),
+			'siteground_optimizer_fix_insecure_content'      => __( 'Insecure Content Fix', 'sg-cachepress' ),
 			'siteground_optimizer_enable_gzip_compression'   => __( 'GZIP Compression', 'sg-cachepress' ),
 			'siteground_optimizer_enable_browser_caching'    => __( 'Browser Caching', 'sg-cachepress' ),
-			'siteground_optimizer_fix_insecure_content'      => __( 'Insecure Content Fix', 'sg-cachepress' ),
 			'siteground_optimizer_optimize_html'             => __( 'HTML Minification', 'sg-cachepress' ),
 			'siteground_optimizer_optimize_javascript'       => __( 'JavaScript Minification', 'sg-cachepress' ),
-			'siteground_optimizer_optimize_javascript_async' => __( 'JavaScript Async Load', 'sg-cachepress' ),
+			'siteground_optimizer_optimize_javascript_async' => __( 'Defer Render-blocking JS', 'sg-cachepress' ),
 			'siteground_optimizer_optimize_css'              => __( 'CSS Minification', 'sg-cachepress' ),
 			'siteground_optimizer_combine_css'               => __( 'CSS Combination', 'sg-cachepress' ),
+			'siteground_optimizer_combine_google_fonts'      => __( 'Google Fonts Combination', 'sg-cachepress' ),
 			'siteground_optimizer_remove_query_strings'      => __( 'Query Strings Removal', 'sg-cachepress' ),
 			'siteground_optimizer_disable_emojis'            => __( 'Emoji Removal Filter', 'sg-cachepress' ),
+			'siteground_optimizer_optimize_images'           => __( 'New Images Optimization', 'sg-cachepress' ),
 			'siteground_optimizer_lazyload_images'           => __( 'Lazy Loading Images', 'sg-cachepress' ),
+			'siteground_optimizer_webp_support'              => __( 'WebP Generation for New Images', 'sg-cachepress' ),
 			'siteground_optimizer_lazyload_gravatars'        => __( 'Lazy Loading Gravatars', 'sg-cachepress' ),
 			'siteground_optimizer_lazyload_thumbnails'       => __( 'Lazy Loading Thumbnails', 'sg-cachepress' ),
 			'siteground_optimizer_lazyload_responsive'       => __( 'Lazy Loading Responsive Images', 'sg-cachepress' ),
 			'siteground_optimizer_lazyload_textwidgets'      => __( 'Lazy Loading Widgets', 'sg-cachepress' ),
+			'siteground_optimizer_lazyload_mobile'           => __( 'Lazy Load for Mobile', 'sg-cachepress' ),
+			'siteground_optimizer_lazyload_woocommerce'      => __( 'Lazy Load for Product Images', 'sg-cachepress' ),
 			'siteground_optimizer_supercacher_permissions'   => __( 'Can Config SuperCacher', 'sg-cachepress' ),
 			'siteground_optimizer_frontend_permissions'      => __( 'Can Optimize Frontend', 'sg-cachepress' ),
 			'siteground_optimizer_images_permissions'        => __( 'Can Optimize Images', 'sg-cachepress' ),
 			'siteground_optimizer_environment_permissions'   => __( 'Can Optimize Environment', 'sg-cachepress' ),
-			'siteground_optimizer_optimize_images'           => __( 'New Images Optimization', 'sg-cachepress' ),
 		);
 
 		// Get the option name. Fallback to `Option` if the option key doens't exists in predefined messages.

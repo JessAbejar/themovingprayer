@@ -6,6 +6,11 @@ Version: 1.0.0
 
 Install this file to wp-content/object-cache.php
 */
+
+if ( !defined( 'WP_CACHE_KEY_SALT' ) ) {
+	define( 'WP_CACHE_KEY_SALT', 'SG_OPTIMIZER_CACHE_KEY_SALT' );
+}
+
 if ( class_exists( 'Memcached' ) )
 {
 

@@ -1,18 +1,25 @@
 @import "../../node_modules/sg-styleguide/lib/styles/main.scss";
 @import "../../node_modules/sg-styleguide/lib/components/title/title.scss";
-@import "../../node_modules/sg-styleguide/lib/components/layout/styles.scss";
+
 
 /* Additional Reset */
 
+.toplevel_page_sg-cachepress {
+  overflow: visible !important;
+}
+
 #sg-optimizer-app {
-  .sg-page {
+  .sg-page,
+  .sg-layout__page {
     height: 100%!important;
-    overflow: initial!important;
+    overflow-x: initial!important;
   }
 
   .sg-layout {
     display: block;
     height: auto;
+    overflow: visible;
+    position: initial;
 
     &:after {
       content: '';
@@ -77,7 +84,7 @@ html {
   }
 
   .sg-rate--stars {
-    border-right: 1px solid $grey-40;
+    border-right: 1px solid #ddd;
   }
 
   .sg-button--hide {

@@ -277,6 +277,9 @@ class Multisite {
 			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_gravatars' ) &&
 			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_thumbnails' ) &&
 			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_responsive' ) &&
+			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_iframes' ) &&
+			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_woocommerce' ) &&
+			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_videos' ) &&
 			true === Options::disable_mu_option( $blog_id, 'siteground_optimizer_lazyload_textwidgets' )
 		) {
 			return true;

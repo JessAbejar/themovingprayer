@@ -28,10 +28,13 @@ class Supercacher_Comments extends Supercacher_Posts {
 	 */
 	public function purge_comment_post( $comment_id ) {
 		// Get the comment data.
-		$commentdata = get_comment( $comment_id );
+		$commentdata = get_comment( $comment_id, OBJECT );
+
+		// Get the post id from the comment.
+		$comment_post_id = is_object( $commentdata ) ? $commentdata->comment_post_ID : $commentdata['comment_post_ID'];
 
 		// Purge the post cache.
-		$this->purge_post_cache( $commentdata->comment_post_ID );
+		$this->purge_post_cache( $comment_post_id );
 	}
 
 }

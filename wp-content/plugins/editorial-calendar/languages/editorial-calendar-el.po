@@ -8,22 +8,21 @@ msgstr ""
 "Project-Id-Version: editorial-calendar-el\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/editorial-calendar\n"
 "POT-Creation-Date: 2010-04-13 21:19+0000\n"
-"PO-Revision-Date: 2010-04-14 07:58-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: Mihalis Papanousis - http://aenaon.biz <fotonews@aenaon.biz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"Language: el_GR\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: edcal.php:63
 msgid "Calendar"
 msgstr "Ημερολόγιο άρθρων"
 
-#: edcal.php:137
-#: edcal.php:349
+#: edcal.php:137 edcal.php:349
 msgid "en-US"
 msgstr "el-GR"
 
@@ -67,18 +66,15 @@ msgstr "Επαναδημοσίευση"
 msgid "Status:"
 msgstr "Κατάσταση"
 
-#: edcal.php:157
-#: edcal.php:295
+#: edcal.php:157 edcal.php:295
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: edcal.php:158
-#: edcal.php:261
+#: edcal.php:158 edcal.php:261
 msgid "Title"
 msgstr "Τίτλος"
 
-#: edcal.php:159
-#: edcal.php:266
+#: edcal.php:159 edcal.php:266
 msgid "Content"
 msgstr "Κείμενο"
 
@@ -94,8 +90,7 @@ msgstr "Νέο άρθρο -"
 msgid "Update"
 msgstr "Ενημέρωση"
 
-#: edcal.php:163
-#: edcal.php:294
+#: edcal.php:163 edcal.php:294
 msgid "Schedule"
 msgstr "Προγραμματισμός δημοσίευσης"
 
@@ -103,13 +98,11 @@ msgstr "Προγραμματισμός δημοσίευσης"
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: edcal.php:165
-#: edcal.php:255
+#: edcal.php:165 edcal.php:255
 msgid "Edit Post"
 msgstr "Επεξεργασία άρθρου"
 
-#: edcal.php:166
-#: edcal.php:287
+#: edcal.php:166 edcal.php:287
 msgid "Scheduled"
 msgstr "Να δημοσιευθεί στις"
 
@@ -197,8 +190,10 @@ msgstr "Κατάσταση"
 msgid "Draft"
 msgstr "Προσχέδιο"
 
-#: edcal.php:544
-#: edcal.php:547
+#: edcal.php:544 edcal.php:547
 msgid "Error in deleting..."
 msgstr "Υπήρξε σφάλμα κατα τη διαγραφή..."
 
+#: edcal.php:190 edcal.php:274
+msgid "ltr"
+msgstr "ltr"

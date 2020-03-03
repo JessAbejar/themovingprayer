@@ -13,5 +13,7 @@ function sg_cachepress_purge_cache( $url = false ) {
 
 	$url = empty( $url ) ? get_home_url( '/' ) : $url;
 
+	do_action( 'siteground_optimizer_flush_cache', $url );
+
 	return $siteground_optimizer_helper->supercacher->purge_cache_request( $url );
 }

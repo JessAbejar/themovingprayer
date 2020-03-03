@@ -2,19 +2,19 @@
 # This file is distributed under the same license as the WordPress Editorial Calendar package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-01-17 16:27-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "Project-Id-Version: WordPress Editorial Calendar\n"
 "POT-Creation-Date: \n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: \n"
+"Language: it_IT\n"
 
-#: edcal.php:274
-#: edcal.php:294
+#: edcal.php:274 edcal.php:294
 msgid "New Draft"
 msgstr "Nuova Bozza"
 
@@ -26,8 +26,7 @@ msgstr "Aggiungi una nuova bozza"
 msgid "The calendar can only show between 1 and 8 weeks at a time."
 msgstr "Il calendario può mostrare solo tra 1 e 8 settimane alla volta."
 
-#: edcal.php:325
-#: edcal.php:400
+#: edcal.php:325 edcal.php:400
 msgid "Show Unscheduled Drafts"
 msgstr "Mostra le bozze non programmate"
 
@@ -55,13 +54,11 @@ msgstr "Non programmati"
 msgid "%1$s Calendar"
 msgstr "Calendario %1$s"
 
-#: edcal.php:96
-#: edcal.php:120
+#: edcal.php:96 edcal.php:120
 msgid "Calendar"
 msgstr "Calendario"
 
-#: edcal.php:263
-#: edcal.php:524
+#: edcal.php:263 edcal.php:524
 msgid "en-US"
 msgstr "it-IT"
 
@@ -93,8 +90,7 @@ msgstr "[BOZZA, IN EVIDENZA]"
 msgid " [PENDING, STICKY]"
 msgstr "[IN ATTESA DI REVISIONE, IN EVIDENZA]"
 
-#: edcal.php:282
-#: edcal.php:286
+#: edcal.php:282 edcal.php:286
 msgid "Edit"
 msgstr "Modifica"
 
@@ -114,18 +110,15 @@ msgstr "Visualizza"
 msgid "Status:"
 msgstr "Stato:"
 
-#: edcal.php:288
-#: edcal.php:483
+#: edcal.php:288 edcal.php:483
 msgid "Cancel"
 msgstr "Annulla"
 
-#: edcal.php:289
-#: edcal.php:445
+#: edcal.php:289 edcal.php:445
 msgid "Title"
 msgstr "Titolo"
 
-#: edcal.php:290
-#: edcal.php:450
+#: edcal.php:290 edcal.php:450
 msgid "Content"
 msgstr "Contenuto"
 
@@ -141,8 +134,7 @@ msgstr "Nuovo %s -"
 msgid "Update"
 msgstr "Aggiorna"
 
-#: edcal.php:296
-#: edcal.php:482
+#: edcal.php:296 edcal.php:482
 msgid "Schedule"
 msgstr "Programma"
 
@@ -158,8 +150,7 @@ msgstr "Salva"
 msgid "Edit %1$s - %2$s"
 msgstr "Modifica %1$s - %2$s"
 
-#: edcal.php:300
-#: edcal.php:467
+#: edcal.php:300 edcal.php:467
 msgid "Scheduled"
 msgstr "Programmato"
 
@@ -219,8 +210,7 @@ msgstr "Mostra nella cella del calendario"
 msgid "Author"
 msgstr "Autore"
 
-#: edcal.php:318
-#: edcal.php:461
+#: edcal.php:318 edcal.php:461
 msgid "Status"
 msgstr "Stato"
 
@@ -280,13 +270,10 @@ msgstr "Post"
 msgid "Post "
 msgstr "Post"
 
-#: edcal.php:865
-#: edcal.php:868
+#: edcal.php:865 edcal.php:868
 msgid "Error in deleting..."
 msgstr "Errore nel cancellare..."
 
-#: edcal.php:191
-#: edcal.php:275
+#: edcal.php:191 edcal.php:275
 msgid "ltr"
 msgstr "ltr"
-

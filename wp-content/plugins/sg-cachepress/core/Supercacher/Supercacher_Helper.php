@@ -12,7 +12,7 @@ class Supercacher_Helper {
 	 * @since  5.0.0
 	 */
 	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'set_cache_headers' ) );
+		add_action( 'wp_headers', array( $this, 'set_cache_headers' ) );
 		add_action( 'wp_login', array( $this, 'set_bypass_cookie' ) );
 		add_action( 'wp_logout', array( $this, 'remove_bypass_cookie' ) );
 	}
@@ -22,13 +22,13 @@ class Supercacher_Helper {
 	 *
 	 * @since 5.0.0
 	 */
-	public function set_cache_headers() {
-
+	public function set_cache_headers( $headers ) {
 		if ( defined( 'WP_CLI' ) || php_sapi_name() === 'cli' ) {
 			return;
 		}
 
 		$is_cache_enabled = (int) get_option( 'siteground_optimizer_enable_cache', 0 );
+		$vary_user_agent = (int) get_option( 'siteground_optimizer_user_agent_header', 0 );
 
 		$url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ? 'https://' : 'http://';
 		$url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
@@ -38,18 +38,25 @@ class Supercacher_Helper {
 			0 === $is_cache_enabled ||
 			self::is_url_excluded( $url )
 		) {
-			header( 'X-Cache-Enabled: False' );
-			return;
+			$headers['X-Cache-Enabled'] = 'False';
+			return $headers;
+		}
+
+		// Add user agent header.
+		if ( 1 === $vary_user_agent ) {
+			$headers['Vary'] = 'User-Agent';
 		}
 
 		// Set cache header.
-		header( 'X-Cache-Enabled: True' );
+		$headers['X-Cache-Enabled'] = 'True';
 
 		if ( \is_user_logged_in() ) {
 			$this->set_bypass_cookie();
 		} else {
 			$this->remove_bypass_cookie();
 		}
+
+		return $headers;
 	}
 
 	/**

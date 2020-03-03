@@ -48,6 +48,7 @@ class Cli_Status {
 	 *  - ssl-fix
 	 *  - autoflush
 	 *  - dynamic-cache
+	 *  - google-fonts
 	 * ---
 	 *
 	 * [--blog_id=<blog_id>]
@@ -92,6 +93,7 @@ class Cli_Status {
 			'ssl'                  => 'siteground_optimizer_ssl_enabled',
 			'gzip'                 => 'siteground_optimizer_enable_gzip_compression',
 			'browser-caching'      => 'siteground_optimizer_enable_browser_caching',
+			'google-fonts'         => 'siteground_optimizer_combine_google_fonts',
 		);
 
 		if ( ! array_key_exists( $type, $mapping ) ) {

@@ -8,17 +8,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-02-10 06:49-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: Zack Grossbart <zack@grossbart.com>\n"
+"Language: he_IL\n"
+"X-Generator: Poedit 2.2.3\n"
 
-#: edcal.php:90
-#: edcal.php:114
+#: edcal.php:90 edcal.php:114
 msgid "Calendar"
 msgstr "לוח שנה"
 
-#: edcal.php:242
-#: edcal.php:466
+#: edcal.php:242 edcal.php:466
 msgid "en-US"
 msgstr "he-IL"
 
@@ -50,8 +50,7 @@ msgstr "[טיוטה, דביק]"
 msgid " [PENDING, STICKY]"
 msgstr "[ממתין לאישור, דביק]"
 
-#: edcal.php:259
-#: edcal.php:263
+#: edcal.php:259 edcal.php:263
 msgid "Edit"
 msgstr "עריכה"
 
@@ -71,18 +70,15 @@ msgstr "הצג"
 msgid "Status:"
 msgstr "מצב:"
 
-#: edcal.php:265
-#: edcal.php:435
+#: edcal.php:265 edcal.php:435
 msgid "Cancel"
 msgstr "בטל"
 
-#: edcal.php:266
-#: edcal.php:398
+#: edcal.php:266 edcal.php:398
 msgid "Title"
 msgstr "כותרת"
 
-#: edcal.php:267
-#: edcal.php:403
+#: edcal.php:267 edcal.php:403
 msgid "Content"
 msgstr "תוכן"
 
@@ -98,8 +94,7 @@ msgstr "%s חדש -"
 msgid "Update"
 msgstr "עדכן"
 
-#: edcal.php:271
-#: edcal.php:434
+#: edcal.php:271 edcal.php:434
 msgid "Schedule"
 msgstr "מתוזמן"
 
@@ -115,8 +110,7 @@ msgstr "שמור"
 msgid "Edit %1$s - %2$s"
 msgstr "ערוך %1$s - %2$s"
 
-#: edcal.php:275
-#: edcal.php:420
+#: edcal.php:275 edcal.php:420
 msgid "Scheduled"
 msgstr "מתוזמן"
 
@@ -176,8 +170,7 @@ msgstr "הצג בתאי לוח שנה"
 msgid "Author"
 msgstr "מחבר הפוסט"
 
-#: edcal.php:293
-#: edcal.php:414
+#: edcal.php:293 edcal.php:414
 msgid "Status"
 msgstr "סטטוס הפוסט"
 
@@ -245,12 +238,10 @@ msgstr "פוסטים "
 msgid "Post "
 msgstr "פוסט"
 
-#: edcal.php:737
-#: edcal.php:740
+#: edcal.php:737 edcal.php:740
 msgid "Error in deleting..."
 msgstr "שגיאה במחיקה..."
 
 #: edcal.php:185
 msgid "ltr"
 msgstr "rtl"
-

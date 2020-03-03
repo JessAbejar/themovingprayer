@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Editorial-Calendar-cs_CZ\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/editorial-calendar\n"
 "POT-Creation-Date: 2010-01-02 21:49+0000\n"
-"PO-Revision-Date: 2010-02-26 18:26+0100\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Road runner <roadrunner@ufoni.cz>\n"
 "Language-Team: Lakva <lakva@volny.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: Y\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-Country: CZECH REPUBLIC\n"
+"Plural-Forms: Y;\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"Language: cs_CZ\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: edcal.php:53
 msgid "Calendar"
@@ -183,8 +183,10 @@ msgstr "Přejít na dnešek"
 msgid "Today"
 msgstr "Dnes"
 
-#: edcal.php:457
-#: edcal.php:460
+#: edcal.php:457 edcal.php:460
 msgid "Error in deleting..."
 msgstr "Chyba při mazání..."
 
+#: edcal.php:190 edcal.php:274
+msgid "ltr"
+msgstr "ltr"

@@ -1,13 +1,23 @@
 {
   "name" : "phpcompatibility/php-compatibility",
-  "description" : "A set of sniffs for PHP_CodeSniffer that checks for PHP version compatibility.",
+  "description" : "A set of sniffs for PHP_CodeSniffer that checks for PHP cross-version compatibility.",
   "type" : "phpcodesniffer-standard",
   "keywords" : [ "compatibility", "phpcs", "standards" ],
   "homepage" : "http://techblog.wimgodden.be/tag/codesniffer/",
   "license" : "LGPL-3.0-or-later",
   "authors" : [ {
     "name" : "Wim Godden",
-    "role" : "lead"
+    "role" : "lead",
+    "homepage" : "https://github.com/wimg"
+  },
+  {
+    "name" : "Juliette Reinders Folmer",
+    "role" : "lead",
+    "homepage" : "https://github.com/jrfnl"
+  },
+  {
+    "name" : "Contributors",
+    "homepage" : "https://github.com/PHPCompatibility/PHPCompatibility/graphs/contributors"
   } ],
   "support" : {
     "issues" : "https://github.com/PHPCompatibility/PHPCompatibility/issues",
@@ -24,13 +34,8 @@
     "squizlabs/php_codesniffer": "2.6.2"
   },
   "suggest" : {
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically.",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically.",
     "roave/security-advisories": "dev-master || Helps prevent installing dependencies with known security issues."
-  },
-  "autoload" : {
-    "psr-4" : {
-      "PHPCompatibility\\" : "PHPCompatibility/"
-    }
   },
   "scripts" : {
     "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths ../../..",

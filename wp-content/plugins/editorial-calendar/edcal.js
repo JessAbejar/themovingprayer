@@ -424,9 +424,25 @@ var edcal = {
             return edcal.savePost(null, false, true);
         });
 
-        jQuery('#edcal-title-new-field').bind('keyup', function(evt) {
-            if (jQuery('#edcal-title-new-field').val().length > 0 && 
-                (!jQuery('#edcal-time').is(':visible') || jQuery('#edcal-time').val().length > 0)) {
+        jQuery('#edcal-title-new-field').bind('input', function(evt) {
+            if ((jQuery('#edcal-title-new-field').val().length > 0 || jQuery('#content').val().length > 0) && 
+				(!jQuery('#edcal-time').is(':visible') || jQuery('#edcal-time').val().length > 0)) {
+                jQuery('#newPostScheduleButton').removeClass('disabled');
+            } else {
+                jQuery('#newPostScheduleButton').addClass('disabled');
+            }
+
+            if (evt.keyCode === 13) {    // enter key
+                /*
+                 * If the user presses enter we want to save the draft.
+                 */
+                return edcal.savePost(null, true);
+            }
+        });
+		
+        jQuery('#content').bind('input', function(evt) {
+            if ((jQuery('#edcal-title-new-field').val().length > 0 || jQuery('#content').val().length > 0) && 
+				(!jQuery('#edcal-time').is(':visible') || jQuery('#edcal-time').val().length > 0)) {
                 jQuery('#newPostScheduleButton').removeClass('disabled');
             } else {
                 jQuery('#newPostScheduleButton').addClass('disabled');
@@ -586,7 +602,7 @@ var edcal = {
                We only want to do this for the days of the week so we skip it
                if we're dealing with just one column for the rows in the calendar.
              */
-            if (cols === 1 || edcal.ltr === 'ltr') {
+            if (cols === 1 || edcal.ltr !== 'rtl') {
                 for (var i = 0; i < children.length; i++) {
                     children.eq(i).css({
                         width: cellWidth + '%',
@@ -1175,10 +1191,6 @@ var edcal = {
     savePost: function(/*object*/ post, /*boolean*/ doEdit, /*boolean*/ doPublish, /*function*/ callback) {
          if (typeof(post) === 'undefined' || post === null) {
             post = edcal.serializePost();
-         }
-
-         if (!post.title || post.title === '') {
-             return false;
          }
 
          //edcal.output('savePost(' + post.date + ', ' + post.title + ')');

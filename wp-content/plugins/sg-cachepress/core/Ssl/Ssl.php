@@ -14,11 +14,31 @@ class Ssl {
 	public function __construct() {
 		$this->htaccess_service = new Htaccess();
 
+		add_action( 'update_option_siteurl', array( $this, 'maybe_switch_rules' ), 10, 2 );
+
 		// Replace unsecure links if the option is enabled.
 		if ( Options::is_enabled( 'siteground_optimizer_fix_insecure_content' ) ) {
 			add_action( 'init', array( $this, 'start_buffer' ) );
 			add_action( 'shutdown', array( $this, 'end_buffer' ) );
 		}
+	}
+
+	/**
+	 * Enable the ssl when the siteurl is changed.
+	 *
+	 * @since  5.3.1
+	 *
+	 * @param  mixed $old The old option value.
+	 * @param  mixed $new The new option value.
+	 *
+	 * @return mixed      The new option value.
+	 */
+	public function maybe_switch_rules( $old, $new ) {
+		if ( Options::is_enabled( 'siteground_optimizer_ssl_enabled' ) ) {
+			$this->enable();
+		}
+
+		return $new;
 	}
 
 	/**
@@ -28,7 +48,7 @@ class Ssl {
 	 *
 	 * @return bool True is the domain has certificate, false otherwise.
 	 */
-	private function has_certificate() {
+	public function has_certificate() {
 		// Get siteurl.
 		$home_url = get_option( 'siteurl' );
 
@@ -108,9 +128,20 @@ class Ssl {
 		$protocol_switched = $this->switch_protocol( true );
 		$enable_from_htaccess = true;
 
+		$replacements = array(
+			'search'  => '{MAYBE_WWW}',
+			'replace' => '',
+		);
+
 		// Add rule to htaccess for single sites.
 		if ( ! is_multisite() ) {
-			$enable_from_htaccess = $this->htaccess_service->enable( 'ssl' );
+			$parsed  = parse_url( get_option( 'siteurl' ) );
+
+			if ( strpos( $parsed['host'], 'www.' ) === 0 ) {
+				$replacements['replace'] = "RewriteCond %{HTTP_HOST} !^www\. [NC]\n    RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]";
+			}
+
+			$enable_from_htaccess = $this->htaccess_service->enable( 'ssl', $replacements );
 		}
 
 		if (

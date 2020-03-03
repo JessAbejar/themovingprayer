@@ -8,21 +8,20 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/editorial-calendar\n"
 "POT-Creation-Date: 2010-04-14 14:22+0000\n"
-"PO-Revision-Date: 2010-04-14 18:44-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: POLISH <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: POLAND\n"
+"Language: pl_PL\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: edcal.php:63
 msgid "Calendar"
 msgstr "Kalendarz"
 
-#: edcal.php:137
-#: edcal.php:349
+#: edcal.php:137 edcal.php:349
 msgid "en-US"
 msgstr "pl-PL"
 
@@ -66,18 +65,15 @@ msgstr "Publikuj ponownie"
 msgid "Status:"
 msgstr "Stan:"
 
-#: edcal.php:157
-#: edcal.php:295
+#: edcal.php:157 edcal.php:295
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: edcal.php:158
-#: edcal.php:261
+#: edcal.php:158 edcal.php:261
 msgid "Title"
 msgstr "Tytuł"
 
-#: edcal.php:159
-#: edcal.php:266
+#: edcal.php:159 edcal.php:266
 msgid "Content"
 msgstr "Treść"
 
@@ -93,8 +89,7 @@ msgstr "Nowy wpis -"
 msgid "Update"
 msgstr "Zaktualizuj"
 
-#: edcal.php:163
-#: edcal.php:294
+#: edcal.php:163 edcal.php:294
 msgid "Schedule"
 msgstr "Zaplanuj"
 
@@ -102,13 +97,11 @@ msgstr "Zaplanuj"
 msgid "Save"
 msgstr "Zapisz"
 
-#: edcal.php:165
-#: edcal.php:255
+#: edcal.php:165 edcal.php:255
 msgid "Edit Post"
 msgstr "Edytuj wpis"
 
-#: edcal.php:166
-#: edcal.php:287
+#: edcal.php:166 edcal.php:287
 msgid "Scheduled"
 msgstr "Zaplanowano"
 
@@ -196,8 +189,10 @@ msgstr "Stan"
 msgid "Draft"
 msgstr "Szkic"
 
-#: edcal.php:544
-#: edcal.php:547
+#: edcal.php:544 edcal.php:547
 msgid "Error in deleting..."
 msgstr "Błąd podczas usuwania..."
 
+#: edcal.php:190 edcal.php:274
+msgid "ltr"
+msgstr "ltr"

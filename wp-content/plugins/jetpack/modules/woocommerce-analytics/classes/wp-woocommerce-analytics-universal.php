@@ -28,8 +28,8 @@ class Jetpack_WooCommerce_Analytics_Universal {
 		// add to carts from non-product pages or lists (search, store etc.)
 		add_action( 'wp_head', array( $this, 'loop_session_events' ), 2 );
 
-		// loading s.js
-		add_action( 'wp_head', array( $this, 'wp_head_bottom' ), 999999 );
+		// loading s.js.
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_tracking_script' ) );
 
 		// Capture cart events
 		add_action( 'woocommerce_add_to_cart', array( $this, 'capture_add_to_cart' ), 10, 6 );
@@ -64,12 +64,16 @@ class Jetpack_WooCommerce_Analytics_Universal {
 
 
 	/**
-	 * Place script to call s.js, Store Analytics
+	 * Place script to call s.js, Store Analytics.
 	 */
-	public function wp_head_bottom() {
-		$filename   = 's-' . gmdate( 'YW' ) . '.js';
-		$async_code = "<script async src='https://stats.wp.com/" . $filename . "'></script>";
-		echo "$async_code\r\n";
+	public function enqueue_tracking_script() {
+		$filename = sprintf(
+			'https://stats.wp.com/s-%d.js',
+			gmdate( 'YW' )
+		);
+
+		// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_enqueue_script( 'woocommerce-analytics', esc_url( $filename ), array(), null, false );
 	}
 
 	/**
@@ -84,7 +88,7 @@ class Jetpack_WooCommerce_Analytics_Universal {
 			if ( ! empty( $data ) ) {
 				foreach ( $data as $data_instance ) {
 					$product = wc_get_product( $data_instance['product_id'] );
-					if ( ! $product ) {
+					if ( ! $product instanceof WC_Product ) {
 						continue;
 					}
 					$product_details = $this->get_product_details( $product );
@@ -324,7 +328,8 @@ class Jetpack_WooCommerce_Analytics_Universal {
 		$referer_postid = isset( $_SERVER['HTTP_REFERER'] ) ? url_to_postid( $_SERVER['HTTP_REFERER'] ) : 0;
 		// if the referring post is not a product OR the product being added is not the same as post
 		// (eg. related product list on single product page) then include a product view event
-		if ( ! wc_get_product( $referer_postid ) || $product_id != $referer_postid ) {
+		$product_by_referer_postid = wc_get_product( $referer_postid );
+		if ( ! $product_by_referer_postid instanceof WC_Product || (int) $product_id !== $referer_postid ) {
 			$this->capture_event_in_session_data( $product_id, $quantity, 'woocommerceanalytics_product_view' );
 		}
 		// add cart event to the session data
@@ -339,7 +344,7 @@ class Jetpack_WooCommerce_Analytics_Universal {
 	public function capture_event_in_session_data( $product_id, $quantity, $event ) {
 
 		$product = wc_get_product( $product_id );
-		if ( ! $product ) {
+		if ( ! $product instanceof WC_Product ) {
 			return;
 		}
 
@@ -376,7 +381,7 @@ class Jetpack_WooCommerce_Analytics_Universal {
 	 */
 	public function get_product_categories_concatenated( $product ) {
 
-		if ( ! $product ) {
+		if ( ! $product instanceof WC_Product ) {
 			return '';
 		}
 

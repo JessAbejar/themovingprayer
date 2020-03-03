@@ -12,6 +12,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+error_reporting(E_ALL | E_STRICT);
+
 // Make sure version id constant is available.
 if (defined('PHP_VERSION_ID') === false) {
     $version = explode('.', PHP_VERSION);
@@ -1057,7 +1059,6 @@ class PHP_CodeSniffer_CLI
         $reportFile,
         $reportWidth
     ) {
-
         if (empty($reports) === true) {
             $reports['full'] = $reportFile;
         }

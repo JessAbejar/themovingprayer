@@ -8,19 +8,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-02-01 15:10-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: Paternostre <info@paternostre.nl>\n"
-"X-Poedit-Language: Dutch\n"
-"X-Poedit-Country: NETHERLANDS\n"
+"Language: nl_NL\n"
+"X-Generator: Poedit 2.2.3\n"
 
-#: edcal.php:71
-#: edcal.php:93
+#: edcal.php:71 edcal.php:93
 msgid "Calendar"
 msgstr "Kalender"
 
-#: edcal.php:221
-#: edcal.php:465
+#: edcal.php:221 edcal.php:465
 msgid "en-US"
 msgstr "nl-NL"
 
@@ -52,8 +50,7 @@ msgstr "[CONCEPT, STICKY]"
 msgid " [PENDING, STICKY]"
 msgstr "[WACHTEND, STICKY]"
 
-#: edcal.php:238
-#: edcal.php:242
+#: edcal.php:238 edcal.php:242
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -73,18 +70,15 @@ msgstr "Bekijken"
 msgid "Status:"
 msgstr "Status:"
 
-#: edcal.php:244
-#: edcal.php:409
+#: edcal.php:244 edcal.php:409
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: edcal.php:245
-#: edcal.php:363
+#: edcal.php:245 edcal.php:363
 msgid "Title"
 msgstr "Titel"
 
-#: edcal.php:246
-#: edcal.php:368
+#: edcal.php:246 edcal.php:368
 msgid "Content"
 msgstr "Inhoud"
 
@@ -100,8 +94,7 @@ msgstr "Nieuwe %s - "
 msgid "Update"
 msgstr "Bijwerken"
 
-#: edcal.php:250
-#: edcal.php:408
+#: edcal.php:250 edcal.php:408
 msgid "Schedule"
 msgstr "Planning"
 
@@ -117,8 +110,7 @@ msgstr "Opslaan"
 msgid "Edit %1$s - %2$s"
 msgstr "Bewerk %1$s - %2$s"
 
-#: edcal.php:254
-#: edcal.php:394
+#: edcal.php:254 edcal.php:394
 msgid "Scheduled"
 msgstr "Gepland"
 
@@ -178,8 +170,7 @@ msgstr "Toon in kalendercel"
 msgid "Author"
 msgstr "Auteur"
 
-#: edcal.php:272
-#: edcal.php:388
+#: edcal.php:272 edcal.php:388
 msgid "Status"
 msgstr "Status"
 
@@ -239,8 +230,10 @@ msgstr "Concept"
 msgid "Pending Review"
 msgstr "Wachtend op review"
 
-#: edcal.php:734
-#: edcal.php:737
+#: edcal.php:734 edcal.php:737
 msgid "Error in deleting..."
 msgstr "Fout bij het verwijderen..."
 
+#: edcal.php:190 edcal.php:274
+msgid "ltr"
+msgstr "ltr"

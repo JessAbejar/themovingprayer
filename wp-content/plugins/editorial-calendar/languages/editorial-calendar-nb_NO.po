@@ -6,17 +6,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-12-22 08:02-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: Zack Grossbart <zack@grossbart.com>\n"
+"Language: nb_NO\n"
+"X-Generator: Poedit 2.2.3\n"
 
-#: edcal.php:90
-#: edcal.php:114
+#: edcal.php:90 edcal.php:114
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: edcal.php:242
-#: edcal.php:466
+#: edcal.php:242 edcal.php:466
 msgid "en-US"
 msgstr "nb-NO"
 
@@ -48,8 +48,7 @@ msgstr " [UTKAST KLISTRET]"
 msgid " [PENDING, STICKY]"
 msgstr " [PÃ…VENTE KLISTRET]"
 
-#: edcal.php:259
-#: edcal.php:263
+#: edcal.php:259 edcal.php:263
 msgid "Edit"
 msgstr "Editer"
 
@@ -69,18 +68,15 @@ msgstr "Se"
 msgid "Status:"
 msgstr "Status"
 
-#: edcal.php:265
-#: edcal.php:435
+#: edcal.php:265 edcal.php:435
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: edcal.php:266
-#: edcal.php:398
+#: edcal.php:266 edcal.php:398
 msgid "Title"
 msgstr "Tittel"
 
-#: edcal.php:267
-#: edcal.php:403
+#: edcal.php:267 edcal.php:403
 msgid "Content"
 msgstr "Innhold"
 
@@ -96,8 +92,7 @@ msgstr "Nytt %s - "
 msgid "Update"
 msgstr "Oppdater"
 
-#: edcal.php:271
-#: edcal.php:434
+#: edcal.php:271 edcal.php:434
 msgid "Schedule"
 msgstr "Planlegg"
 
@@ -113,8 +108,7 @@ msgstr "Lagre"
 msgid "Edit %1$s - %2$s"
 msgstr "Editer %1$ - %2$s"
 
-#: edcal.php:275
-#: edcal.php:420
+#: edcal.php:275 edcal.php:420
 msgid "Scheduled"
 msgstr "Planlagt"
 
@@ -174,8 +168,7 @@ msgstr "Vis i Kalender celle"
 msgid "Author"
 msgstr "Forfatter"
 
-#: edcal.php:293
-#: edcal.php:414
+#: edcal.php:293 edcal.php:414
 msgid "Status"
 msgstr "Status"
 
@@ -197,7 +190,7 @@ msgstr "Velg antall uker som kalenderen skal vise"
 
 #: edcal.php:306
 msgid "<h2>We're done</h2>We've finished collecting data.  Thank you for helping us make the calendar better."
-msgstr "<h2>Vi er ferdig</h2> Vi er ferdig med Ã¥ samle data. Takk for at du hjelper oss" "med Ã¥ gjÃ¸re kalenderen bedre."
+msgstr "<h2>Vi er ferdig</h2> Vi er ferdig med Ã¥ samle data. Takk for at du hjelper oss\" \"med Ã¥ gjÃ¸re kalenderen bedre."
 
 #: edcal.php:347
 msgid " Calendar"
@@ -243,8 +236,10 @@ msgstr "Innlegg "
 msgid "Post "
 msgstr "Innlegg "
 
-#: edcal.php:737
-#: edcal.php:740
+#: edcal.php:737 edcal.php:740
 msgid "Error in deleting..."
 msgstr "Feil under sletting..."
 
+#: edcal.php:190 edcal.php:274
+msgid "ltr"
+msgstr "ltr"

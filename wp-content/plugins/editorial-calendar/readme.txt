@@ -2,8 +2,8 @@
 Contributors: cvernon, justinstresslimit, jkudish, MaryVogt, zgrossbart
 Tags: posts, post, calendar, AJAX, admin, administration
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 3.7.2
+Tested up to: 5.2.3
+Stable tag: 3.7.5
 
 The Editorial Calendar makes it possible to see all your posts and drag and drop them to manage your blog.
 
@@ -194,6 +194,18 @@ The `edcal_default_status` property controls the default status for new posts in
 7. Use the new unscheduled drafts section to manage drafts before you schedule them.
 
 == Changelog ==
+
+= 3.7.5 =
+
+The calendar now support quick edit when a post has either a title or content instead of requiring a title.
+
+= 3.7.4 =
+
+Fixed a specific issue which made the calendar show up as right to left instead of left to right in Dutch.
+
+= 3.7.3 =
+
+We are now making sure to set the correct right to left and left to right orientation in every language file.
 
 = 3.7.2 =
 

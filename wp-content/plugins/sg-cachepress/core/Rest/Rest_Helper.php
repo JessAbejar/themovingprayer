@@ -9,7 +9,9 @@ use SiteGround_Optimizer\Ssl\Ssl;
 use SiteGround_Optimizer\Htaccess\Htaccess;
 use SiteGround_Optimizer\Multisite\Multisite;
 use SiteGround_Optimizer\Images_Optimizer\Images_Optimizer;
+use SiteGround_Optimizer\Front_End_Optimization\Front_End_Optimization;
 use SiteGround_Optimizer\Helper\Helper;
+use SiteGround_Optimizer\Analysis\Analysis;
 
 /**
  * Rest Helper class that process all rest requests and provide json output for react app.
@@ -25,7 +27,6 @@ class Rest_Helper {
 		$this->ssl              = new Ssl();
 		$this->htaccess         = new Htaccess();
 		$this->multisite        = new Multisite();
-		$this->images_optimizer = new Images_Optimizer();
 	}
 
 	/**
@@ -66,12 +67,17 @@ class Rest_Helper {
 	 * @since  5.0.0
 	 */
 	public function optimize_images() {
+		$this->images_optimizer = new Images_Optimizer();
 		$this->images_optimizer->initialize();
 
-		wp_send_json_success( array(
-			'image_optimization_status'  => 0,
-			'image_optimization_stopped' => 0,
-		) );
+		wp_send_json_success(
+			array(
+				'image_optimization_status'   => 0,
+				'image_optimization_stopped'  => 0,
+				'has_images_for_optimization' => get_option( 'siteground_optimizer_total_unoptimized_images', 0 ),
+				'total_unoptimized_images'    => get_option( 'siteground_optimizer_total_unoptimized_images', 0 ),
+			)
+		);
 	}
 
 	/**
@@ -139,7 +145,7 @@ class Rest_Helper {
 		$data = json_decode( $request->get_body(), true );
 
 		// Bail if the option key is not set.
-		if ( empty( $data[ $key ] ) ) {
+		if ( ! isset( $data[ $key ] ) ) {
 			return true === $bail ? wp_send_json_error() : false;
 		}
 
@@ -159,7 +165,10 @@ class Rest_Helper {
 			$options['sites_data'] = $this->multisite->get_sites_info();
 		}
 
+		$options['has_images']                  = $this->options->check_for_images();
 		$options['has_images_for_optimization'] = $this->options->check_for_unoptimized_images();
+		$options['has_images_for_conversion']   = $this->options->check_for_non_converted_images();
+		$options['assets']                      = Front_End_Optimization::get_instance()->get_assets();
 
 		// Send the options to react app.
 		wp_send_json_success( $options );
@@ -204,10 +213,11 @@ class Rest_Helper {
 		if ( empty( $port ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'SG Optimizer was unable to connect to the Memcached server and it was disabled. Please, check your cPanel and turn it on if disabled.', 'sg-cachepress' ),
+					'message' => __( 'SG Optimizer was unable to connect to the Memcached server and it was disabled. Please, check your SiteGround control panel and turn it on if disabled.', 'sg-cachepress' ),
 				)
 			);
 		}
+
 		// First enable the option.
 		$result = Options::enable_option( 'siteground_optimizer_enable_memcached' );
 
@@ -218,6 +228,14 @@ class Rest_Helper {
 					'message' => __( 'Memcached Enabled', 'sg-cachepress' ),
 				)
 			);
+		} else {
+			if ( 11211 === $port ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'SG Optimizer was unable to connect to the Memcached server and it was disabled. Please, check your SiteGround control panel and turn it on if disabled.', 'sg-cachepress' ),
+					)
+				);
+			}
 		}
 
 		// Dropin cannot be created.
@@ -275,6 +293,15 @@ class Rest_Helper {
 	 */
 	public function enable_ssl( $request ) {
 		$key    = $this->validate_and_get_option_value( $request, 'option_key' );
+		// Bail if the domain doens't nove ssl certificate.
+		if ( ! $this->ssl->has_certificate() ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Please, install an SSL certificate first!', 'sg-cachepress' ),
+				)
+			);
+		}
+
 		$result = $this->ssl->enable();
 
 		wp_send_json(
@@ -424,11 +451,19 @@ class Rest_Helper {
 	 * @since  5.0.0
 	 */
 	public function check_image_optimizing_status() {
+		$unoptimized_images = $this->options->check_for_unoptimized_images();
+
+		if ( 0 === $unoptimized_images ) {
+			Images_Optimizer::complete();
+		}
+
 		$status = (int) get_option( 'siteground_optimizer_image_optimization_completed', 0 );
+
 		wp_send_json_success(
 			array(
 				'image_optimization_status'   => $status,
-				'has_images_for_optimization' => $this->options->check_for_unoptimized_images(),
+				'has_images_for_optimization' => $unoptimized_images,
+				'total_unoptimized_images'    => (int) get_option( 'siteground_optimizer_total_unoptimized_images' ),
 			)
 		);
 	}
@@ -489,7 +524,7 @@ class Rest_Helper {
 	 * @since  5.0.0
 	 */
 	public function reset_images_optimization() {
-		$this->images_optimizer->reset_image_optimization_status();
+		Images_Optimizer::reset_image_optimization_status();
 
 		wp_send_json_success();
 	}
@@ -504,6 +539,89 @@ class Rest_Helper {
 		update_site_option( 'siteground_optimizer_hide_rating', 1 );
 
 		wp_send_json_success();
+	}
+
+	/**
+	 * Update exclude list.
+	 *
+	 * @since  5.2.0
+	 *
+	 * @param  object $request Request data.
+	 */
+	public function update_exclude_list( $request ) {
+		// List of predefined exclude lists.
+		$exclude_lists = array(
+			'minify_javascript_exclude',
+			'async_javascript_exclude',
+			'minify_css_exclude',
+			'minify_html_exclude',
+			'excluded_lazy_load_classes',
+			'combine_css_exclude',
+		);
+
+		// Get the type and handles data from the request.
+		$type   = $this->validate_and_get_option_value( $request, 'type' );
+		$handle = $this->validate_and_get_option_value( $request, 'handle' );
+
+		// Bail if the type is not listed in the predefined exclude list.
+		if ( ! in_array( $type, $exclude_lists ) ) {
+			wp_send_json_error();
+		}
+
+		$handles = get_option( 'siteground_optimizer_' . $type, array() );
+		$key     = array_search( $handle, $handles );
+
+		if ( false === $key ) {
+			array_push( $handles, $handle );
+		} else {
+			unset( $handles[ $key ] );
+		}
+
+		$handles = array_values( $handles );
+
+		if ( in_array( $type, array( 'minify_html_exclude', 'excluded_lazy_load_classes' ) ) ) {
+			$handles = $handle;
+		}
+
+		// Update the option.
+		$result = update_option( 'siteground_optimizer_' . $type, $handles );
+
+		// Purge the cache.
+		Supercacher::purge_cache();
+
+		// Send response to the react app.
+		wp_send_json(
+			array(
+				'success' => $result,
+				'handles' => $handles,
+			)
+		);
+	}
+
+
+	/**
+	 * Disable specific optimizations for a blog.
+	 *
+	 * @since  5.4.0
+	 *
+	 * @param  object $request Request data.
+	 */
+	public function run_analysis( $request ) {
+
+		// Get the required params.
+		$device = $this->validate_and_get_option_value( $request, 'device' );
+		$url    = $this->validate_and_get_option_value( $request, 'url', false );
+
+		// Bail if any of the parameters is empty.
+		if ( empty( $device ) ) {
+			wp_send_json_error();
+		}
+
+		$analysis = new Analysis();
+		$result = $analysis->run_analysis_rest( $url, $device );
+
+		// Send the response.
+		wp_send_json_success( $result );
 	}
 
 }

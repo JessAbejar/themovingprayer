@@ -107,6 +107,9 @@ class Modules {
 				'siteground_optimizer_lazyload_thumbnails',
 				'siteground_optimizer_lazyload_responsive',
 				'siteground_optimizer_lazyload_textwidgets',
+				'siteground_optimizer_lazyload_iframes',
+				'siteground_optimizer_lazyload_woocommerce',
+				'siteground_optimizer_lazyload_videos',
 			),
 		),
 	);
@@ -148,11 +151,14 @@ class Modules {
 			),
 		),
 		'images' => array(
-			'title' => 'Image Optimization',
+			'title' => 'Media Optimization',
 			'modules' => array(
 				'optimize_images',
 				'lazyload_images',
 			),
+		),
+		'analytics' => array(
+			'title' => 'Performance Test',
 		),
 	);
 

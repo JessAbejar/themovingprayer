@@ -35,6 +35,7 @@ class Admin {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
 		add_action( 'plugins_loaded', array( $this, 'hide_errors_and_notices' ) );
 
 		if ( ! $this->is_multisite_without_permissions() ) {
@@ -147,15 +148,16 @@ class Admin {
 			'php_version'        => $php_version_info['version'],
 			'is_php_changed'     => $php_version_info['has_been_changed'],
 			'is_cron_disabled'   => Helper::is_cron_disabled(),
+			'is_avalon'          => Helper::is_avalon(),
 			'modules'            => $this->modules->get_active_modules(),
 			'tabs'               => $this->modules->get_active_tabs(),
 			'locale'             => Helper::get_i18n_data_json(),
-			'should_flush_cache' => $this->should_flush_cache(),
+			'update_timestamp'   => get_option( 'siteground_optimizer_update_timestamp', 0 ),
 			'is_shop'            => is_plugin_active( 'woocommerce/woocommerce.php' ) ? 1 : 0,
 			'localeSlug'         => join( '-', explode( '_', \get_user_locale() ) ),
 			'wp_nonce'           => wp_create_nonce( 'wp_rest' ),
 			'config'             => array(
-				'iconsPath' => SiteGround_Optimizer\URL . '/assets/images/svg',
+				'assetsPath' => SiteGround_Optimizer\URL . '/assets/images',
 			),
 			'network_settings'   => array(
 				'is_network_admin' => intval( is_network_admin() ),
@@ -164,25 +166,6 @@ class Admin {
 		);
 
 		wp_localize_script( 'siteground-optimizer-admin', 'optimizerData', $data );
-	}
-
-	/**
-	 * Check whether to flush the redux cache.
-	 *
-	 * @since  5.0.0
-	 *
-	 * @return bool True|False
-	 */
-	public function should_flush_cache() {
-		$should_flush_cache = get_option( 'siteground_optimizer_flush_redux_cache', 0 );
-
-		if ( 1 === (int) $should_flush_cache ) {
-			delete_option( 'siteground_optimizer_flush_redux_cache' );
-
-			return 1;
-		}
-
-		return 0;
 	}
 
 	/**
@@ -236,7 +219,7 @@ class Admin {
 		}
 
 		$class = 'notice notice-error';
-		$message = __( 'SG Optimizer has detected that Memcached was turned off. If you want to use it, please enable it from cPanel first.', 'sg-cachepress' );
+		$message = __( 'SG Optimizer has detected that Memcached was turned off. If you want to use it, please enable it from your SiteGround control panel first.', 'sg-cachepress' );
 
 		printf(
 			'<div class="%1$s" style="position: relative"><p>%2$s</p><button type="button" class="notice-dismiss dismiss-memcache-notice" data-link="%3$s"><span class="screen-reader-text">Dismiss this notice.</span></button></div>',
@@ -258,9 +241,19 @@ class Admin {
 			'manage_options',
 			\SiteGround_Optimizer\PLUGIN_SLUG,   // Page slug.
 			array( $this, 'render' ),
-			\SiteGround_Optimizer\URL . '/assets/images/logo-white.svg'
+			\SiteGround_Optimizer\URL . '/assets/images/icon.svg'
 		);
 	}
+
+	/**
+	 * Add styles to WordPress admin head.
+	 *
+	 * @since  5.2.0
+	 */
+	public function admin_print_styles() {
+		echo '<style>.toplevel_page_sg-cachepress.menu-top .wp-menu-image img { width:20px;} </style>';
+	}
+
 
 	/**
 	 * Display the admin page.

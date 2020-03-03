@@ -255,6 +255,12 @@ class Htaccess {
 
 		// Get the server php version if it was not found in htaccess files.
 		if ( false === $maybe_php_version ) {
+			if ( Helper::is_avalon() ) {
+				return array(
+					'version'          => 'recommended-php',
+					'has_been_changed' => 1,
+				);
+			}
 			return array(
 				'version'          => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
 				'has_been_changed' => 0,
@@ -280,6 +286,7 @@ class Htaccess {
 	private function check_htaccess_php_version( $path ) {
 		$file = trailingslashit( $path ) . '.htaccess';
 
+
 		// Check if the file exists.
 		if ( file_exists( $file ) && is_readable( $file ) ) {
 			// Check if the version has changed in .htaccess.
@@ -304,6 +311,7 @@ class Htaccess {
 
 			return $this->check_htaccess_php_version( dirname( $path ) );
 		}
+
 
 		// Bail if the path if the main dir.
 		if ( '/' === $path ) {

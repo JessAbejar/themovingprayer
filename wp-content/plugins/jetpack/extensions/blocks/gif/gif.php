@@ -24,7 +24,9 @@ jetpack_register_block(
 function jetpack_gif_block_render( $attr ) {
 	$padding_top = isset( $attr['paddingTop'] ) ? $attr['paddingTop'] : 0;
 	$style       = 'padding-top:' . $padding_top;
-	$giphy_url   = isset( $attr['giphyUrl'] ) ? $attr['giphyUrl'] : null;
+	$giphy_url   = isset( $attr['giphyUrl'] )
+		? Jetpack_Gutenberg::validate_block_embed_url( $attr['giphyUrl'], array( 'giphy.com' ) )
+		: null;
 	$search_text = isset( $attr['searchText'] ) ? $attr['searchText'] : '';
 	$caption     = isset( $attr['caption'] ) ? $attr['caption'] : null;
 
@@ -32,17 +34,8 @@ function jetpack_gif_block_render( $attr ) {
 		return null;
 	}
 
-	/* TODO: replace with centralized block_class function */
-	$align   = isset( $attr['align'] ) ? $attr['align'] : 'center';
-	$type    = 'gif';
-	$classes = array(
-		'wp-block-jetpack-' . $type,
-		'align' . $align,
-	);
-	if ( isset( $attr['className'] ) ) {
-		array_push( $classes, $attr['className'] );
-	}
-	$classes     = implode( $classes, ' ' );
+	$classes = Jetpack_Gutenberg::block_classes( 'gif', $attr );
+
 	$placeholder = sprintf( '<a href="%s">%s</a>', esc_url( $giphy_url ), esc_attr( $search_text ) );
 
 	ob_start();

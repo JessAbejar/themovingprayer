@@ -73,7 +73,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '2.9.1';
+    const VERSION = '2.9.2';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -2199,7 +2199,6 @@ class PHP_CodeSniffer
     {
         $installedPaths = array(dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR.'Standards');
         $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
-
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
         }

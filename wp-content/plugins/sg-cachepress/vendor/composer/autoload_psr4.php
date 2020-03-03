@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'SiteGround_Optimizer\\' => array($baseDir . '/core'),
-    'PHPCompatibility\\' => array($vendorDir . '/phpcompatibility/php-compatibility/PHPCompatibility'),
     'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => array($vendorDir . '/dealerdirect/phpcodesniffer-composer-installer/src'),
 );

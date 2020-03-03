@@ -2,19 +2,19 @@
 # This file is distributed under the same license as the WordPress Editorial Calendar package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-02-02 08:53-0500\n"
+"PO-Revision-Date: 2019-08-12 06:19-0400\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "Project-Id-Version: WordPress Editorial Calendar\n"
 "POT-Creation-Date: \n"
 "Last-Translator: Zack Grossbart <zack@grossbart.com>\n"
 "Language-Team: \n"
+"Language: da_DK\n"
 
-#: edcal.php:273
-#: edcal.php:293
+#: edcal.php:273 edcal.php:293
 msgid "New Draft"
 msgstr "Ny kladde"
 
@@ -26,8 +26,7 @@ msgstr "Tilføj en ny kladde"
 msgid "The calendar can only show between 1 and 8 weeks at a time."
 msgstr "Kalenderen kan kun vise mellem 1 og 8 uger ad gangen."
 
-#: edcal.php:324
-#: edcal.php:395
+#: edcal.php:324 edcal.php:395
 msgid "Show Unscheduled Drafts"
 msgstr "Vis ikke planlagte kladder"
 
@@ -55,13 +54,11 @@ msgstr "Ikke udgivet"
 msgid "%1$s Calendar"
 msgstr "%1$s kalender"
 
-#: edcal.php:96
-#: edcal.php:120
+#: edcal.php:96 edcal.php:120
 msgid "Calendar"
 msgstr "Kalender"
 
-#: edcal.php:262
-#: edcal.php:531
+#: edcal.php:262 edcal.php:531
 msgid "en-US"
 msgstr "da-DK"
 
@@ -93,8 +90,7 @@ msgstr "[KLADDE, STICKY]"
 msgid " [PENDING, STICKY]"
 msgstr "[AFVENTER, STICKY]"
 
-#: edcal.php:281
-#: edcal.php:285
+#: edcal.php:281 edcal.php:285
 msgid "Edit"
 msgstr "Rediger"
 
@@ -114,18 +110,15 @@ msgstr "Vis"
 msgid "Status:"
 msgstr "Status:"
 
-#: edcal.php:287
-#: edcal.php:478
+#: edcal.php:287 edcal.php:478
 msgid "Cancel"
 msgstr "Annuller"
 
-#: edcal.php:288
-#: edcal.php:440
+#: edcal.php:288 edcal.php:440
 msgid "Title"
 msgstr "Titel"
 
-#: edcal.php:289
-#: edcal.php:445
+#: edcal.php:289 edcal.php:445
 msgid "Content"
 msgstr "Indhold"
 
@@ -141,8 +134,7 @@ msgstr "Nyt %s -"
 msgid "Update"
 msgstr "Opdater"
 
-#: edcal.php:295
-#: edcal.php:477
+#: edcal.php:295 edcal.php:477
 msgid "Schedule"
 msgstr "Udgiv"
 
@@ -158,8 +150,7 @@ msgstr "Gem"
 msgid "Edit %1$s - %2$s"
 msgstr "Rediger %1$s - %2$s"
 
-#: edcal.php:299
-#: edcal.php:462
+#: edcal.php:299 edcal.php:462
 msgid "Scheduled"
 msgstr "Udgivet"
 
@@ -219,8 +210,7 @@ msgstr "Vis i kalender"
 msgid "Author"
 msgstr "Forfatter"
 
-#: edcal.php:317
-#: edcal.php:456
+#: edcal.php:317 edcal.php:456
 msgid "Status"
 msgstr "Status"
 
@@ -280,13 +270,10 @@ msgstr "Indlæg"
 msgid "Post "
 msgstr "Indlæg"
 
-#: edcal.php:877
-#: edcal.php:880
+#: edcal.php:877 edcal.php:880
 msgid "Error in deleting..."
 msgstr "Fejl ved sletning..."
 
-#: edcal.php:190
-#: edcal.php:274
+#: edcal.php:190 edcal.php:274
 msgid "ltr"
 msgstr "ltr"
-

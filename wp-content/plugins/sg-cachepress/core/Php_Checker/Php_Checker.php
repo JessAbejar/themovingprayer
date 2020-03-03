@@ -3,6 +3,7 @@ namespace SiteGround_Optimizer\Php_Checker;
 
 use SiteGround_Optimizer\SiteGround_Optimizer;
 use SiteGround_Optimizer\Rest\Rest;
+
 /**
  * Handle PHP compatibility checks.
  */
@@ -82,6 +83,8 @@ class Php_Checker {
 
 		// Reset the option.
 		delete_option( 'siteground_optimizer_phpcompat_result' );
+
+		delete_option( 'siteground_optimizer_lock' );
 	}
 
 	/**
@@ -100,7 +103,7 @@ class Php_Checker {
 			'cookies'  => $_COOKIE,
 		);
 
-		wp_remote_post( esc_url_raw( admin_url( 'admin-ajax.php' ) ), $args );
+		$response = wp_remote_post( esc_url_raw( admin_url( 'admin-ajax.php' ) ), $args );
 	}
 
 	/**
@@ -424,7 +427,11 @@ class Php_Checker {
 	 * @return string $report The plugin compatibility report.
 	 */
 	public function process_dir( $dir, $php_version ) {
-		call_user_func( array( 'PHPCompatibility\PHPCSHelper', 'setConfigData' ), 'testVersion', $php_version, true );
+		if ( class_exists( 'PHPCompatibility\PHPCSHelper' ) ) {
+			call_user_func( array( 'PHPCompatibility\PHPCSHelper', 'setConfigData' ), 'testVersion', $php_version, true );
+		} else {
+			\PHP_CodeSniffer::setConfigData( 'testVersion', $php_version, true );
+		}
 
 		$codesniffer_cli = new \PHP_CodeSniffer_CLI();
 

@@ -158,7 +158,7 @@ class Supercacher {
 	 * @return bool True on success, false on failure.
 	 */
 	public function purge_index_cache() {
-		return $this->purge_cache_request( get_home_url( '/' ), true );
+		return $this->purge_cache_request( get_home_url( '/' ), false );
 	}
 
 	/**
@@ -177,9 +177,13 @@ class Supercacher {
 			return;
 		}
 
-		$hostname            = parse_url( home_url(), PHP_URL_HOST );
-		$ip                  = isset( $_SERVER['SERVER_ADDR'] ) ? $_SERVER['SERVER_ADDR'] : $hostname;
-		$cache_server_socket = @fsockopen( $ip, 80, $errno, $errstr, 2 );
+		$hostname            = str_replace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
+		$cache_server_socket = @fsockopen( $hostname, 80, $errno, $errstr, 2 );
+
+		if ( ! $cache_server_socket ) {
+			$hostname = '127.0.0.1';
+			$cache_server_socket = @fsockopen( $hostname, 80, $errno, $errstr, 2 );
+		}
 
 		if ( ! $cache_server_socket ) {
 			return false;
@@ -217,6 +221,8 @@ class Supercacher {
 		$response = fgets( $cache_server_socket );
 
 		fclose( $cache_server_socket );
+
+		do_action( 'siteground_optimizer_flush_cache', $url );
 
 		return preg_match( '/200/', $response );
 	}

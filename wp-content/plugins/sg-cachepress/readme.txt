@@ -3,7 +3,7 @@ Contributors: Hristo Sg, siteground, sstoqnov
 Tags: nginx, caching, speed, memcache, memcached, performance, siteground, nginx, supercacher
 Requires at least: 4.7
 Requires PHP: 5.5
-Tested up to: 5.2
+Tested up to: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,7 +136,9 @@ In version 5.0 we've added full WP-CLI support for all plugin options and functi
 * wp sg optimize lazyload enable|disable - enables or disables Lazy loading of images
 * wp sg optimize gzip enable|disable - enables or disables Gzip compression for your site
 * wp sg optimize browsercache enable|disable - enables or disables Browser caching rules
-* wp sg status html|js|js-async|css|combine-css|querystring|emojis|images|lazyload_images|lazyload_gravatars|lazyload_thumbnails|lazyload_responsive|lazyload_textwidgets|gzip|browser-caching|memcache|ssl|ssl-fix|autoflush|dynamic-cache - returns optimization current status (enabled|disabled)
+* wp sg optimize dynamic-cache enable|disable - enables or disables Dynamic caching rules
+* wp sg optimize google-fonts enable|disable - enables or disables Google Fonts Combination
+* wp sg status dynamic-cache|autoflush-cache|mobile-cache|html|js|js-async|css|combine-css|querystring|emojis|images|lazyload_images|lazyload_gravatars|lazyload_thumbnails|lazyload_responsive|lazyload_textwidgets|gzip|browser-caching|memcache|ssl|ssl-fix|google-fonts - returns optimization current status (enabled|disabled)
 
 = Requirements =
 
@@ -168,6 +170,114 @@ Our plugin uses a cookie in order to function properly. It does not store person
 1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG CachePress listing
 
 == Changelog ==
+
+= Version 5.4.4 =
+* Improved transients handling
+* Added Jet Popup support
+
+= Version 5.4.3 =
+* Added Lazy loading functionality for iframes
+* Added Lazy loading functionality for videos
+
+= Version 5.4.2 =
+* Fixed bug with WebP image regeneration on image delete
+
+= Version 5.4.1 =
+* Added PHP 7.4 support for PHP Compatibility Checker
+* Improved WebP Conversion
+* Fixed bug with WebP image regeneration on image edit
+* Improved plugin localization
+
+= Version 5.4.0 =
+* Added WebP Support on All Accounts on Site Tools
+* Added Google PageSpeed Test 
+* Improved Image Optimization Process
+* Improved SSL Certificate check
+
+= Version 5.3.10 =
+* Better PHP Version Management for Site Tools
+* NGINX Direct Delivery for Site Tools
+
+= Version 5.3.9 =
+* Improved check for SG Servers
+
+= Version 5.3.8 =
+* Fixed a bug when Memcached fails to purge when new WordPress version requiring a database update is released
+* Added alert and check if you’re running SG Optimizer on a host different than SiteGround
+* Improved compatibility with WooCommerce
+* Improved conditional styles combination
+* Improved image optimization process
+
+= Version 5.3.7 =
+* Added WooCommerce Square Payment & Braintree For WooCommerce Exclude by Default
+* Improved Google Fonts Optimization
+* Added Notice for Defer Render-Blocking Scripts Optimization
+* Added wp-cli commands for Google Fonts Optimization
+* Changed New Images Optimizer hook to wp_generate_attachment_metadata
+
+= Version 5.3.6 =
+* Improved Google Fonts loading with better caching
+* Improved Defer of render-blocking JS
+
+= Version 5.3.5 =
+* WordPress 5.3 Support Declared
+* Better Elementor Compatibility
+* Better Image Optimization Messaging
+* Better Google Fonts combination
+* Added PHP 7.4 support
+
+= Version 5.3.4 =
+* Improved Async load of JS files
+* Added Google Fonts Combination optimization
+* Moved lazyload script in footer
+* Improved CSS combination
+
+= Version 5.3.3 =
+* Improved browser cache handling upon plugin update
+* Added wp-cli commands for Dynamic Cache, Autoflush and Browser-Speciffic cache handling
+
+= Version 5.3.2 =
+* Fixed bug with https enforce for www websites
+* Improved JILT support
+
+= Version 5.3.1 =
+* Better SSL force to accommodate websites with WWW in the URL
+* Global exclusion of siteorigin-widget-icon-font-fontawesome from Combine CSS
+
+= Version 5.3.0 =
+* Refactoring of the Lazy Load functionality
+* Redesign of the Lazy Load screen
+* Improved WooCommerce product image Lazy Load
+* Gzip functionality update for Site Tools accounts
+* Browser caching functionality update for Site Tools accounts
+* Improved Browser caching functionality for cPanel accounts
+
+= Version 5.2.5 =
+* New Feature: Option to split caches per User Agent
+* New Feature: Option to disable lazy loading for mobile devices
+* Improved Memcached check
+
+= Version 5.2.4 =
+* Improved XML RCP checks compatibility
+
+= Version 5.2.3 =
+* Improved LazyLoad
+
+= Version 5.2.2 =
+* Improved Events Calendar Compatibility
+* Suppressed notices in the REST API in certain cases
+* Improved nonscript tag in LazyLoad
+
+= Version 5.2.1 =
+* Improved Cloudflare compatibility
+
+= Version 5.2.0 =
+* Exclude list Interface for JavaScript handlers
+* Exclude list Interface for CSS handlers
+* Exclude list Interface for HTML minification (URL like dynamic)
+* Exclude list interface for LazyLoading (Class)
+* Improved Thrive Architect support
+* Fixed notice when purging comment cache
 
 = Version 5.1.3 =
 * Improved Elementor support

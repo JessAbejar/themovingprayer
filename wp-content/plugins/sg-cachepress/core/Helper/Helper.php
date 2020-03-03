@@ -11,7 +11,7 @@ use SiteGround_Optimizer\Memcache\Memcache;
 use SiteGround_Optimizer\Php_Checker\Php_Checker;
 use SiteGround_Optimizer\Front_End_Optimization\Front_End_Optimization;
 use SiteGround_Optimizer\Cli\Cli;
-use SiteGround_Optimizer\Images_Optimizer\Images_Optimizer;
+use SiteGround_Optimizer\Config\Config;
 
 /**
  * Helper functions and main initialization class.
@@ -24,9 +24,9 @@ class Helper {
 	public function __construct() {
 		// Load the plugin textdomain.
 		add_action( 'after_setup_theme', array( $this, 'load_textdomain' ), 9999 );
-		add_action( 'init', array( new Install_Service(), 'install' ) );
 		add_action( 'plugins_loaded', array( $this, 'is_plugin_installed' ) );
 		add_action( 'init', array( $this, 'hide_warnings_in_rest_api' ) );
+		add_filter( 'xmlrpc_login_error', array( $this, 'filter_xmlrpc_login_error' ), 10, 2 );
 
 		set_error_handler( array( $this, 'error_handler' ) );
 
@@ -40,6 +40,7 @@ class Helper {
 	 * @since  5.0.0
 	 */
 	public function run() {
+		new Install_Service();
 		// Initialize dashboard page.
 		new Admin();
 
@@ -61,11 +62,11 @@ class Helper {
 		// Init the main class responsible for front-end optionmization.
 		new Front_End_Optimization();
 
-		// Init the Image optimizer.
-		new Images_Optimizer();
-
 		// Init the CLI commands.
 		new Cli();
+
+		// Init the config class.
+		new Config();
 	}
 
 	/**
@@ -195,7 +196,8 @@ class Helper {
 
 		$rest_url    = wp_parse_url( site_url( $prefix ) );
 		$current_url = wp_parse_url( add_query_arg( array() ) );
-		return 0 === strpos( $current_url['path'], $rest_url['path'], 0 );
+
+		return 0 === @strpos( $current_url['path'], $rest_url['path'], 0 );
 	}
 
 	/**
@@ -245,5 +247,41 @@ class Helper {
 		$url = set_url_scheme( $url, $scheme );
 
 		return trailingslashit( $url );
+	}
+
+	/**
+	 * Send notification to SiteGround on login error
+	 *
+	 * @since  5.2.4
+	 *
+	 * @param  string $this_error The XML-RPC error message.
+	 * @param  object $user       WP_User object.
+	 *
+	 * @return string             The XML-RPC error message.
+	 */
+	public function filter_xmlrpc_login_error( $this_error, $user ) {
+		if ( function_exists( 'c74ce9b9ffdebe0331d8e43e97206424_notify' ) ) {
+			c74ce9b9ffdebe0331d8e43e97206424_notify( 'wpxmlrpc', getcwd(), 'UNKNOWN' );
+		}
+
+		return $this_error;
+	}
+
+	/**
+	 * Checks if the plugin run on the new SiteGround interface.
+	 *
+	 * @since  5.3.0
+	 *
+	 * @return boolean True/False.
+	 */
+	public static function is_avalon() {
+		$response = shell_exec( 'test -f /etc/yum.repos.d/baseos.repo && echo Avalon' );
+
+		// The post for our new server is aloways the same.
+		if ( 'Avalon' === trim( $response ) ) {
+			return 1;
+		}
+
+		return 0;
 	}
 }
