@@ -3,7 +3,7 @@ Contributors: Hristo Sg, siteground, sstoqnov
 Tags: nginx, caching, speed, memcache, memcached, performance, siteground, nginx, supercacher
 Requires at least: 4.7
 Requires PHP: 5.5
-Tested up to: 5.3
+Tested up to: 5.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,17 @@ Our plugin uses a cookie in order to function properly. It does not store person
 1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG CachePress listing
 
 == Changelog ==
+
+= Version 5.4.6 =
+* Improved compatibility with page builders
+* Improved compatibility with latest Elementor
+* Added support for popular AMP plugins 
+* Better WebP optiomization status reporting
+
+= Version 5.4.5 =
+* Improved elementor support
+* Improved flothemes support
+* Improved handling of @imports in combine css
 
 = Version 5.4.4 =
 * Improved transients handling

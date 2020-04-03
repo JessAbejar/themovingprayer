@@ -59,6 +59,19 @@ class Minifier {
 	private static $instance;
 
 	/**
+	 * Exclude params.
+	 *
+	 * @since 5.4.6
+	 *
+	 * @var array Array of all exclude params.
+	 */
+	private $exclude_params = array(
+		'pdf-catalog',
+		'tve',
+		'elementor-preview',
+	);
+
+	/**
 	 * The constructor.
 	 *
 	 * @since 5.0.0
@@ -129,7 +142,11 @@ class Minifier {
 		global $wp_scripts;
 
 		// Bail if the scripts object is empty.
-		if ( ! is_object( $wp_scripts ) || null === $this->assets_dir ) {
+		if (
+			! is_object( $wp_scripts ) ||
+			null === $this->assets_dir ||
+			$this->has_exclude_param()
+		) {
 			return;
 		}
 
@@ -235,7 +252,11 @@ class Minifier {
 		global $wp_styles;
 
 		// Bail if the scripts object is empty.
-		if ( ! is_object( $wp_styles ) || null === $this->assets_dir ) {
+		if (
+			! is_object( $wp_styles ) ||
+			null === $this->assets_dir ||
+			$this->has_exclude_param()
+		) {
 			return;
 		}
 
@@ -361,10 +382,32 @@ class Minifier {
 		}
 
 		// Get excluded params.
-		$excluded_params = apply_filters( 'sgo_html_minify_exclude_params', array( 'pdf-catalog', 'tve' ) );
+		$excluded_params = apply_filters( 'sgo_html_minify_exclude_params', $this->exclude_params );
+
+		return $this->has_exclude_param( $excluded_params );
+	}
+
+	/**
+	 * Check if the current url, should be excluded from optimizations.
+	 *
+	 * @since  5.4.6
+	 *
+	 * @param  array $params Array of GET params.
+	 *
+	 * @return boolean True if the url should be excluded, false otherwise.
+	 */
+	public function has_exclude_param( $params = array() ) {
+		// If there are no params we don't need to check the query params.
+		if ( ! isset( $_REQUEST ) ) {
+			return false;
+		}
+
+		if ( empty( $params ) ) {
+			$params = $this->exclude_params;
+		}
 
 		// Check if any of the excluded params exists in the request.
-		foreach ( $excluded_params as $param ) {
+		foreach ( $params as $param ) {
 			if ( array_key_exists( $param, $_REQUEST ) ) {
 				return true;
 			}

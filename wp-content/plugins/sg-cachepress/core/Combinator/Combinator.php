@@ -49,6 +49,7 @@ class Combinator {
 		'tve_style_family_tve_flt', // Excluded in 5.3.0.
 		'siteorigin-widget-icon-font-fontawesome',
 		'woocommerce-smallscreen',
+		'theme-css',
 	);
 
 	/**
@@ -232,6 +233,8 @@ class Combinator {
 		foreach ( $contents as $url => $content ) {
 			$dir = trailingslashit( dirname( $url ) );
 
+			$content = $this->check_for_imports( $content, $url );
+
 			$regex = '/url\s*\(\s*(?!["\']?data:)(?![\'|\"]?[\#|\%|])([^)]+)\s*\)([^;},\s]*)/i';
 
 			$replacements = array();
@@ -258,6 +261,37 @@ class Combinator {
 		}
 
 		return implode( "\n", $new_content );
+	}
+
+	/**
+	 * Check for imports in the files and get the import content.
+	 *
+	 * @since  5.4.5
+	 *
+	 * @param  string $content The file content.
+	 * @param  string $url     The url to the file.
+	 *
+	 * @return string          Original content + content from import clause.
+	 */
+	private function check_for_imports( $content, $url ) {
+		$dir = trailingslashit( dirname( $url ) );
+		preg_match_all( '/@import\s+["\'](.+?)["\']/i', $content, $matches );
+
+		if ( empty( $matches ) ) {
+			return $content;
+		}
+
+		foreach ( $matches[1] as $match ) {
+			$import_content = $this->get_style_content_with_replacements(
+				array(
+					$url => $this->get_style_content( $dir . $match ),
+				)
+			);
+
+			$content = str_replace( $matches[0], $import_content, $content );
+		}
+
+		return $content;
 	}
 
 	/**

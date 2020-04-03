@@ -4,6 +4,7 @@ namespace SiteGround_Optimizer\Ssl;
 use SiteGround_Optimizer\Helper\Helper;
 use SiteGround_Optimizer\Options\Options;
 use SiteGround_Optimizer\Htaccess\Htaccess;
+use SiteGround_Optimizer\Supercacher\Supercacher;
 
 class Ssl {
 	/**
@@ -42,7 +43,7 @@ class Ssl {
 	}
 
 	/**
-	 * Check if the current domain has valis ssl certificate.
+	 * Check if the current domain has valid ssl certificate.
 	 *
 	 * @since  5.0.0
 	 *
@@ -107,6 +108,10 @@ class Ssl {
 		// Disable the option.
 		Options::disable_option( 'siteground_optimizer_ssl_enabled' );
 
+		Supercacher::purge_cache();
+		Supercacher::flush_memcache();
+		Supercacher::delete_assets();
+
 		// Return success.
 		return true;
 	}
@@ -151,8 +156,12 @@ class Ssl {
 			return false;
 		}
 
-		// Disable the option.
+		// Enable the option.
 		Options::enable_option( 'siteground_optimizer_ssl_enabled' );
+
+		Supercacher::purge_cache();
+		Supercacher::flush_memcache();
+		Supercacher::delete_assets();
 
 		// Return success.
 		return true;

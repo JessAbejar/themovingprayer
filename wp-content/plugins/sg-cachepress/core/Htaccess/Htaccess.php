@@ -321,5 +321,4 @@ class Htaccess {
 		// Continue with parent directories.
 		return $this->check_htaccess_php_version( dirname( $path ) );
 	}
-
 }

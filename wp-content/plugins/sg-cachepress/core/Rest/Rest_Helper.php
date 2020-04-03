@@ -167,8 +167,12 @@ class Rest_Helper {
 
 		$options['has_images']                  = $this->options->check_for_images();
 		$options['has_images_for_optimization'] = $this->options->check_for_unoptimized_images();
-		$options['has_images_for_conversion']   = $this->options->check_for_non_converted_images();
 		$options['assets']                      = Front_End_Optimization::get_instance()->get_assets();
+
+		// Check for non converted images when we are on avalon server.
+		if ( Helper::is_avalon() ) {
+			$options['has_images_for_conversion']   = $this->options->check_for_non_converted_images();
+		}
 
 		// Send the options to react app.
 		wp_send_json_success( $options );

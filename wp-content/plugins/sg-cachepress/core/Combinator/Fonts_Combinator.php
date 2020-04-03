@@ -218,9 +218,8 @@ class Fonts_Combinator {
 	 */
 	public function get_combined_css( $fonts ) {
 		$display = apply_filters( 'sgo_google_fonts_display', 'swap' );
-
 		// Combined url for Google fonts.
-		$url          = 'https://fonts.googleapis.com/css?family=' . $fonts['fonts'] . '&subset=' . $fonts['subsets'] . '&display=' . $display;
+		$url = 'https://fonts.googleapis.com/css?family=' . $fonts['fonts'] . '&subset=' . $fonts['subsets'] . '&display=' . $display;
 		// Build the combined tag in case the css is missing or the request fail.
 		$combined_tag = '<link rel="stylesheet" data-provider="sgoptimizer" href="' . $url . '" />';
 
@@ -229,6 +228,14 @@ class Fonts_Combinator {
 
 		// Return the combined tag if the css is empty.
 		if ( false === $css ) {
+			return $combined_tag;
+		}
+
+		// Return combined tag if AMP plugin is active.
+		if (
+			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ||
+			( function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint() )
+		) {
 			return $combined_tag;
 		}
 

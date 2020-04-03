@@ -275,13 +275,6 @@ class Helper {
 	 * @return boolean True/False.
 	 */
 	public static function is_avalon() {
-		$response = shell_exec( 'test -f /etc/yum.repos.d/baseos.repo && echo Avalon' );
-
-		// The post for our new server is aloways the same.
-		if ( 'Avalon' === trim( $response ) ) {
-			return 1;
-		}
-
-		return 0;
+		return (int) file_exists( '/etc/yum.repos.d/baseos.repo' );
 	}
 }
