@@ -5,9 +5,9 @@ use SiteGround_Optimizer\Helper\Helper;
 use SiteGround_Optimizer\Front_End_Optimization\Front_End_Optimization;
 
 /**
- * SG Combinator main plugin class
+ * SG Fonts Combinator main plugin class
  */
-class Fonts_Combinator {
+class Fonts_Combinator extends Abstract_Combinator {
 
 	/**
 	 * Dir where the we will store the Google fonts css.
@@ -25,7 +25,7 @@ class Fonts_Combinator {
 	 *
 	 * @var array Google Fonts regular expression
 	 */
-	private $regex_parts = array(
+	public $regex_parts = array(
 		'~', // The php quotes.
 		'<link', // Match the opening part of link tags.
 		'(?:\s+(?:(?!href\s*=\s*)[^>])+)?', // Negative lookahead aserting the regex does not match href attribute.
@@ -43,19 +43,37 @@ class Fonts_Combinator {
 	);
 
 	/**
+	 * The singleton instance.
+	 *
+	 * @since 5.5.2
+	 *
+	 * @var The singleton instance.
+	 */
+	private static $instance;
+
+	/**
 	 * The constructor.
 	 *
-	 * @since 5.3.4
+	 * @since 5.5.2
 	 */
 	public function __construct() {
-		// Bail if it's admin page.
-		if ( is_admin() ) {
-			return;
+		parent::__construct();
+		self::$instance = $this;
+	}
+
+	/**
+	 * Get the singleton instance.
+	 *
+	 * @since 5.5.2
+	 *
+	 * @return  The singleton instance.
+	 */
+	public static function get_instance() {
+		if ( null == self::$instance ) {
+			self::$instance = new self();
 		}
 
-		// Add the hooks that we will use t ominify the html.
-		add_action( 'init', array( $this, 'start_bufffer' ) );
-		add_action( 'shutdown', array( $this, 'end_buffer' ) );
+		return self::$instance;
 	}
 
 	/**
@@ -67,9 +85,9 @@ class Fonts_Combinator {
 	 *
 	 * @return string       Modified html with combined Google font.
 	 */
-	public function combine_google_fonts( $html ) {
+	public function run( $html ) {
 		// Get fonts if any.
-		$fonts = $this->get_fonts( $html );
+		$fonts = $this->get_items( $html );
 		// Bail if there are no fonts or if there is only one font.
 		if ( empty( $fonts ) ) {
 			return $html;
@@ -97,27 +115,6 @@ class Fonts_Combinator {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Get all Google fonts from the html.
-	 *
-	 * @since  5.3.4
-	 *
-	 * @param  string $html The page html.
-	 *
-	 * @return array       Array with all Google fonts
-	 */
-	public function get_fonts( $html ) {
-		// Build the regular expression.
-		// ~<link(?:\s+(?:(?!href\s*=\s*)[^>])+)?(?:\s+href\s*=\s*(?P<quotes>['|"]))((?:https?:)?\/\/fonts\.googleapis\.com\/css(?:(?!(?P=quotes)).)+)(?P=quotes)(?:\s+.*?)?[>]~imsg.
-		$regex = implode( '', $this->regex_parts );
-
-		// Check for Google fonts.
-		preg_match_all( $regex, $html, $matches, PREG_SET_ORDER );
-
-		// Return the matches.
-		return $matches;
 	}
 
 	/**
@@ -224,7 +221,7 @@ class Fonts_Combinator {
 		$combined_tag = '<link rel="stylesheet" data-provider="sgoptimizer" href="' . $url . '" />';
 
 		// Get the fonts css.
-		$css = $this->get_fonts_css( $url );
+		$css = $this->get_external_file_content( $url, 'css', 'fonts' );
 
 		// Return the combined tag if the css is empty.
 		if ( false === $css ) {
@@ -242,93 +239,4 @@ class Fonts_Combinator {
 		// Return the inline css.
 		return '<style type="text/css">' . $css . '</style>';
 	}
-
-	/**
-	 * Get the fonts css.
-	 *
-	 * @since  5.3.6
-	 *
-	 * @param  string $url Google fonts url.
-	 *
-	 * @return bool|string Fonts css on success, false on failure.
-	 */
-	public function get_fonts_css( $url ) {
-		// Generate unique hash tag unsing the font url.
-		$hash     = md5( $url );
-		// Build the fonts dir.
-		$dir      = Front_End_Optimization::get_instance()->assets_dir . $this->fonts_dir;
-		// Build the css path.
-		$css_path = $dir . '/' . $hash . '.css';
-
-		// Setup the WP Filesystem.
-		$wp_filesystem = Helper::setup_wp_filesystem();
-
-		// Check if cached version fo the css exists.
-		if ( $wp_filesystem->exists( $css_path ) ) {
-			// Get the file content.
-			$content = $wp_filesystem->get_contents( $css_path );
-
-			// Return the file content if it's not empty.
-			if ( ! empty( $content ) ) {
-				return $content;
-			}
-		}
-
-		// THE FILE DOESN'T EXIST.
-
-		// Create the fonts dir if doesn't exists.
-		if ( ! $wp_filesystem->exists( $dir ) ) {
-			$is_dir_created = $wp_filesystem->mkdir( $dir );
-		}
-
-		// Try to fetch the fonts css.
-		$request = wp_remote_get( $url );
-
-		// Bail if the request fails.
-		if ( is_wp_error( $request ) ) {
-			return false;
-		}
-
-		if ( 200 !== wp_remote_retrieve_response_code( $request ) ) {
-			return false;
-		}
-
-		// Try to create the file and bail if for some reason it's not created.
-		if ( false === $wp_filesystem->touch( $css_path ) ) {
-			return false;
-		}
-
-		// Get the css from the request.
-		$css = wp_remote_retrieve_body( $request );
-
-		// Add the css in the file, so it can be cached.
-		$wp_filesystem->put_contents(
-			$css_path,
-			$css
-		);
-
-		// Finally return the fonts css.
-		return $css;
-	}
-
-	/**
-	 * Start buffer.
-	 *
-	 * @since  5.0.0
-	 */
-	public function start_bufffer() {
-		ob_start( array( $this, 'combine_google_fonts' ) );
-	}
-
-	/**
-	 * End the buffer.
-	 *
-	 * @since  5.0.0
-	 */
-	public function end_buffer() {
-		if ( ob_get_length() ) {
-			ob_end_flush();
-		}
-	}
-
 }

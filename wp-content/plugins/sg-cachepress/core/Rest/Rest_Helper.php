@@ -131,6 +131,43 @@ class Rest_Helper {
 	}
 
 	/**
+	 * Checks if the option key exists.
+	 *
+	 * @since  5.5.0
+	 *
+	 * @param  object $request Request data.
+	 *
+	 * @return string The option key.
+	 */
+	public function change_option_from_rest( $request ) {
+		$allowed_options = array(
+			'siteground_optimizer_quality_webp',
+			'siteground_optimizer_quality_type',
+			'siteground_optimizer_quality_images',
+		);
+
+		// Get the option key.
+		$key = $this->validate_and_get_option_value( $request, 'option_key' );
+
+
+		// Bail if the option is now allowed.
+		if ( ! in_array( $key, $allowed_options ) ) {
+			wp_send_json_error();
+		}
+
+		$value      = $this->validate_and_get_option_value( $request, 'value' );
+		$is_network = $this->validate_and_get_option_value( $request, 'is_multisite', false );
+		$result     = Options::change_option( $key, $value, $is_network );
+
+		// Chnage the option.
+		return wp_send_json(
+			array(
+				'success' => $result,
+			)
+		);
+	}
+
+	/**
 	 * Checks if the `option_key` paramether exists in rest data.
 	 *
 	 * @since  5.0.0
@@ -168,6 +205,7 @@ class Rest_Helper {
 		$options['has_images']                  = $this->options->check_for_images();
 		$options['has_images_for_optimization'] = $this->options->check_for_unoptimized_images();
 		$options['assets']                      = Front_End_Optimization::get_instance()->get_assets();
+		$options['quality_type']                = get_option( 'siteground_optimizer_quality_type', '' );
 
 		// Check for non converted images when we are on avalon server.
 		if ( Helper::is_avalon() ) {
@@ -561,6 +599,7 @@ class Rest_Helper {
 			'minify_html_exclude',
 			'excluded_lazy_load_classes',
 			'combine_css_exclude',
+			'combine_javascript_exclude',
 		);
 
 		// Get the type and handles data from the request.

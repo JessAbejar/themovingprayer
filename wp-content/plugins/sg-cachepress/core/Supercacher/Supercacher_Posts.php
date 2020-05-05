@@ -13,6 +13,7 @@ class Supercacher_Posts extends Supercacher {
 	 */
 	public function run() {
 		add_action( 'save_post', array( $this, 'purge_all_post_cache' ) );
+		add_action( 'pll_save_post', array( $this, 'purge_all_post_cache' ) );
 		add_action( 'wp_trash_post', array( $this, 'purge_all_post_cache' ) );
 	}
 

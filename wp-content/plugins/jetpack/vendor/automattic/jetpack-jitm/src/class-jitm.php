@@ -14,6 +14,7 @@ use Automattic\Jetpack\Assets\Logo as Jetpack_Logo;
 use Automattic\Jetpack\Partner;
 use Automattic\Jetpack\Tracking;
 use Automattic\Jetpack\Connection\Manager;
+use Automattic\Jetpack\Redirect;
 
 /**
  * Jetpack just in time messaging through out the admin
@@ -82,7 +83,6 @@ class JITM {
 		if ( ! in_array(
 			$screen->id,
 			array(
-				'jetpack_page_stats',
 				'jetpack_page_akismet-key-config',
 				'admin_page_jetpack_modules',
 			),
@@ -303,7 +303,7 @@ class JITM {
 					),
 				)
 			),
-			'https://jetpack.com/support/primary-user/'
+			esc_url( Redirect::get_url( 'jetpack-support-primary-user' ) )
 		);
 		echo '</p>';
 		echo '<p>';
@@ -319,7 +319,7 @@ class JITM {
 					),
 				)
 			),
-			'https://jetpack.com/contact-support'
+			esc_url( Redirect::get_url( 'jetpack-contact-support' ) )
 		);
 		echo '</p>';
 		echo '</div>';
@@ -454,10 +454,11 @@ class JITM {
 	 *
 	 * @param string $message_path The message path to ask for.
 	 * @param string $query The query string originally from the front end.
+	 * @param bool   $full_jp_logo_exists If there is a full Jetpack logo already on the page.
 	 *
 	 * @return array The JITM's to show, or an empty array if there is nothing to show
 	 */
-	public function get_messages( $message_path, $query ) {
+	public function get_messages( $message_path, $query, $full_jp_logo_exists ) {
 		// Custom filters go here.
 		add_filter( 'jitm_woocommerce_services_msg', array( $this, 'jitm_woocommerce_services_msg' ) );
 		add_filter( 'jitm_jetpack_woo_services_install', array( $this, 'jitm_jetpack_woo_services_install' ) );
@@ -608,7 +609,7 @@ class JITM {
 			switch ( $envelope->content->icon ) {
 				case 'jetpack':
 					$jetpack_logo            = new Jetpack_Logo();
-					$envelope->content->icon = '<div class="jp-emblem">' . $jetpack_logo->get_jp_emblem() . '</div>';
+					$envelope->content->icon = '<div class="jp-emblem">' . ( ( $full_jp_logo_exists ) ? $jetpack_logo->get_jp_emblem() : $jetpack_logo->get_jp_emblem_larger() ) . '</div>';
 					break;
 				case 'woocommerce':
 					$envelope->content->icon = '<div class="jp-emblem"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 168 100" xml:space="preserve" enable-background="new 0 0 168 100" width="50" height="30"><style type="text/css">

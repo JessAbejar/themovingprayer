@@ -4,6 +4,7 @@ namespace SiteGround_Optimizer\Modules;
 use SiteGround_Optimizer\Multisite\Multisite;
 use SiteGround_Optimizer\Admin\Admin;
 use SiteGround_Optimizer\Options\Options;
+use SiteGround_Optimizer\Helper\Helper;
 
 /**
  * Provide list of SiteGround Optimizer modules.
@@ -29,78 +30,159 @@ class Modules {
 	 */
 	public $modules = array(
 		'dynamic_cache'   => array(
-			'title' => 'Dynamic Cache',
+			'title'   => 'Dynamic Cache',
+			'text' => 'Store your content in the server’s memory for a faster access with this full-page caching solution powered by NGINX.',
+			'weight'  => 100,
+			'tab'  => 'supercacher',
 			'options' => array(
 				'siteground_optimizer_enable_cache',
 				'siteground_optimizer_autoflush_cache',
 			),
 		),
 		'memcached'       => array(
-			'title' => 'Memcached',
+			'title'   => 'Memcached',
+			'text' => 'Powerful object caching for your site. It stores frequently executed queries to your databases and reuses them for better performance.',
+			'weight'  => 0,
+			'tab'  => 'supercacher',
 			'options' => array(
 				'siteground_optimizer_enable_memcached',
 			),
 		),
 		'ssl'             => array(
-			'title' => 'Enable HTTPS',
+			'title'   => 'Enable HTTPS',
+			'text' => '',
+			'weight'  => 0,
 			'options' => array(
 				'siteground_optimizer_ssl_enabled',
 			),
 		),
 		'phpchecker'      => array(
-			'title' => 'PHP Compatibility Checker',
+			'title'   => 'PHP Compatibility Checker',
+			'text' => '',
+			'weight'  => 0,
 			'options' => array(),
 		),
 		'gzip'            => array(
-			'title' => 'GZIP Compression',
+			'title'   => 'GZIP Compression',
+			'text' => '',
+			'weight'  => 0,
 			'options' => array(
 				'siteground_optimizer_enable_gzip_compression',
 			),
 		),
 		'browser_cache'   => array(
-			'title' => 'Browser Caching',
+			'title'   => 'Browser Caching',
+			'text' => '',
+			'weight'  => 0,
 			'options' => array(
 				'siteground_optimizer_enable_browser_caching',
 			),
 		),
 		'html'            => array(
-			'title' => 'HTML Minification',
+			'title'   => 'HTML Minification',
+			'text' => 'Removes unnecessary characters from your HTML output saving data and improving your site speed.',
+			'weight'  => 90,
+			'tab'  => 'frontend',
 			'options' => array(
 				'siteground_optimizer_optimize_html',
 			),
 		),
 		'javascript'      => array(
-			'title' => 'JavaScript Minification',
+			'title'   => 'JavaScript Minification',
+			'text' => 'Minify your JavaScript files in order to reduce their size and reduce the number of requests to the server.',
+			'weight'  => 80,
+			'tab'  => 'frontend',
 			'options' => array(
 				'siteground_optimizer_optimize_javascript',
 			),
 		),
+		'javascript_combination' => array(
+			'title'   => 'JavaScript Combination',
+			'text' => 'Combine your JavaScript files in order to reduce the number of requests to the server.',
+			'weight'  => 70,
+			'tab'  => 'frontend',
+			'options' => array(
+				'siteground_optimizer_combine_javascript',
+			),
+		),
+		'javascript_defer' => array(
+			'title'   => 'Defer Render-blocking JS',
+			'text' => 'Defer loading of render-blocking JavaScript files for faster initial site load.',
+			'weight'  => 60,
+			'tab'  => 'frontend',
+			'options' => array(
+				'siteground_optimizer_optimize_javascript_async',
+			),
+		),
 		'css'             => array(
-			'title' => 'CSS Minification',
+			'title'   => 'Mnify CSS Files',
+			'text' => 'Minify your CSS files in order to reduce their size and reduce the number of requests to the server.',
+			'weight'  => 85,
+			'tab'  => 'frontend',
 			'options' => array(
 				'siteground_optimizer_optimize_css',
 			),
 		),
+		'css_combination'             => array(
+			'title'   => 'Combine CSS Files',
+			'text' => 'Combine multiple CSS files into one to lower the number of requests your site generates.',
+			'weight'  => 74,
+			'tab'  => 'frontend',
+			'options' => array(
+				'siteground_optimizer_combine_css',
+			),
+		),
+		'optimize_google_fonts'   => array(
+			'title'   => 'Optimize Loading of Google Fonts',
+			'text' => 'Combine the loading of Google fonts reducing the number of HTTP requests.',
+			'weight'  => 87,
+			'tab'  => 'frontend',
+			'options' => array(
+				'siteground_optimizer_combine_google_fonts',
+			),
+		),
 		'query_strings'   => array(
-			'title' => 'Query Strings Removal',
+			'title'   => 'Query Strings Removal',
+			'text' => 'Removes version query strings from your static resources improving the caching of those resources.',
+			'weight'  => 0,
+			'tab'  => 'frontend',
 			'options' => array(
 				'siteground_optimizer_remove_query_strings',
 			),
 		),
 		'emojis'          => array(
-			'title' => 'Emojis Removal',
+			'title'   => 'Emojis Removal',
+			'text' => 'Enable to prevent WordPress from automatically detecting and generating emojis in your pages.',
+			'weight'  => 0,
+			'tab'  => 'frontend',
 			'options' => array(
 				'siteground_optimizer_disable_emojis',
 			),
 		),
 		'optimize_images' => array(
-			'title' => 'Images Optimization',
+			'title'   => 'Images Optimization',
+			'text' => 'We will automatically optimize all new images that you upload to your Media Library.',
+			'weight'  => 40,
+			'tab'  => 'images',
 			'options' => array(
 				'siteground_optimizer_optimize_images',
 			),
 		),
+		'webp_support' => array(
+			'title'   => 'Generate WebP Copies of New Images',
+			'text' => 'WebP is a next generation image format supported by modern browers which greatly reduces the size of your images.',
+			'weight'  => 75,
+			'avalon' => 1,
+			'tab'  => 'images',
+			'options' => array(
+				'siteground_optimizer_webp_support',
+			),
+		),
 		'lazyload_images' => array(
-			'title' => 'Lazy Load Images',
+			'title'   => 'Lazy Load Media',
+			'text' => 'Load images only when they are visible in the browser.',
+			'weight'  => 76,
+			'tab'  => 'images',
 			'options' => array(
 				'siteground_optimizer_lazyload_images',
 				'siteground_optimizer_lazyload_gravatars',
@@ -421,11 +503,12 @@ class Modules {
 		foreach ( $excluded['excluded_modules'] as $module ) {
 			$options = $this->modules[ $module ]['options'];
 
-			array_map(function( $option ) {
-				Options::disable_option( $option );
-			}, $options);
+			array_map(
+				function( $option ) {
+					Options::disable_option( $option );
+				}, $options
+			);
 		}
-
 
 		delete_option( 'disable_conflicting_modules' );
 	}
@@ -649,6 +732,117 @@ class Modules {
 
 		// Disable network admin modules.
 		return array_diff( $active_modules, $disabled_modules['network_admin'] );
+	}
+
+	/**
+	 * Get modules for the slider on plugin page.
+	 *
+	 * @since  5.5
+	 *
+	 * @return array Array of modules.
+	 */
+	public function get_slider_modules() {
+		$modules   = array();
+		$whats_new = array();
+		// Get the new modules.
+		$new_modules = get_option( 'siteground_optimizer_whats_new', array() );
+
+		// Add the new modules to the response if the optimization is not enabled.
+		if ( ! empty( $new_modules ) ) {
+			foreach ( $new_modules as $index => $card ) {
+				if ( 1 == get_option( 'siteground_optimizer_' . $card['optimization'], 0 ) ) {
+					continue;
+				}
+
+				$modules[]   = $card;
+				$whats_new[] = $index;
+			}
+		}
+
+		// Merge and remove the empty cards.
+		$cards = array_filter(
+			array_merge(
+				$modules, // Add "What's new" modules.
+				array_merge(
+					array(
+						$this->get_optimizations(), // Add optimizations that are not yet enabled to the response.
+					),
+					// Add the default card.
+					array(
+						array(
+							'type' => 'default',
+							'title' => 'Welcome to SG Optimizer',
+							'text' => 'Get the best performance for your WordPress website with our optimization plugin. It handles caching, system settings, and all the necessary configurations for a blazing-fast website. With the SiteGround Optimizer enabled, you’re getting the very best from your hosting environment!',
+							'icon' => 'presentational-speed-caching',
+							'icon_color' => 'salmon',
+						),
+					)
+				)
+			)
+		);
+
+		// Finally return the response.
+		return array(
+			'whats_new' => $whats_new,
+			'cards'     => $cards,
+		);
+	}
+
+	/**
+	 * Get optimizations which are currently disabled.
+	 *
+	 * @since  5.5.
+	 *
+	 * @return array Array of possible optimizations.
+	 */
+	public function get_optimizations() {
+		$optimizations = array();
+		$count         = 3;
+		$is_avalon     = Helper::is_avalon();
+
+		// Order the modules.
+		$keys = array_column( $this->modules, 'weight' );
+		array_multisort( $keys, SORT_DESC, $this->modules );
+
+		foreach ( $this->modules as $module ) {
+			// Bail if there are no optimizations.
+			if ( empty( $module['options'][0] ) ) {
+				continue;
+			}
+
+			// Bail if the optimization is alredy enabled.
+			if ( 1 == get_option( $module['options'][0], 0 ) ) {
+				continue;
+			}
+
+			// Bail if the optimization is not important.
+			if ( 0 == $module['weight'] ) {
+				continue;
+			}
+
+			// Or if the optimization is for avalon servers only.
+			if ( ! $is_avalon && ! empty( $module['avalon'] ) ) {
+				continue;
+			}
+
+			// Add the optimization to the array.
+			$optimizations[] = array(
+				'title'         => $module['title'],
+				'text'          => $module['text'],
+				'optimization'  => str_replace( 'siteground_optimizer_', '', $module['options'][0] ),
+				'link'          => $module['tab'],
+			);
+
+			// Return the optimizations if we've reached the required quantity.
+			if ( count( $optimizations ) == $count ) {
+				return array(
+					'type' => 'optimizations',
+					'boxes' => $optimizations,
+				);
+			}
+		}
+
+		return array();
 	}
 
 }

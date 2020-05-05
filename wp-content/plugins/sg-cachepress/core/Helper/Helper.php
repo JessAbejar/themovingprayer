@@ -250,6 +250,23 @@ class Helper {
 	}
 
 	/**
+	 * Some plugins like WPML for example are overwriting the site url.
+	 *
+	 * @since  5.0.10
+	 *
+	 * @return string The real site url.
+	 */
+	public static function get_site_url() {
+		$url = get_option( 'siteurl' );
+
+		$scheme = is_ssl() ? 'https' : parse_url( $url, PHP_URL_SCHEME );
+
+		$url = set_url_scheme( $url, $scheme );
+
+		return trailingslashit( $url );
+	}
+
+	/**
 	 * Send notification to SiteGround on login error
 	 *
 	 * @since  5.2.4

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once dirname( __FILE__ ) . '/class.jetpack-search-options.php';
+require_once dirname( __FILE__ ) . '/class-jetpack-search-options.php';
 
 /**
  * Class to customize search on the site.
@@ -72,6 +72,29 @@ class Jetpack_Search_Customize {
 			)
 		);
 
+		$id = $setting_prefix . 'overlay_trigger';
+		$wp_customize->add_setting(
+			$id,
+			array(
+				'default'   => 'immediate',
+				'transport' => 'postMessage',
+				'type'      => 'option',
+			)
+		);
+		$wp_customize->add_control(
+			$id,
+			array(
+				'label'       => __( 'Overlay Trigger', 'jetpack' ),
+				'description' => __( 'Choose when the search overlay should appear.', 'jetpack' ),
+				'section'     => $section_id,
+				'type'        => 'select',
+				'choices'     => array(
+					'immediate' => __( 'Open immediately', 'jetpack' ),
+					'results'   => __( 'Open when results are available', 'jetpack' ),
+				),
+			)
+		);
+
 		$id = $setting_prefix . 'opacity';
 		$wp_customize->add_setting(
 			$id,
@@ -87,7 +110,7 @@ class Jetpack_Search_Customize {
 				'type'        => 'range',
 				'section'     => $section_id,
 				'label'       => __( 'Background Opacity', 'jetpack' ),
-				'description' => __( 'Select and opacity for the search overlay.', 'jetpack' ),
+				'description' => __( 'Select an opacity for the search overlay.', 'jetpack' ),
 				'input_attrs' => array(
 					'min'  => 85,
 					'max'  => 100,
@@ -152,8 +175,6 @@ class Jetpack_Search_Customize {
 				'label'   => __( 'Display "Powered by Jetpack"', 'jetpack' ),
 			)
 		);
-
 	}
-
 }
 

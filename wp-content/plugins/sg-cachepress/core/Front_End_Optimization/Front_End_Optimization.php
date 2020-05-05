@@ -6,9 +6,8 @@ use SiteGround_Optimizer\Emojis_Removal\Emojis_Removal;
 use SiteGround_Optimizer\Lazy_Load\Lazy_Load;
 use SiteGround_Optimizer\Images_Optimizer\Images_Optimizer;
 use SiteGround_Optimizer\Minifier\Minifier;
-use SiteGround_Optimizer\Combinator\Combinator;
-use SiteGround_Optimizer\Combinator\Fonts_Combinator;
 use SiteGround_Optimizer\Helper\Helper;
+use SiteGround_Optimizer\Parser\Parser;
 /**
  * SG Front_End_Optimization main plugin class
  */
@@ -98,10 +97,6 @@ class Front_End_Optimization {
 			new Lazy_Load();
 		}
 
-		if ( Options::is_enabled( 'siteground_optimizer_combine_css' ) ) {
-			new Combinator();
-		}
-
 		// Enabled async load js files.
 		if ( Options::is_enabled( 'siteground_optimizer_optimize_javascript_async' ) ) {
 			add_action( 'wp_print_scripts', array( $this, 'prepare_scripts_for_async_load' ), PHP_INT_MAX );
@@ -110,11 +105,16 @@ class Front_End_Optimization {
 			add_filter( 'script_loader_tag', array( $this, 'add_async_attribute' ), 10, 3 );
 		}
 
-		if ( Options::is_enabled( 'siteground_optimizer_combine_google_fonts' ) ) {
-			new Fonts_Combinator();
-		}
-
 		new Minifier();
+
+		if (
+			Options::is_enabled( 'siteground_optimizer_optimize_html' ) ||
+			Options::is_enabled( 'siteground_optimizer_combine_css' ) ||
+			Options::is_enabled( 'siteground_optimizer_combine_javascript' ) ||
+			Options::is_enabled( 'siteground_optimizer_combine_google_fonts' )
+		) {
+			new Parser();
+		}
 	}
 
 	/**
@@ -142,8 +142,14 @@ class Front_End_Optimization {
 		// Get the uploads dir.
 		$upload_dir = wp_upload_dir();
 
+		$base_dir = $upload_dir['basedir'];
+
+		if ( defined( 'UPLOADS' ) ) {
+			$base_dir = ABSPATH . UPLOADS;
+		}
+
 		// Build the assets dir name.
-		$directory = $upload_dir['basedir'] . '/siteground-optimizer-assets';
+		$directory = $base_dir . '/siteground-optimizer-assets';
 
 		// Check if directory exists and try to create it if not.
 		$is_directory_created = ! is_dir( $directory ) ? $this->create_directory( $directory ) : true;
@@ -152,6 +158,7 @@ class Front_End_Optimization {
 		if ( $is_directory_created ) {
 			$this->assets_dir = trailingslashit( $directory );
 		}
+
 	}
 
 	/**
@@ -187,7 +194,7 @@ class Front_End_Optimization {
 	 * @return string           Original filepath.
 	 */
 	public static function get_original_filepath( $original ) {
-		$home_url = Helper::get_home_url();
+		$home_url = Helper::get_site_url();
 		// Get the home_url from database. Some plugins like qtranslate for example,
 		// modify the home_url, which result to wrong replacement with ABSPATH for resources loaded via link.
 		// Very ugly way to handle resources without protocol.
@@ -313,6 +320,8 @@ class Front_End_Optimization {
 				'ver',
 				'version',
 				'v',
+				'mts',
+				'nomtcache',
 				'generated',
 				'timestamp',
 			),
@@ -329,7 +338,18 @@ class Front_End_Optimization {
 	 */
 	private function check_for_builders() {
 
-		$builder_paramas = apply_filters( 'sgo_pb_params', array( 'fl_builder', 'vcv-action', 'et_fb', 'ct_builder', 'tve' ) );
+		$builder_paramas = apply_filters(
+			'sgo_pb_params',
+			array(
+				'fl_builder',
+				'vcv-action',
+				'et_fb',
+				'ct_builder',
+				'tve',
+				'preview',
+				'elementor-preview',
+			)
+		);
 
 		foreach ( $builder_paramas as $param ) {
 			if ( isset( $_GET[ $param ] ) ) {

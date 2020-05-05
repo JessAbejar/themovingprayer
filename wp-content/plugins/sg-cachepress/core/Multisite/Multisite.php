@@ -22,6 +22,7 @@ class Multisite {
 			'frontend'    => (int) get_site_option( 'siteground_optimizer_frontend_permissions', 1 ),
 			'images'      => (int) get_site_option( 'siteground_optimizer_images_permissions', 1 ),
 			'environment' => (int) get_site_option( 'siteground_optimizer_environment_permissions', 0 ),
+			'analytics'   => (int) get_site_option( 'siteground_optimizer_analytics_permissions', 1 ),
 		);
 	}
 

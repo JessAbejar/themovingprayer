@@ -129,6 +129,14 @@ class Rest {
 				'permission_callback' => array( $this, 'check_permissions' ),
 			)
 		);
+
+		register_rest_route(
+			self::REST_NAMESPACE, '/change-option/', array(
+				'methods'  => 'POST',
+				'callback' => array( $this->helper, 'change_option_from_rest' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
+			)
+		);
 	}
 
 	/**

@@ -101,6 +101,27 @@ class Options {
 	}
 
 	/**
+	 * Change an option.
+	 *
+	 * @since 5.5.0
+	 *
+	 * @param  string $key Setting field key.
+	 * @param  string $value Setting value.
+	 * @param  bool   $is_multisite Whether to check multisite option or regular option.
+	 *
+	 * @return bool True on success, false otherwise.
+	 */
+	public static function change_option( $key, $value, $is_multisite = false ) {
+		// Update the option.
+		$result = false === $is_multisite ? update_option( $key, $value ) : update_site_option( $key, $value );
+
+		// Purge the cache.
+		Supercacher::purge_cache();
+		// Return the result.
+		return $result;
+	}
+
+	/**
 	 * Check if a single boolean setting is enabled for single site in a network.
 	 *
 	 * @since 5.0.0
@@ -265,6 +286,7 @@ class Options {
 			);
 		}
 
+
 		foreach ( $site_options as $option ) {
 			// Try to unserialize the value.
 			$value = maybe_unserialize( $option->value );
@@ -388,6 +410,7 @@ class Options {
 			'siteground_optimizer_optimize_javascript_async' => __( 'Defer Render-blocking JS', 'sg-cachepress' ),
 			'siteground_optimizer_optimize_css'              => __( 'CSS Minification', 'sg-cachepress' ),
 			'siteground_optimizer_combine_css'               => __( 'CSS Combination', 'sg-cachepress' ),
+			'siteground_optimizer_combine_javascript'        => __( 'JavaScript Files Combination', 'sg-cachepress' ),
 			'siteground_optimizer_combine_google_fonts'      => __( 'Google Fonts Combination', 'sg-cachepress' ),
 			'siteground_optimizer_remove_query_strings'      => __( 'Query Strings Removal', 'sg-cachepress' ),
 			'siteground_optimizer_disable_emojis'            => __( 'Emoji Removal Filter', 'sg-cachepress' ),

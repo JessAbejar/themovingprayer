@@ -173,9 +173,6 @@ class Images_Optimizer {
 				update_post_meta( $id, 'siteground_optimizer_optimization_failed', 1 );
 			}
 
-			// Mark the image as optimized.
-			update_post_meta( $id, 'siteground_optimizer_is_optimized', 1 );
-
 			// Break script execution before we hit the max execution time.
 			if ( ( $started + $timeout - 5 ) < time() ) {
 				break;

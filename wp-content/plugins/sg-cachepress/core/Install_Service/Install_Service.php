@@ -20,6 +20,9 @@ use SiteGround_Optimizer\Install_Service\Install_5_3_6;
 use SiteGround_Optimizer\Install_Service\Install_5_3_10;
 use SiteGround_Optimizer\Install_Service\Install_5_4_0;
 use SiteGround_Optimizer\Install_Service\Install_5_4_3;
+use SiteGround_Optimizer\Install_Service\Install_5_5_0;
+use SiteGround_Optimizer\Install_Service\Install_5_5_2;
+use SiteGround_Optimizer\Install_Service\Install_5_5_4;
 use SiteGround_Optimizer\Supercacher\Supercacher;
 
 /**
@@ -50,14 +53,16 @@ class Install_Service {
 			new Install_5_3_10(),
 			new Install_5_4_0(),
 			new Install_5_4_3(),
+			new Install_5_5_0(),
+			new Install_5_5_2(),
+			new Install_5_5_4(),
 		);
 
 		add_action( 'upgrader_process_complete', array( $this, 'install' ) );
-
 	}
 
 	/**
-	 * Loop thought all versions and install the updates.
+	 * Loop through all versions and install the updates.
 	 *
 	 * @since 5.0.0
 	 *
@@ -114,6 +119,13 @@ class Install_Service {
 		return get_option( 'siteground_optimizer_version', '0.0.0' );
 	}
 
+	/**
+	 * Checks whether update is required.
+	 *
+	 * @since  5.4.7
+	 *
+	 * @return bool True/false/
+	 */
 	private function install_required() {
 		foreach ( $this->installs as $install ) {
 			// Get the install version.

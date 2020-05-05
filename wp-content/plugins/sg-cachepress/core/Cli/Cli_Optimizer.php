@@ -35,6 +35,7 @@ class Cli_Optimizer {
 	 *  - html
 	 *  - js
 	 *  - js-async
+	 *  - combine-js
 	 *  - css
 	 *  - combine-css
 	 *  - querystring
@@ -42,6 +43,7 @@ class Cli_Optimizer {
 	 *  - images
 	 *  - lazyload
 	 *  - gzip
+	 *  - webp
 	 *  - google-fonts
 	 *  - browsercache
 	 * ---
@@ -68,8 +70,10 @@ class Cli_Optimizer {
 			case 'querystring':
 			case 'emojis':
 			case 'js-async':
+			case 'combine-js':
 			case 'combine-css':
 			case 'google-fonts':
+			case 'webp':
 			case 'images':
 				return $this->optimize( $args[1], $args[0], $blog_id );
 			case 'lazyload':
@@ -118,9 +122,11 @@ class Cli_Optimizer {
 			'js-async'        => 'siteground_optimizer_optimize_javascript_async',
 			'css'             => 'siteground_optimizer_optimize_css',
 			'combine-css'     => 'siteground_optimizer_combine_css',
+			'combine-js'      => 'siteground_optimizer_combine_javascript',
 			'querystring'     => 'siteground_optimizer_remove_query_strings',
 			'emojis'          => 'siteground_optimizer_disable_emojis',
 			'images'          => 'siteground_optimizer_optimize_images',
+			'webp'            => 'siteground_optimizer_webp_support',
 		);
 
 		switch ( $action ) {

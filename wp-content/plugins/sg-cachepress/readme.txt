@@ -80,6 +80,36 @@ You can exclude script from being minified using the filter we’ve designed for
 		return $exclude_list;
 	}
 
+You can exclude script from being combined using the filter we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
+
+	add_filter( 'siteground_optimizer_combine_javascript_exclude', 'js_combine_exclude' );
+	function js_combine_exclude( $exclude_list ) {
+		$exclude_list[] = 'script-handle';
+		$exclude_list[] = 'script-handle-2';
+
+		return $exclude_list;
+	}
+
+You can exclude external script from being combined using the filter we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
+
+	add_filter( 'sgo_javascript_combine_excluded_external_paths', 'js_combine_exclude_external_script' );
+	function js_combine_exclude_external_script( $exclude_list ) {
+		$exclude_list[] = 'script-host.com';
+		$exclude_list[] = 'script-host-2.com';
+
+		return $exclude_list;
+	}
+
+You can exclude inline script from being combined using the filter we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
+
+	add_filter( 'sgo_javascript_combine_excluded_inline_content', 'js_combine_exclude_inline_script' );
+	function js_combine_exclude_inline_script( $exclude_list ) {
+		$exclude_list[] = 'first few symbols of inline content script';
+
+		return $exclude_list;
+	}
+
+
 You can exclude script from being loaded asynchronous using the filter we’ve designed for that purpose. Here’s an example of the code, you can add to your functions.php file:
 
 	add_filter( 'sgo_js_async_exclude', 'js_async_exclude' );
@@ -130,15 +160,18 @@ In version 5.0 we've added full WP-CLI support for all plugin options and functi
 * wp sg optimize html enable|disable - enables or disables HTML minification
 * wp sg optimize js enable|disable - enables or disables JS minification
 * wp sg optimize css enable|disable - enables or disables CSS minification
+* wp sg optimize combine-css enable|disable - enables or disables CSS combination
+* wp sg optimize combine-js enable|disable - enables or disables JS combination
 * wp sg optimize querystring enable|disable - enables or disables query strings removal
 * wp sg optimize emojis enable|disable - enables or disables stripping of the Emoji scripts
 * wp sg optimize images enable|disable - enables or disables New image optimization
+* wp sg optimize webp enable|disable - enables or disables WebP image optimization
 * wp sg optimize lazyload enable|disable - enables or disables Lazy loading of images
 * wp sg optimize gzip enable|disable - enables or disables Gzip compression for your site
 * wp sg optimize browsercache enable|disable - enables or disables Browser caching rules
 * wp sg optimize dynamic-cache enable|disable - enables or disables Dynamic caching rules
 * wp sg optimize google-fonts enable|disable - enables or disables Google Fonts Combination
-* wp sg status dynamic-cache|autoflush-cache|mobile-cache|html|js|js-async|css|combine-css|querystring|emojis|images|lazyload_images|lazyload_gravatars|lazyload_thumbnails|lazyload_responsive|lazyload_textwidgets|gzip|browser-caching|memcache|ssl|ssl-fix|google-fonts - returns optimization current status (enabled|disabled)
+* wp sg status dynamic-cache|autoflush-cache|mobile-cache|html|js|js-async|css|combine-css|querystring|emojis|images|lazyload_images|lazyload_gravatars|lazyload_thumbnails|lazyload_responsive|lazyload_textwidgets|gzip|browser-caching|memcache|ssl|ssl-fix|google-fonts|combine-js|webp - returns optimization current status (enabled|disabled)
 
 = Requirements =
 
@@ -157,21 +190,55 @@ Our plugin uses a cookie in order to function properly. It does not store person
 = Automatic Installation =
 
 1. Go to Plugins -> Add New
-1. Search for "SG CachePress"
-1. Click on the Install button under the SG CachePress plugin
+1. Search for "SG Optimizer"
+1. Click on the Install button under the SG Optimizer plugin
 1. Once the plugin is installed, click on the Activate plugin link
 
 = Manual Installation =
 
 1. Login to the WordPress admin panel and go to Plugins -> Add New
 1. Select the 'Upload' menu 
-1. Click the 'Choose File' button and point your browser to the SGCachePress.zip file you've downloaded
+1. Click the 'Choose File' button and point your browser to the sg-cachepress.zip file you've downloaded
 1. Click the 'Install Now' button
-1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG CachePress listing
+1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG Optimizer listing
 
 == Changelog ==
 
+= Version 5.5.4 =
+* Fixed issue with CSS Combination causing problems with media specific stylesheets
+* Added defer attribute for the Combined JS files when JS Defer is enabled
+* Better support with sites using long domains (.blog, .marketing, etc.)
+* Fixed Memcached XSS security issues
+* Fixed CSS & JS Combination for sites with custom upload folders
+
+= Version 5.5.3 =
+* Fix ISE for Flatsome theme
+
+= Version 5.5.2 =
+* Better CSS Combination
+* Better Fonts Combination
+* Better concatenation of inline scripts
+* Improved WebP Quaity Slider
+* Updated readme.txt file
+* Added WP-CLI Commands: combine-js and webp
+* Better Polylang support
+
+= Version 5.5.1 =
+* Better Elementor support
+* Better Divi support
+* Better AMP support
+* Better sourcemapping removal
+
+= Version 5.5.0 =
+* New - Combine JavaScript Files
+* New - WebP quality control plus lossless option
+* New - What's new and opportunities slider
+* Improved - better WPML support (mostly memcached)
+* Improved - better Elementor support
+* Improved - better Browser Caching rules for cPanel users
+
 = Version 5.4.6 =
+* Interface revamp for better accessability
 * Improved compatibility with page builders
 * Improved compatibility with latest Elementor
 * Added support for popular AMP plugins 

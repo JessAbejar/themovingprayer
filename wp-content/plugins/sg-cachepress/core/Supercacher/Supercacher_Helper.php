@@ -116,5 +116,4 @@ class Supercacher_Helper {
 		return ! empty( $matches ) ? true : false;
 	}
 
-
 }

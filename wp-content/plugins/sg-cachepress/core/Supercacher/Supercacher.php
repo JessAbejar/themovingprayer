@@ -67,6 +67,7 @@ class Supercacher {
 		add_action( 'update_option_siteground_optimizer_autoflush_cache', array( $this, 'purge_everything' ) );
 		add_action( 'update_option_siteground_optimizer_enable_memcached', array( $this, 'purge_everything' ) );
 		add_action( 'update_option_siteground_optimizer_combine_css', array( $this, 'delete_assets' ) );
+		add_action( 'pll_save_post', array( $this, 'flush_memcache' ) );
 
 		// Delete assets (minified js and css files) every 30 days.
 		add_action( 'siteground_delete_assets', array( $this, 'delete_assets' ) );

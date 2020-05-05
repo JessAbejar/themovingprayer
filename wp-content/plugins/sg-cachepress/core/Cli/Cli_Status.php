@@ -33,9 +33,11 @@ class Cli_Status {
 	 *  - js-async
 	 *  - css
 	 *  - combine-css
+	 *  - combine-js
 	 *  - querystring
 	 *  - emojis
 	 *  - images
+	 *  - webp
 	 *  - lazyload_images
 	 *  - lazyload_gravatars
 	 *  - lazyload_thumbnails
@@ -94,6 +96,8 @@ class Cli_Status {
 			'gzip'                 => 'siteground_optimizer_enable_gzip_compression',
 			'browser-caching'      => 'siteground_optimizer_enable_browser_caching',
 			'google-fonts'         => 'siteground_optimizer_combine_google_fonts',
+			'combine-js'           => 'siteground_optimizer_combine_javascript',
+			'webp'                 => 'siteground_optimizer_webp_support',
 		);
 
 		if ( ! array_key_exists( $type, $mapping ) ) {

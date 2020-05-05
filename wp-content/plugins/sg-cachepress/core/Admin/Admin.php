@@ -144,7 +144,7 @@ class Admin {
 
 		$data = array(
 			'rest_base'          => untrailingslashit( get_rest_url( null, Rest::REST_NAMESPACE ) ),
-			'home_url'           => Helper::get_home_url(),
+			'home_url'           => Helper::get_site_url(),
 			'php_version'        => $php_version_info['version'],
 			'is_php_changed'     => $php_version_info['has_been_changed'],
 			'is_cron_disabled'   => Helper::is_cron_disabled(),
@@ -153,6 +153,7 @@ class Admin {
 			'tabs'               => $this->modules->get_active_tabs(),
 			'locale'             => Helper::get_i18n_data_json(),
 			'update_timestamp'   => get_option( 'siteground_optimizer_update_timestamp', 0 ),
+			'cards'              => $this->modules->get_slider_modules(),
 			'is_shop'            => is_plugin_active( 'woocommerce/woocommerce.php' ) ? 1 : 0,
 			'localeSlug'         => join( '-', explode( '_', \get_user_locale() ) ),
 			'wp_nonce'           => wp_create_nonce( 'wp_rest' ),

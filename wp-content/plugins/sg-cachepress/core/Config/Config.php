@@ -30,6 +30,7 @@ class Config {
 		'enable_browser_caching',
 		'optimize_html',
 		'optimize_javascript',
+		'combine_javascript',
 		'optimize_javascript_async',
 		'optimize_css',
 		'combine_css',

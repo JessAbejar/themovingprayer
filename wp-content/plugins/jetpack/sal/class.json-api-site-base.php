@@ -71,6 +71,8 @@ abstract class SAL_Site {
 
 	abstract public function is_private();
 
+	abstract public function is_coming_soon();
+
 	abstract public function is_following();
 
 	abstract public function get_subscribers_count();
@@ -133,6 +135,8 @@ abstract class SAL_Site {
 		);
 	}
 
+	abstract protected function is_wpforteams_site();
+
 	public function is_wpcom_atomic() {
 		return false;
 	}
@@ -146,10 +150,6 @@ abstract class SAL_Site {
 	}
 
 	public function get_post_by_id( $post_id, $context ) {
-		// Remove the skyword tracking shortcode for posts returned via the API.
-		remove_shortcode( 'skyword-tracking' );
-		add_shortcode( 'skyword-tracking', '__return_empty_string' );
-
 		$post = get_post( $post_id, OBJECT, $context );
 
 		if ( ! $post ) {
@@ -657,5 +657,9 @@ abstract class SAL_Site {
 
 	function get_site_segment() {
 		return false;
+	}
+
+	function get_site_creation_flow() {
+		return get_option( 'site_creation_flow' );
 	}
 }

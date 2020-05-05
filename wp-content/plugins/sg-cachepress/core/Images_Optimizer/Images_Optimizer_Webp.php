@@ -174,9 +174,6 @@ class Images_Optimizer_Webp {
 				update_post_meta( $id, 'siteground_optimizer_webp_conversion_failed', 1 );
 			}
 
-			// Mark the image as optimized.
-			update_post_meta( $id, 'siteground_optimizer_is_converted_to_webp', 1 );
-
 			// Break script execution before we hit the max execution time.
 			if ( ( $started + $timeout - 5 ) < time() ) {
 				break;
@@ -229,7 +226,6 @@ class Images_Optimizer_Webp {
 
 		// conversion failed.
 		if ( true === boolval( $status ) ) {
-			update_post_meta( $id, 'siteground_optimizer_webp_conversion_failed', 1 );
 			return false;
 		}
 
@@ -241,12 +237,10 @@ class Images_Optimizer_Webp {
 
 				// conversion failed.
 				if ( true === boolval( $status ) ) {
-					update_post_meta( $id, 'siteground_optimizer_webp_conversion_failed', 1 );
 					return false;
 				}
 			}
 		}
-
 
 		// Everything ran smoothly.
 		update_post_meta( $id, 'siteground_optimizer_is_converted_to_webp', 1 );
@@ -263,7 +257,7 @@ class Images_Optimizer_Webp {
 	 * @return bool             False on success, true on failure.
 	 */
 	public static function generate_webp_file( $filepath ) {
-		// Bail if the file doens't exists or fi the webp copy already exists.
+		// Bail if the file doens't exists or if the webp copy already exists.
 		if ( ! file_exists( $filepath ) || file_exists( $filepath . '.webp' ) ) {
 			return true;
 		}
@@ -271,13 +265,27 @@ class Images_Optimizer_Webp {
 		// Get image type.
 		$type = exif_imagetype( $filepath );
 
+		// Prepare the quality parameters.
+		switch ( get_option( 'siteground_optimizer_quality_type', 'lossless' ) ) {
+			case 'lossy':
+				$quality = get_option( 'siteground_optimizer_quality_webp', 75 );
+				$quality_type = ' ';
+				break;
+			case 'lossless':
+			default:
+				$quality = 75;
+				$quality_type = '-lossless';
+				break;
+		}
+
+
 		switch ( $type ) {
 			case IMAGETYPE_GIF:
-				$placeholder = 'gif2webp %1$s -o %1$s.webp 2>&1';
+				$placeholder = 'gif2webp -q %1$s %2$s %3$s -o %3$s.webp 2>&1';
 				break;
 
 			case IMAGETYPE_JPEG:
-				$placeholder = 'cwebp -q 50 %1$s -o %1$s.webp 2>&1';
+				$placeholder = 'cwebp -q %1$s %2$s %3$s -o %3$s.webp 2>&1';
 				break;
 
 			case IMAGETYPE_PNG:
@@ -287,7 +295,7 @@ class Images_Optimizer_Webp {
 				if ( filesize( $filepath ) > self::PNGS_SIZE_LIMIT ) {
 					return true;
 				}
-				$placeholder = 'cwebp -q 50 %1$s -o %1$s.webp 2>&1';
+				$placeholder = 'cwebp -q %1$s %2$s %3$s -o %3$s.webp 2>&1';
 				break;
 
 			default:
@@ -299,6 +307,8 @@ class Images_Optimizer_Webp {
 		exec(
 			sprintf(
 				$placeholder, // The command.
+				$quality, // The quality %.
+				$type, // The quality %.
 				$filepath // Image path.
 			),
 			$output,
